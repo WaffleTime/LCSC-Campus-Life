@@ -37,6 +37,7 @@
 		C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E44183C33D000851B89 /* MonthlyEvents.m */; };
 		C1E66E4B183C33D000851B89 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E46183C33D000851B89 /* Preferences.m */; };
 		C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */; };
+		C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E4F183C34F000851B89 /* daysOfWeek.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		C1E66E46183C33D000851B89 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
 		C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
+		C1E66E4F183C34F000851B89 /* daysOfWeek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daysOfWeek.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 			children = (
 				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
 				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
+				C1E66E4F183C34F000851B89 /* daysOfWeek.png */,
 				C1E66E29183C33B300851B89 /* AcademicsSelected.png */,
 				C1E66E2A183C33B300851B89 /* AcademicsUnselected.png */,
 				C1E66E2B183C33B300851B89 /* ActivitiesSelected.png */,
@@ -289,6 +292,7 @@
 				C1E66E3B183C33B300851B89 /* ResidenceSelected.png in Resources */,
 				C1E66E3A183C33B300851B89 /* EntertainmentUnselected.png in Resources */,
 				C1E66E08183C333A00851B89 /* Main_iPad.storyboard in Resources */,
+				C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */,
 				C1E66E39183C33B300851B89 /* EntertainmentSelected.png in Resources */,
 				C1E66E0D183C333A00851B89 /* Images.xcassets in Resources */,
 				C1E66E34183C33B300851B89 /* AcademicsUnselected.png in Resources */,
