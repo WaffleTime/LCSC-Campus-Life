@@ -1,17 +1,22 @@
 //
 //  AppDelegate.m
-//  campuslife
+//  LCSC Campus Life
 //
-//  Created by Super Student on 11/19/13.
+//  Created by Super Student on 10/29/13.
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "Preferences.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+            (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -26,6 +31,10 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    Preferences *prefs = [Preferences getSharedInstance];
+    
+    [prefs savePreferences];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -41,6 +50,20 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    Preferences *prefs = [Preferences getSharedInstance];
+    
+    [prefs savePreferences];
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
 }
 
 @end

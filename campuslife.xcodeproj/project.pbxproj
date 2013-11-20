@@ -15,13 +15,28 @@
 		C1E66E02183C333A00851B89 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E01183C333A00851B89 /* AppDelegate.m */; };
 		C1E66E05183C333A00851B89 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E03183C333A00851B89 /* Main_iPhone.storyboard */; };
 		C1E66E08183C333A00851B89 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E06183C333A00851B89 /* Main_iPad.storyboard */; };
-		C1E66E0B183C333A00851B89 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E0A183C333A00851B89 /* ViewController.m */; };
 		C1E66E0D183C333A00851B89 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E0C183C333A00851B89 /* Images.xcassets */; };
 		C1E66E14183C333A00851B89 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66E13183C333A00851B89 /* XCTest.framework */; };
 		C1E66E15183C333A00851B89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF1183C333A00851B89 /* Foundation.framework */; };
 		C1E66E16183C333A00851B89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF5183C333A00851B89 /* UIKit.framework */; };
 		C1E66E1E183C333B00851B89 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E1C183C333B00851B89 /* InfoPlist.strings */; };
 		C1E66E20183C333B00851B89 /* campuslifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E1F183C333B00851B89 /* campuslifeTests.m */; };
+		C1E66E33183C33B300851B89 /* AcademicsSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E29183C33B300851B89 /* AcademicsSelected.png */; };
+		C1E66E34183C33B300851B89 /* AcademicsUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E2A183C33B300851B89 /* AcademicsUnselected.png */; };
+		C1E66E35183C33B300851B89 /* ActivitiesSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E2B183C33B300851B89 /* ActivitiesSelected.png */; };
+		C1E66E36183C33B300851B89 /* ActivitiesUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E2C183C33B300851B89 /* ActivitiesUnselected.png */; };
+		C1E66E37183C33B300851B89 /* AthleticsSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E2D183C33B300851B89 /* AthleticsSelected.png */; };
+		C1E66E38183C33B300851B89 /* AthleticsUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E2E183C33B300851B89 /* AthleticsUnselected.png */; };
+		C1E66E39183C33B300851B89 /* EntertainmentSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E2F183C33B300851B89 /* EntertainmentSelected.png */; };
+		C1E66E3A183C33B300851B89 /* EntertainmentUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E30183C33B300851B89 /* EntertainmentUnselected.png */; };
+		C1E66E3B183C33B300851B89 /* ResidenceSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E31183C33B300851B89 /* ResidenceSelected.png */; };
+		C1E66E3C183C33B300851B89 /* ResidenceUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E32183C33B300851B89 /* ResidenceUnselected.png */; };
+		C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E3E183C33D000851B89 /* CalendarViewController.m */; };
+		C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */; };
+		C1E66E49183C33D000851B89 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E42183C33D000851B89 /* EventDetailViewController.m */; };
+		C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E44183C33D000851B89 /* MonthlyEvents.m */; };
+		C1E66E4B183C33D000851B89 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E46183C33D000851B89 /* Preferences.m */; };
+		C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,14 +62,34 @@
 		C1E66E01183C333A00851B89 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C1E66E04183C333A00851B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		C1E66E07183C333A00851B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		C1E66E09183C333A00851B89 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C1E66E0A183C333A00851B89 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C1E66E0C183C333A00851B89 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C1E66E12183C333A00851B89 /* campuslifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = campuslifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E66E13183C333A00851B89 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C1E66E1B183C333A00851B89 /* campuslifeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "campuslifeTests-Info.plist"; sourceTree = "<group>"; };
 		C1E66E1D183C333B00851B89 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1E66E1F183C333B00851B89 /* campuslifeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = campuslifeTests.m; sourceTree = "<group>"; };
+		C1E66E29183C33B300851B89 /* AcademicsSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AcademicsSelected.png; sourceTree = "<group>"; };
+		C1E66E2A183C33B300851B89 /* AcademicsUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AcademicsUnselected.png; sourceTree = "<group>"; };
+		C1E66E2B183C33B300851B89 /* ActivitiesSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActivitiesSelected.png; sourceTree = "<group>"; };
+		C1E66E2C183C33B300851B89 /* ActivitiesUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ActivitiesUnselected.png; sourceTree = "<group>"; };
+		C1E66E2D183C33B300851B89 /* AthleticsSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AthleticsSelected.png; sourceTree = "<group>"; };
+		C1E66E2E183C33B300851B89 /* AthleticsUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AthleticsUnselected.png; sourceTree = "<group>"; };
+		C1E66E2F183C33B300851B89 /* EntertainmentSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EntertainmentSelected.png; sourceTree = "<group>"; };
+		C1E66E30183C33B300851B89 /* EntertainmentUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EntertainmentUnselected.png; sourceTree = "<group>"; };
+		C1E66E31183C33B300851B89 /* ResidenceSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ResidenceSelected.png; sourceTree = "<group>"; };
+		C1E66E32183C33B300851B89 /* ResidenceUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ResidenceUnselected.png; sourceTree = "<group>"; };
+		C1E66E3D183C33D000851B89 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		C1E66E3E183C33D000851B89 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		C1E66E3F183C33D000851B89 /* Day_Event_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Day_Event_ViewController.h; sourceTree = "<group>"; };
+		C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Day_Event_ViewController.m; sourceTree = "<group>"; };
+		C1E66E41183C33D000851B89 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
+		C1E66E42183C33D000851B89 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
+		C1E66E43183C33D000851B89 /* MonthlyEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthlyEvents.h; sourceTree = "<group>"; };
+		C1E66E44183C33D000851B89 /* MonthlyEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthlyEvents.m; sourceTree = "<group>"; };
+		C1E66E45183C33D000851B89 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		C1E66E46183C33D000851B89 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
+		C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
+		C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,9 +153,17 @@
 				C1E66E01183C333A00851B89 /* AppDelegate.m */,
 				C1E66E03183C333A00851B89 /* Main_iPhone.storyboard */,
 				C1E66E06183C333A00851B89 /* Main_iPad.storyboard */,
-				C1E66E09183C333A00851B89 /* ViewController.h */,
-				C1E66E0A183C333A00851B89 /* ViewController.m */,
 				C1E66E0C183C333A00851B89 /* Images.xcassets */,
+				C1E66E3D183C33D000851B89 /* CalendarViewController.h */,
+				C1E66E3E183C33D000851B89 /* CalendarViewController.m */,
+				C1E66E3F183C33D000851B89 /* Day_Event_ViewController.h */,
+				C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */,
+				C1E66E41183C33D000851B89 /* EventDetailViewController.h */,
+				C1E66E42183C33D000851B89 /* EventDetailViewController.m */,
+				C1E66E43183C33D000851B89 /* MonthlyEvents.h */,
+				C1E66E44183C33D000851B89 /* MonthlyEvents.m */,
+				C1E66E45183C33D000851B89 /* Preferences.h */,
+				C1E66E46183C33D000851B89 /* Preferences.m */,
 				C1E66DF8183C333A00851B89 /* Supporting Files */,
 			);
 			path = campuslife;
@@ -129,6 +172,18 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
+				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
+				C1E66E29183C33B300851B89 /* AcademicsSelected.png */,
+				C1E66E2A183C33B300851B89 /* AcademicsUnselected.png */,
+				C1E66E2B183C33B300851B89 /* ActivitiesSelected.png */,
+				C1E66E2C183C33B300851B89 /* ActivitiesUnselected.png */,
+				C1E66E2D183C33B300851B89 /* AthleticsSelected.png */,
+				C1E66E2E183C33B300851B89 /* AthleticsUnselected.png */,
+				C1E66E2F183C33B300851B89 /* EntertainmentSelected.png */,
+				C1E66E30183C33B300851B89 /* EntertainmentUnselected.png */,
+				C1E66E31183C33B300851B89 /* ResidenceSelected.png */,
+				C1E66E32183C33B300851B89 /* ResidenceUnselected.png */,
 				C1E66DF9183C333A00851B89 /* campuslife-Info.plist */,
 				C1E66DFA183C333A00851B89 /* InfoPlist.strings */,
 				C1E66DFD183C333A00851B89 /* main.m */,
@@ -231,9 +286,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1E66E3B183C33B300851B89 /* ResidenceSelected.png in Resources */,
+				C1E66E3A183C33B300851B89 /* EntertainmentUnselected.png in Resources */,
 				C1E66E08183C333A00851B89 /* Main_iPad.storyboard in Resources */,
+				C1E66E39183C33B300851B89 /* EntertainmentSelected.png in Resources */,
 				C1E66E0D183C333A00851B89 /* Images.xcassets in Resources */,
+				C1E66E34183C33B300851B89 /* AcademicsUnselected.png in Resources */,
+				C1E66E3C183C33B300851B89 /* ResidenceUnselected.png in Resources */,
+				C1E66E37183C33B300851B89 /* AthleticsSelected.png in Resources */,
 				C1E66E05183C333A00851B89 /* Main_iPhone.storyboard in Resources */,
+				C1E66E38183C33B300851B89 /* AthleticsUnselected.png in Resources */,
+				C1E66E36183C33B300851B89 /* ActivitiesUnselected.png in Resources */,
+				C1E66E33183C33B300851B89 /* AcademicsSelected.png in Resources */,
+				C1E66E35183C33B300851B89 /* ActivitiesSelected.png in Resources */,
 				C1E66DFC183C333A00851B89 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,8 +318,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1E66E0B183C333A00851B89 /* ViewController.m in Sources */,
 				C1E66E02183C333A00851B89 /* AppDelegate.m in Sources */,
+				C1E66E49183C33D000851B89 /* EventDetailViewController.m in Sources */,
+				C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */,
+				C1E66E4B183C33D000851B89 /* Preferences.m in Sources */,
+				C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */,
+				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
+				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

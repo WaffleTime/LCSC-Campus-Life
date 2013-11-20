@@ -1,8 +1,8 @@
 //
 //  AppDelegate.h
-//  campuslife
+//  LCSC Campus Life
 //
-//  Created by Super Student on 11/19/13.
+//  Created by Super Student on 10/29/13.
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
