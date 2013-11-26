@@ -50,18 +50,27 @@
     self.signInOutButton.title = @"Sign In";
 
     if (IDIOM == IPAD) {
-        
+        [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
+                            forState:UIControlStateSelected];
+        [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
+                            forState:UIControlStateSelected];
+        [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
+                            forState:UIControlStateSelected];
+        [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
+                            forState:UIControlStateSelected];
+        [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
+                            forState:UIControlStateSelected];
     }
     else {
-        [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"EntertainmentSelected.png"]
+        [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
                                      forState:UIControlStateSelected];
-        [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"AcademicsSelected.png"]
+        [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
                             forState:UIControlStateSelected];
-        [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"ActivitiesSelected.png"]
+        [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
                             forState:UIControlStateSelected];
-        [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"ResidenceSelected.png"]
+        [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
                                      forState:UIControlStateSelected];
-        [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"AthleticsSelected.png"]
+        [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
                                      forState:UIControlStateSelected];
     }
     
