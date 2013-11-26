@@ -6,6 +6,11 @@
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
+//This is for checking to see if an ipad is being used.
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
+
+
 #import "CalendarViewController.h"
 #import "MonthlyEvents.h"
 #import "Preferences.h"
@@ -44,16 +49,21 @@
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
 
-    [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"EntertainmentSelected.png"]
-                                 forState:UIControlStateSelected];
-    [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"AcademicsSelected.png"]
-                        forState:UIControlStateSelected];
-    [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"ActivitiesSelected.png"]
-                        forState:UIControlStateSelected];
-    [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"ResidenceSelected.png"]
-                                 forState:UIControlStateSelected];
-    [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"AthleticsSelected.png"]
-                                 forState:UIControlStateSelected];
+    if (IDIOM == IPAD) {
+        
+    }
+    else {
+        [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"EntertainmentSelected.png"]
+                                     forState:UIControlStateSelected];
+        [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"AcademicsSelected.png"]
+                            forState:UIControlStateSelected];
+        [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"ActivitiesSelected.png"]
+                            forState:UIControlStateSelected];
+        [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"ResidenceSelected.png"]
+                                     forState:UIControlStateSelected];
+        [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"AthleticsSelected.png"]
+                                     forState:UIControlStateSelected];
+    }
     
     Preferences *prefs = [Preferences getSharedInstance];
     
@@ -256,48 +266,58 @@
 
         //Iterate through all events and determine categories that are present.
         for (int i=0; i<[dayEvents count]; i++) {
-            NSString *category = [[dayEvents objectAtIndex:i] objectForKey:@"category"];
+            //NSString *category = [[dayEvents objectAtIndex:i] objectForKey:@"category"];
             
-            //We'll unhide the category squares that are found.
-            if ([category isEqual:@"Entertainment"]) {
-                if (cat1.hidden) {
-                    //Check to see if this category is selected.
-                    if ([prefs getPreference:1]) {
-                        cat1.hidden = NO;
+            NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
+            
+            //The colorId denotes the category
+            switch ([[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]) {
+                //We'll unhide the category squares that are found.
+                //Case Entertainment
+                case 11:
+                    if (cat1.hidden) {
+                        //Check to see if this category is selected.
+                        if ([prefs getPreference:1]) {
+                            cat1.hidden = NO;
+                        }
                     }
-                }
-            }
-            else if ([category isEqual:@"Academics"]) {
-                if (cat2.hidden) {
-                    //Check to see if this category is selected.
-                    if ([prefs getPreference:2]) {
-                        cat2.hidden = NO;
+                    break;
+                //case Academics
+                case 9:
+                    if (cat2.hidden) {
+                        //Check to see if this category is selected.
+                        if ([prefs getPreference:2]) {
+                            cat2.hidden = NO;
+                        }
                     }
-                }
-            }
-            else if ([category isEqual:@"Activities"]) {
-                if (cat3.hidden) {
-                    //Check to see if this category is selected.
-                    if ([prefs getPreference:3]) {
-                        cat3.hidden = NO;
+                    break;
+                //case Activities
+                case 5:
+                    if (cat3.hidden) {
+                        //Check to see if this category is selected.
+                        if ([prefs getPreference:3]) {
+                            cat3.hidden = NO;
+                        }
                     }
-                }
-            }
-            else if ([category isEqual:@"Residence"]) {
-                if (cat4.hidden) {
-                    //Check to see if this category is selected.
-                    if ([prefs getPreference:4]) {
-                        cat4.hidden = NO;
+                    break;
+                //case Residence
+                case 6:
+                    if (cat4.hidden) {
+                        //Check to see if this category is selected.
+                        if ([prefs getPreference:4]) {
+                            cat4.hidden = NO;
+                        }
                     }
-                }
-            }
-            else if ([category isEqual:@"Athletics"]) {
-                if (cat5.hidden) {
-                    //Check to see if this category is selected.
-                    if ([prefs getPreference:5]) {
-                        cat5.hidden = NO;
+                    break;
+                //case Athletics
+                case 10:
+                    if (cat5.hidden) {
+                        //Check to see if this category is selected.
+                        if ([prefs getPreference:5]) {
+                            cat5.hidden = NO;
+                        }
                     }
-                }
+                    break;
             }
         }
     }
@@ -491,12 +511,27 @@
             
             //Loop through the events
             for (int i=0; i<[eventsInfo count]; i++) {
-                NSMutableDictionary *mCurrentEvent = [[NSMutableDictionary alloc] initWithDictionary:[eventsInfo objectAtIndex:i]];
+                //NSMutableDictionary *mCurrentEvent = [[NSMutableDictionary alloc] initWithDictionary:[eventsInfo objectAtIndex:i]];
                 
-                NSInteger day = [[[[mCurrentEvent objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:NSMakeRange(8, 2)] integerValue];
+                NSInteger day;
                 
+                if ([[[eventsInfo objectAtIndex:i] objectForKey:@"start"] objectForKey:@"dateTime"] != nil) {
+                    day = [[[[[eventsInfo objectAtIndex:i]
+                                        objectForKey:@"start"]
+                                       objectForKey:@"dateTime"]
+                                      substringWithRange:NSMakeRange(8, 2)]
+                                     integerValue];
+                }
+                else {
+                    day = [[[[[eventsInfo objectAtIndex:i]
+                                        objectForKey:@"start"]
+                                       objectForKey:@"date"]
+                                      substringWithRange:NSMakeRange(8, 2)]
+                                     integerValue];
+                }
                 //NSLog(@"The day of the event is %ld", day);
                 
+                /*
                 NSString *description = [mCurrentEvent objectForKey:@"description"];
                 
                 int substringStartIndex = [self getIndexOfSubstringInString:@"Category: " :description];
@@ -552,9 +587,10 @@
                     [mCurrentEvent setObject:[category substringWithRange:NSMakeRange(0, [category length] - trailingSpaces)]
                                       forKey:@"category"];
                 }
+                 */
                 
                 //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                [events AppendEvent:day :(NSDictionary *)mCurrentEvent];
+                [events AppendEvent:day :[eventsInfo objectAtIndex:i]];
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             

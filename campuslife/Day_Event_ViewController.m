@@ -113,17 +113,17 @@
     
     
     MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-    NSLog(@"\n \n \n events at pos 1: \n %@ \n \n \n", [events getEventsForDay:1]);
+    //NSLog(@"\n \n \n events at pos 1: \n %@ \n \n \n", [events getEventsForDay:1]);
     
     
     
     NSDictionary *eventTime = [[events getEventsForDay:_day] objectAtIndex:indexPath.row]; //                                                 <--
-    NSLog(@"\n \n \n I have no idea what this will do! \n \n \n %@ \n \n \n", eventTime);
+    //NSLog(@"\n \n \n I have no idea what this will do! \n \n \n %@ \n \n \n", eventTime);
     
     
     
     NSString *eventStart = [[eventTime objectForKey:@"start"] objectForKey:@"dateTime"];
-    NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> First Test. Start time: %@", eventStart);
+    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> First Test. Start time: %@", eventStart);
     
     /* Okay, to explain this piece of code:
      * NSRange creates a range from which we can extract a tiny substring. This sub-string corrects the
@@ -132,10 +132,10 @@
      */
     NSRange elevenToSixteenStart = NSMakeRange(11, 5);
     NSString *startTime = [eventStart substringWithRange:elevenToSixteenStart];
-    NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Testing substring: startTime = %@", startTime);
+    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Testing substring: startTime = %@", startTime);
     
     NSString *eventEnd = [[eventTime objectForKey:@"end"] objectForKey:@"dateTime"];
-    NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> First Test. End time: %@", eventEnd);
+    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> First Test. End time: %@", eventEnd);
     
     /* Okay, to explain this piece of code:
      * NSRange creates a range from which we can extract a tiny substring. This sub-string corrects the
@@ -144,10 +144,10 @@
      */
     NSRange elevenToSixteenEnd = NSMakeRange(11, 5);
     NSString *endTime = [eventEnd substringWithRange:elevenToSixteenEnd];
-    NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Testing substring: endTime = %@", endTime);
+    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Testing substring: endTime = %@", endTime);
     
     
-    
+    /*
     UILabel *textView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width/4, cell.frame.size.height)];
     textView1.text = [NSString stringWithFormat:@"%@-%@", startTime, endTime];
     textView1.numberOfLines = 2;
@@ -175,7 +175,7 @@
     textView2.font = [UIFont systemFontOfSize:25];
     textView2.minimumScaleFactor = .5;
     [cell.contentView addSubview:textView4];
-    
+    */
     
     /*
     [self.tableView setSortDescriptors:[NSArray arrayWithObjects:

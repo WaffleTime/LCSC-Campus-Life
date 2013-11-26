@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C19EA4C1183ECDA5002FC746 /* daysOfTheWeek-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */; };
 		C1E66DF2183C333A00851B89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF1183C333A00851B89 /* Foundation.framework */; };
 		C1E66DF4183C333A00851B89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF3183C333A00851B89 /* CoreGraphics.framework */; };
 		C1E66DF6183C333A00851B89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF5183C333A00851B89 /* UIKit.framework */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daysOfTheWeek-iPad.png"; sourceTree = "<group>"; };
 		C1E66DEE183C333A00851B89 /* campuslife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = campuslife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E66DF1183C333A00851B89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C1E66DF3183C333A00851B89 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -177,6 +179,7 @@
 				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
 				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C1E66E4F183C34F000851B89 /* daysOfWeek.png */,
+				C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */,
 				C1E66E29183C33B300851B89 /* AcademicsSelected.png */,
 				C1E66E2A183C33B300851B89 /* AcademicsUnselected.png */,
 				C1E66E2B183C33B300851B89 /* ActivitiesSelected.png */,
@@ -296,6 +299,7 @@
 				C1E66E39183C33B300851B89 /* EntertainmentSelected.png in Resources */,
 				C1E66E0D183C333A00851B89 /* Images.xcassets in Resources */,
 				C1E66E34183C33B300851B89 /* AcademicsUnselected.png in Resources */,
+				C19EA4C1183ECDA5002FC746 /* daysOfTheWeek-iPad.png in Resources */,
 				C1E66E3C183C33B300851B89 /* ResidenceUnselected.png in Resources */,
 				C1E66E37183C33B300851B89 /* AthleticsSelected.png in Resources */,
 				C1E66E05183C333A00851B89 /* Main_iPhone.storyboard in Resources */,
@@ -470,6 +474,7 @@
 				GCC_PREFIX_HEADER = "campuslife/campuslife-Prefix.pch";
 				INFOPLIST_FILE = "campuslife/campuslife-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9EEB27B5-DB34-4ED3-B282-697D0D0E4A2B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -483,6 +488,7 @@
 				GCC_PREFIX_HEADER = "campuslife/campuslife-Prefix.pch";
 				INFOPLIST_FILE = "campuslife/campuslife-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9EEB27B5-DB34-4ED3-B282-697D0D0E4A2B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -548,6 +554,7 @@
 				C1E66E25183C333B00851B89 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C1E66E26183C333B00851B89 /* Build configuration list for PBXNativeTarget "campuslifeTests" */ = {
 			isa = XCConfigurationList;
@@ -556,6 +563,7 @@
 				C1E66E28183C333B00851B89 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
