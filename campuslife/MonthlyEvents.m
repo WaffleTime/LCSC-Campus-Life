@@ -47,6 +47,8 @@ static MonthlyEvents *sharedInstance;
         [sharedInstance setYear:(int)year];
         [sharedInstance setMonth:(int)month];
         
+        //NSLog(@"This month is: %d", month);
+        
         //account for leap year.
         if (year % 4 == 0) {
             [sharedInstance setDaysInMonth:[[NSMutableArray alloc] initWithArray:@[@31, @29, @31, @30, @31, @30, @31, @31, @30, @31, @30, @31]]];
@@ -157,18 +159,23 @@ static MonthlyEvents *sharedInstance;
     }
 }
 
+//Takes in events from the json retrieved from the Google Calendar API.
+//@param day Day the event is on, 1-31.
 -(void)AppendEvent:(NSInteger)day :(NSDictionary *)eventDict {
     [[_calendarEvents objectAtIndex:day-1] addObject:eventDict];
 }
 
+//@param day Day the events are on, 1-31.
 -(NSArray *)getEventsForDay:(NSInteger)day {
     return [_calendarEvents objectAtIndex:day-1];
 }
 
+//@return An integer in [0,6] that represents a day of the week.
 -(int)getFirstWeekDay {
     return _firstWeekDay;
 }
 
+//Gets a string that represents the current month.
 -(NSString *)getMonthBarDate {
     NSString *month;
     switch (_selectedMonth) {
@@ -213,11 +220,13 @@ static MonthlyEvents *sharedInstance;
     return [month stringByAppendingString:[NSString stringWithFormat:@", %d", _selectedYear]];
 }
 
+//@return Should be an integer in [28,31].
 -(int)getDaysOfMonth {
     //_selectedMonth contains [1,12], daysInMonth takes in [0,11]
     return (int)[[_daysInMonth objectAtIndex:_selectedMonth-1] integerValue];
 }
 
+//@return Should be an integer in [28,31].
 -(int)getDaysOfPreviousMonth {
     int previousMonth = 0;
     if (_selectedMonth-2 < 0) {
@@ -267,23 +276,24 @@ static MonthlyEvents *sharedInstance;
 }
 
 
-
+//@param day Accepts integers in [1,31]
 -(void)setSelectedDay:(int)day {
-    //The minus 1 accounts for the fact that day needs to contain [0,...]
     [self setDay:day];
 }
 
+//@return Returns an integer in [1,31]
 -(int)getSelectedDay {
     return _selectedDay;
 }
 
 
 
-
+//@return Returns an integer in [1,12]
 -(int)getSelectedMonth {
     return _selectedMonth;
 }
 
+//@return The exact year, no off by one here.
 -(int)getSelectedYear {
     return _selectedYear;
 }

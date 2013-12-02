@@ -33,6 +33,7 @@
 		C1E66E4B183C33D000851B89 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E46183C33D000851B89 /* Preferences.m */; };
 		C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */; };
 		C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E4F183C34F000851B89 /* daysOfWeek.png */; };
+		C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
 		C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
 		C1E66E4F183C34F000851B89 /* daysOfWeek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daysOfWeek.png; sourceTree = "<group>"; };
+		C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
+		C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 				C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */,
 				C1E66E41183C33D000851B89 /* EventDetailViewController.h */,
 				C1E66E42183C33D000851B89 /* EventDetailViewController.m */,
+				C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */,
+				C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */,
 				C1E66E43183C33D000851B89 /* MonthlyEvents.h */,
 				C1E66E44183C33D000851B89 /* MonthlyEvents.m */,
 				C1E66E45183C33D000851B89 /* Preferences.h */,
@@ -165,9 +170,9 @@
 			isa = PBXGroup;
 			children = (
 				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
+				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C17D5A471844433300DE0B26 /* selected-ipad.png */,
 				C17D5A481844433300DE0B26 /* unselected-ipad.png */,
-				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C17D5A4318443C5100DE0B26 /* selected.png */,
 				C17D5A4418443C5100DE0B26 /* unselected.png */,
 				C1E66E4F183C34F000851B89 /* daysOfWeek.png */,
@@ -310,6 +315,7 @@
 				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,
+				C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

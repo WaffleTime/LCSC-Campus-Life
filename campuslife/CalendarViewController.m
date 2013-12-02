@@ -22,6 +22,8 @@
 
 @property (nonatomic, setter=setSignedIn:) BOOL signedIn;
 
+@property (nonatomic) MonthlyEvents *events;
+
 @end
 
 @implementation CalendarViewController
@@ -48,6 +50,8 @@
     
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
+    
+    _events = [MonthlyEvents getSharedInstance];
 
     if (IDIOM == IPAD) {
         [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
@@ -152,13 +156,11 @@
 - (IBAction)backMonthOffset:(id)sender {
     [_activityIndicator startAnimating];
     
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    [_events offsetMonth:-1];
     
-    [events offsetMonth:-1];
+    _monthLabel.text = [_events getMonthBarDate];
     
-    _monthLabel.text = [events getMonthBarDate];
-    
-    [self getEventsForMonth:[events getSelectedMonth] :[events getSelectedYear]];
+    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     
     //NSLog(@"went to previous month");
 }
@@ -166,13 +168,11 @@
 - (IBAction)forwardMonthOffset:(id)sender {
     [_activityIndicator startAnimating];
     
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    [_events offsetMonth:1];
     
-    [events offsetMonth:1];
+    _monthLabel.text = [_events getMonthBarDate];
     
-    _monthLabel.text = [events getMonthBarDate];
-    
-    [self getEventsForMonth:[events getSelectedMonth] :[events getSelectedYear]];
+    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     
     //NSLog(@"went to next month");
 }
@@ -182,11 +182,10 @@
     
     if (_signedIn) {
         cells = 35;
-
-        MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+        
         //NSLog(@"The number of cells required:%d", [events getFirstWeekDay] + [events getDaysOfMonth]-1);
         
-        if ([events getFirstWeekDay] + [events getDaysOfMonth]-1 >= 35) {
+        if ([_events getFirstWeekDay] + [_events getDaysOfMonth]-1 >= 35) {
             cells = 42;
         }
     }
@@ -197,53 +196,36 @@
     return cells;
 }
 
-/*
- - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
- {
-     UICollectionReusableView *reusableview = nil;
-     
-     if (kind == UICollectionElementKindSectionHeader) {
-         UICollectionReusableView *headerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Legend" forIndexPath:indexPath];
-         
-         reusableview = headerview;
-     }
-     
- return reusableview;
- }
-*/
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
-    
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
     
     //NSLog(@"The first weekday is:%d", [events getFirstWeekDay]);
     
     //NSLog(@"Check to see if cell is for next month:%d >= %d", indexPath.row+1 - [events getFirstWeekDay], [events getDaysOfMonth]);
     
     //Check to see if this cell is for a day of the previous month
-    if (indexPath.row+1 - [events getFirstWeekDay] <= 0) {
+    if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
         cell = (UICollectionViewCell *)[_collectionView dequeueReusableCellWithReuseIdentifier:@"OtherMonthCell" forIndexPath:indexPath];
         
         UILabel *dayLbl = (UILabel *)[cell viewWithTag:100];
         
-        dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [events getFirstWeekDay] + [events getDaysOfPreviousMonth]];
+        dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [_events getFirstWeekDay] + [_events getDaysOfPreviousMonth]];
     }
     //Check to see if this cell is for a day of the next month
-    else if (indexPath.row+1 - [events getFirstWeekDay] > [events getDaysOfMonth]) {
+    else if (indexPath.row+1 - [_events getFirstWeekDay] > [_events getDaysOfMonth]) {
         cell = (UICollectionViewCell *)[_collectionView dequeueReusableCellWithReuseIdentifier:@"OtherMonthCell" forIndexPath:indexPath];
         
         UILabel *dayLbl = (UILabel *)[cell viewWithTag:100];
 
-        dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [events getFirstWeekDay] - [events getDaysOfMonth]];
+        dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [_events getFirstWeekDay] - [_events getDaysOfMonth]];
     }
     else {
         cell = (UICollectionViewCell *)[_collectionView dequeueReusableCellWithReuseIdentifier:@"CurrentDayCell" forIndexPath:indexPath];
         
         UILabel *dayLbl = (UILabel *)[cell viewWithTag:100];
         
-        dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [events getFirstWeekDay]];
+        dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [_events getFirstWeekDay]];
         
         //Grab the squares for each category.
         UIView *cat1 = (UIView *)[cell viewWithTag:11];
@@ -271,13 +253,13 @@
         Preferences *prefs = [Preferences getSharedInstance];
         
         //Showing relevant category by making the colorful squares not hidden anymore.
-        NSArray *dayEvents = [events getEventsForDay:(int)indexPath.row+1 - [events getFirstWeekDay]];
+        NSArray *dayEvents = [_events getEventsForDay:(int)indexPath.row+1 - [_events getFirstWeekDay]];
 
         //Iterate through all events and determine categories that are present.
         for (int i=0; i<[dayEvents count]; i++) {
             //NSString *category = [[dayEvents objectAtIndex:i] objectForKey:@"category"];
             
-            NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
+            //NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
             
             //The colorId denotes the category
             switch ([[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]) {
@@ -341,11 +323,11 @@
         
         //Day_Event_ViewController *destViewController = (Day_Event_ViewController *)[segue destinationViewController];
         
-        MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-        
         //[destViewController setDay:indexPath.row+1 - [events getFirstWeekDay] ];
         
-        [events setSelectedDay:(int)indexPath.row+1 - [events getFirstWeekDay]];
+        [_events setSelectedDay:(int)indexPath.row+1 - [_events getFirstWeekDay]];
+        
+        NSLog(@"The selected day is %d", (int)indexPath.row+1 - [_events getFirstWeekDay]);
     }
 }
 
@@ -357,73 +339,20 @@
         NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
         NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
         
-        MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-        
         //Check to see if this cell is for a day of the previous month
-        if (indexPath.row+1 - [events getFirstWeekDay] <= 0) {
+        if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
             //Offset month if a previous month's cell is clicked
             [self backMonthOffset:nil];
             canSegue = NO;
         }
         //Check to see if this cell is for a day of the next month
-        else if (indexPath.row+1 - [events getFirstWeekDay] > [events getDaysOfMonth]) {
+        else if (indexPath.row+1 - [_events getFirstWeekDay] > [_events getDaysOfMonth]) {
             //Offset month if a future month's cell is clicked
             [self forwardMonthOffset:nil];
             canSegue = NO;
         }
     }
     return canSegue;
-}
-
-/*
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
- 
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-*/
-
-- (int)getIndexOfSubstringInString:(NSString *)substring :(NSString *)string {
-    BOOL substringFound = NO;
-    
-    int substringStartIndex = -1;
-    
-    //Iterate through the string to find the first character in the substring.
-    for (int i=0; i<[string length]; i++) {
-        //Check to see if the substring character has been found.
-        if ([string characterAtIndex:i] == [substring characterAtIndex:0]) {
-            //Check to see if the following characters in the string are also in the substring.
-            //  This can start at 1 because the 0th index of the substring has already been determined
-            //  to be in the string.
-            for (int j=1; j<[substring length]; j++) {
-                //Check if one the following characters in the substring aren't within the string.
-                if ([string characterAtIndex:i+j] != [substring characterAtIndex:j]) {
-                    //If this is true, then i isn't the index of the first character in the substring
-                    //  within the string.
-                    break;
-                }
-                else {
-                    //If this was the very last character in the substring and it's in the string, the
-                    //  substring has been found. (The loop stops when it finds a char in the substring that's
-                    //  not in the string.)
-                    if (j == [substring length]-1) {
-                        substringFound = YES;
-                        substringStartIndex = i;
-                    }
-                }
-            }
-            //If we've found the substring, we can stop the loop.
-            if (substringFound) {
-                break;
-            }
-        }
-    }
-    
-    return substringStartIndex;
 }
 
 
@@ -512,11 +441,9 @@
             
             //NSLog(@"Putting the events into _calendarEvents.");
             
-            //This sets up the _calendarEvents array for new events for the given month.
-            MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-            [events refreshArrayOfEvents];
+            [_events refreshArrayOfEvents];
             
-            _monthLabel.text = [events getMonthBarDate];
+            _monthLabel.text = [_events getMonthBarDate];
             
             //Loop through the events
             for (int i=0; i<[eventsInfo count]; i++) {
@@ -540,66 +467,8 @@
                 }
                 //NSLog(@"The day of the event is %ld", day);
                 
-                /*
-                NSString *description = [mCurrentEvent objectForKey:@"description"];
-                
-                int substringStartIndex = [self getIndexOfSubstringInString:@"Category: " :description];
-                
-                if (substringStartIndex == -1) {
-                    //Just because typos happen, do the same, but for no space after "Category:"
-                    substringStartIndex = [self getIndexOfSubstringInString:@"Category:" :description];
-                    
-                    //Check if "Category:" wasn't present again.
-                    if (substringStartIndex == -1) {
-                        [mCurrentEvent setObject:@"No Category" forKey:@"category"];
-                    }
-                    else {
-                        //This block gets the first word after the "Category:", which is the category.
-                        NSString *categoryWithExtraStuff = [description substringWithRange:NSMakeRange(substringStartIndex+9, [description length] - substringStartIndex+9)];
-                        NSString *category = [[categoryWithExtraStuff componentsSeparatedByString:@"\n"] objectAtIndex:0];
-                        
-                        int trailingSpaces = 0;
-                        
-                        //Determine number of trailing spaces, so we can not include them in the category.
-                        for (int j=(int)[category length]-1; j>=0; j--) {
-                            if ([category characterAtIndex:j] != ' ') {
-                                break;
-                            }
-                            else {
-                                trailingSpaces += 1;
-                            }
-                        }
-                        
-                        //Add the category item to the dictionary.
-                        [mCurrentEvent setObject:[category substringWithRange:NSMakeRange(0, [category length] - trailingSpaces)]
-                                          forKey:@"category"];
-                    }
-                }
-                else {
-                    //This block gets the first word after the "Category:", which is the category.
-                    NSString *categoryWithExtraStuff = [description substringWithRange:NSMakeRange(substringStartIndex+10, [description length] - (substringStartIndex+10))];
-                    NSString *category = [[categoryWithExtraStuff componentsSeparatedByString:@"\n"] objectAtIndex:0];
-                    
-                    int trailingSpaces = 0;
-                    
-                    //Determine number of trailing spaces, so we can not include them in the category.
-                    for (int j=(int)[category length]-1; j>=0; j--) {
-                        if ([category characterAtIndex:j] != ' ') {
-                            break;
-                        }
-                        else {
-                            trailingSpaces += 1;
-                        }
-                    }
-                    
-                    //Add the category item to the dictionary.
-                    [mCurrentEvent setObject:[category substringWithRange:NSMakeRange(0, [category length] - trailingSpaces)]
-                                      forKey:@"category"];
-                }
-                 */
-                
                 //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                [events AppendEvent:day :[eventsInfo objectAtIndex:i]];
+                [_events AppendEvent:day :[eventsInfo objectAtIndex:i]];
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
@@ -611,8 +480,7 @@
 }
 
 -(void)accessTokenWasRevoked{
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-    [events refreshArrayOfEvents];
+    [_events refreshArrayOfEvents];
 }
 
 
