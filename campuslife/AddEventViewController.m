@@ -64,10 +64,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 
 -(IBAction) addEvent {
-    [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
-           withHttpMethod:httpMethod_POST
-       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:lastDateOfMonth], [self toStringFromDateTime:firstDateOfMonth], nil]];
+    //[_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+    //       withHttpMethod:httpMethod_POST
+    //   postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+    //  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:lastDateOfMonth], [self toStringFromDateTime:firstDateOfMonth], nil]];
 }
 
 
@@ -203,6 +203,32 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void)tap:(UITapGestureRecognizer *)tapRec{
     [[self view] endEditing: YES];
+}
+
+
+
+#pragma mark - GoogleOAuth class delegate method implementation
+
+-(void)authorizationWasSuccessful {
+}
+
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+}
+
+-(void)accessTokenWasRevoked{
+}
+
+
+-(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
+    // Just log the error messages.
+    NSLog(@"%@", errorShortDescription);
+    NSLog(@"%@", errorDetails);
+}
+
+
+-(void)errorInResponseWithBody:(NSString *)errorMessage{
+    // Just log the error message.
+    NSLog(@"%@", errorMessage);
 }
 
 
