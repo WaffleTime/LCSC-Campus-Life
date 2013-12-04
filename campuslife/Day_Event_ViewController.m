@@ -13,6 +13,13 @@
 
 
 @interface Day_Event_ViewController ()
+{
+    
+    MonthlyEvents *events;
+    
+    NSArray *sortedArray;
+    
+}
 
 @end
 
@@ -37,13 +44,13 @@
     
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
     
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    events = [MonthlyEvents getSharedInstance];
     
     [self setDay:[events getSelectedDay]];
     
-    [self.tableView reloadData];
+    sortedArray = [self eventSorter:[events getEventsForDay:_day]];
     
-    NSLog(@"View loaded.");
+    [self.tableView reloadData];
 }
 
 
@@ -55,8 +62,6 @@
  */
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"View appeared: requesting new information from a specific day.");
-    
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
 }
 
@@ -76,6 +81,72 @@
 
 
 
+- (NSArray *)eventSorter:(NSArray *)unsorted
+{
+    NSMutableArray *newArray = [[NSMutableArray alloc] init];
+    
+    [newArray addObjectsFromArray:unsorted];
+    
+    if ([[events getEventsForDay:_day] count]>1)
+    {
+        NSLog(@"entered if-loop");
+        
+        for (int i = 0; i < [[events getEventsForDay:_day] count]; i++)
+        {
+            NSLog(@"entered into 1st for-loop");
+            
+            for (int j = 0; j < [[events getEventsForDay:_day] count] - 1; j++)
+            {
+                NSLog(@"entered into 2nd for-loop");
+                
+            //    NSDictionary *eventTime = [[events getEventsForDay:j] objectAtIndex:indexPath.row];
+                //NSString *eventStart = [[eventTime objectForKey:@"start"] objectForKey:@"dateTime"];
+                
+                NSRange startHr1 = NSMakeRange(11, 2);
+                NSRange startMn1 = NSMakeRange(14, 2);
+                NSString *startHrStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr1];
+                NSString *startMnStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
+                NSString *startTime1 =[startHrStr1 stringByAppendingString:startMnStr1];
+                int st1 = [startTime1 intValue];
+                NSLog(@"\n \n \n Printing st1: %d \n \n", st1);
+                
+                NSRange startHr2 = NSMakeRange(11, 2);
+                NSRange startMn2 = NSMakeRange(14, 2);
+                NSString *startHrStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr2];
+                NSString *startMnStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
+                NSString *startTime2 =[startHrStr2 stringByAppendingString:startMnStr2];
+                int st2 = [startTime2 intValue];
+                NSLog(@"\n \n \n Printing st2: %d \n \n", st2);
+                
+                
+                
+                if (st1 > st2)
+                {
+                    NSLog(@"entered into the inner if-loop");
+                    NSLog(@"first item %@", newArray[j]);
+                    NSLog(@"second item %@", newArray[j+1]);
+                    
+                    NSDictionary *temp = newArray[j];
+                    
+                    newArray[j] = newArray[j+1];
+                    
+                    newArray[j+1] = temp;
+                }
+            }
+        }
+    }
+    else
+    {
+        NSLog(@"didn't enter if-loop");
+    }
+    
+    return (NSArray *)newArray;
+}
+
+
+
+
+
 // Useless comment!
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -86,12 +157,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
- 
-    //NSLog(@"THe number of rows is %d", (int)[[events getEventsForDay:_day] count]);
-    
-    //NSLog(@"The events for the selected day are %@", [events getEventsForDay:_day]);
-    
     return [[events getEventsForDay:_day] count];
 }
 
@@ -111,81 +176,52 @@
     }
     
     
-    
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-    //NSLog(@"\n \n \n events at pos 1: \n %@ \n \n \n", [events getEventsForDay:1]);
-    
-    
-    
-    NSDictionary *eventTime = [[events getEventsForDay:_day] objectAtIndex:indexPath.row]; //                                                 <--
-    //NSLog(@"\n \n \n I have no idea what this will do! \n \n \n %@ \n \n \n", eventTime);
-    
-    
+    NSDictionary *eventTime = [sortedArray objectAtIndex:indexPath.row];
     
     NSString *eventStart = [[eventTime objectForKey:@"start"] objectForKey:@"dateTime"];
-    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> First Test. Start time: %@", eventStart);
-    
-    /* Okay, to explain this piece of code:
-     * NSRange creates a range from which we can extract a tiny substring. This sub-string corrects the
-     * (null) problem that we were having. I'll save the code, just in case, but I'll also implement the
-     * new stuff. :D
-     */
     NSRange elevenToSixteenStart = NSMakeRange(11, 5);
     NSString *startTime = [eventStart substringWithRange:elevenToSixteenStart];
-    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Testing substring: startTime = %@", startTime);
+    startTime = [self twentyFourToTwelve:startTime];
     
     NSString *eventEnd = [[eventTime objectForKey:@"end"] objectForKey:@"dateTime"];
-    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> First Test. End time: %@", eventEnd);
-    
-    /* Okay, to explain this piece of code:
-     * NSRange creates a range from which we can extract a tiny substring. This sub-string corrects the
-     * (null) problem that we were having. I'll save the code, just in case, but I'll also implement the
-     * new stuff. :D
-     */
     NSRange elevenToSixteenEnd = NSMakeRange(11, 5);
     NSString *endTime = [eventEnd substringWithRange:elevenToSixteenEnd];
-    //NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Testing substring: endTime = %@", endTime);
+    endTime = [self twentyFourToTwelve:endTime];
     
+    UILabel *time = (UILabel *)[cell viewWithTag:20];
+    time.text = [NSString stringWithFormat:@"%@\n to \n%@", startTime, endTime];
     
-    /*
-    UILabel *textView1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width/4, cell.frame.size.height)];
-    textView1.text = [NSString stringWithFormat:@"%@-%@", startTime, endTime];
-    textView1.numberOfLines = 2;
-    textView1.font = [UIFont systemFontOfSize:25];
-    textView1.minimumScaleFactor = .5;
-    [cell.contentView addSubview:textView1];
+    //UIView *color = (UILabel *)[cell viewWithTag:21];
     
-    UILabel *textView2 = [[UILabel alloc] initWithFrame:CGRectMake((cell.frame.size.width)/4, 0, 3*cell.frame.size.width/8, cell.frame.size.height)];
-    textView2.text = @"Custom text 1"; //[eventTime objectForKey:@"summary"];
-    textView2.numberOfLines = 2;
-    textView2.font = [UIFont systemFontOfSize:25];
-    textView2.minimumScaleFactor = .5;
-    [cell.contentView addSubview:textView2];
-    
-    UILabel *textView3 = [[UILabel alloc] initWithFrame:CGRectMake((3*cell.frame.size.width)/8, 0, 3*cell.frame.size.width/4, cell.frame.size.height)];
-    textView2.text = @"Custom text 2"; //[eventTime objectForKey:@"summary"];
-    textView2.numberOfLines = 2;
-    textView2.font = [UIFont systemFontOfSize:25];
-    textView2.minimumScaleFactor = .5;
-    [cell.contentView addSubview:textView3];
-    
-    UILabel *textView4 = [[UILabel alloc] initWithFrame:CGRectMake((3*cell.frame.size.width)/4, 0, cell.frame.size.width, cell.frame.size.height)];
-    textView2.text = [eventTime objectForKey:@"summary"];
-    textView2.numberOfLines = 2;
-    textView2.font = [UIFont systemFontOfSize:25];
-    textView2.minimumScaleFactor = .5;
-    [cell.contentView addSubview:textView4];
-    */
-    
-    /*
-    [self.tableView setSortDescriptors:[NSArray arrayWithObjects:
-                                       [NSSortDescriptor sortDescriptorWithKey:[[eventTime objectForKey:@"start"] objectForKey:@"dateTime"] ascending:YES selector:@selector(compare:)],
-                                       [NSSortDescriptor sortDescriptorWithKey:[[eventTime objectForKey:@"end"] objectForKey:@"dateTime"] ascending:YES selector:@selector(compare:)],
-                                       nil]];
-    */
-    
+    UILabel *summary = (UILabel *)[cell viewWithTag:22];
+    summary.text = [eventTime objectForKey:@"summary"];
     
     return cell;
+}
+
+
+
+
+
+- (NSString *)twentyFourToTwelve:(NSString *)time
+{
+    if (time != nil)
+    {
+        if (time < @"10:00")
+        {
+            time[0] = @" ";
+            [time stringByAppendingString:@"AM"];
+        }
+        
+        if (time >= @"13:00")
+        {
+            //convert back to 12 hour.
+            [time stringByAppendingString:@"PM"];
+        }
+        
+    }
+    
+    return time;
 }
 
 
