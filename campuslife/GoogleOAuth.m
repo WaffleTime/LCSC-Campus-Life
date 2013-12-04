@@ -209,8 +209,7 @@
         // Create a mutable request.
         NSMutableURLRequest *request;
         
-        
-        /*
+
         // In case of POST httpMethod value, set the parameters and any other necessary properties.
         if (httpMethod == httpMethod_POST) {
             // A string with the POST parameters should be built.
@@ -231,54 +230,6 @@
             
             // Set any other necessary options.
             [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            
-            NSLog(@"%@", request);
-        }*/
-        
-        // In case of POST httpMethod value, set the parameters and any other necessary properties.
-        if (httpMethod == httpMethod_POST) {
-            // A string with the POST parameters should be built.
-            // Create an empty string.
-            /*
-            NSString *postParams = @"";
-
-            int jsonExists = -1;
-
-            // Iterrate through all parameters and append every POST parameter to the postParams string.
-            for (int i=0; i<[params count]; i++) {
-                if ([(NSString *)[params objectAtIndex:i] isEqual:@"json"]) {
-                    jsonExists = i;
-                }
-                else {
-                    postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"%@=%@",
-                                                                      [params objectAtIndex:i], [values objectAtIndex:i]]];
-                }
-
-                // If the current parameter is not the last one then add the "&" symbol to separate post parameters.
-                if (i < [params count] - 1) {
-                    postParams = [postParams stringByAppendingString:@"&"];
-                }
-            }*/
-
-            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-            
-            
-            [request setHTTPBody:[values objectAtIndex:0]];
-            
-            /*
-            //Either parameters or a json is set as the request's body.
-            if (jsonExists != -1) {
-                [request setHTTPBody:[values objectAtIndex:jsonExists]];
-            }
-            else {
-                // Set any other necessary options.
-                [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
-            }
-            */
-
-            NSLog(@"%@", request);
-
             [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         }
         else if (httpMethod == httpMethod_GET) {
@@ -301,8 +252,10 @@
             getParams = [getParams stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
             
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@&%@", apiURL, accessTokenString, getParams]]];
-            
-            NSLog(@"The url %@", request);
+        }
+        else if (httpMethod == httpMethod_PUT) {
+            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         }
 
         

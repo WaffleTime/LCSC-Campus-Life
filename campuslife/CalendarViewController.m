@@ -269,54 +269,45 @@
             
             //NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
             
-            //The colorId denotes the category
-            switch ([[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]) {
-                //We'll unhide the category squares that are found.
-                //Case Entertainment
-                case 11:
-                    if (cat1.hidden) {
-                        //Check to see if this category is selected.
-                        if ([prefs getPreference:1]) {
-                            cat1.hidden = NO;
-                        }
+            if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
+                if (cat1.hidden) {
+                    //Check to see if this category is selected.
+                    if ([prefs getPreference:1]) {
+                        cat1.hidden = NO;
                     }
-                    break;
-                //case Academics
-                case 9:
-                    if (cat2.hidden) {
-                        //Check to see if this category is selected.
-                        if ([prefs getPreference:2]) {
-                            cat2.hidden = NO;
-                        }
+                }
+            }
+            else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Academics"]) {
+                if (cat2.hidden) {
+                    //Check to see if this category is selected.
+                    if ([prefs getPreference:2]) {
+                        cat2.hidden = NO;
                     }
-                    break;
-                //case Activities
-                case 5:
-                    if (cat3.hidden) {
-                        //Check to see if this category is selected.
-                        if ([prefs getPreference:3]) {
-                            cat3.hidden = NO;
-                        }
+                }
+            }
+            else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Activities"]) {
+                if (cat3.hidden) {
+                    //Check to see if this category is selected.
+                    if ([prefs getPreference:3]) {
+                        cat3.hidden = NO;
                     }
-                    break;
-                //case Residence
-                case 6:
-                    if (cat4.hidden) {
-                        //Check to see if this category is selected.
-                        if ([prefs getPreference:4]) {
-                            cat4.hidden = NO;
-                        }
+                }
+            }
+            else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Residence"]) {
+                if (cat4.hidden) {
+                    //Check to see if this category is selected.
+                    if ([prefs getPreference:4]) {
+                        cat4.hidden = NO;
                     }
-                    break;
-                //case Athletics
-                case 10:
-                    if (cat5.hidden) {
-                        //Check to see if this category is selected.
-                        if ([prefs getPreference:5]) {
-                            cat5.hidden = NO;
-                        }
+                }
+            }
+            else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Athletics"]) {
+                if (cat5.hidden) {
+                    //Check to see if this category is selected.
+                    if ([prefs getPreference:5]) {
+                        cat5.hidden = NO;
                     }
-                    break;
+                }
             }
         }
     }
@@ -362,6 +353,120 @@
     }
     return canSegue;
 }
+
+
+//This is strictly for locating things like Category: and ShortDesc: within
+//  the summary of the.
+- (int)getIndexOfSubstringInString:(NSString *)substring :(NSString *)string {
+    BOOL substringFound = NO;
+
+    int substringStartIndex = -1;
+
+    //Iterate through the string to find the first character in the substring.
+    for (int i=0; i<[string length]; i++) {
+        //Check to see if the substring character has been found.
+        if ([string characterAtIndex:i] == [substring characterAtIndex:0]) {
+            //If the substring length is greater than the remaining characters in the string,
+            //  there is no possible way that the substring exists there (and an exception will be thrown.)
+            //Only search for the substring if the remaining chars is >= to the substring length.
+            if ([string length] - i >= [substring length]) {
+                //Check to see if the following characters in the string are also in the substring.
+                //  This can start at 1 because the 0th index of the substring has already been determined
+                //  to be in the string.
+                for (int j=1; j<[substring length]; j++) {
+                    //Check if one the following characters in the substring aren't within the string.
+                    if ([string characterAtIndex:i+j] != [substring characterAtIndex:j]) {
+                        //If this is true, then i isn't the index of the first character in the substring
+                        //  within the string.
+                        break;
+                    }
+                    else {
+                        //If this was the very last character in the substring and it's in the string, the
+                        //  substring has been found. (The loop stops when it finds a char in the substring that's
+                        //  not in the string.)
+                        if (j == [substring length]-1) {
+                            substringFound = YES;
+                            substringStartIndex = i;
+                        }
+                    }
+                }
+            }
+            //If we've found the substring, we can stop the loop.
+            if (substringFound) {
+                break;
+            }
+        }
+    }
+
+    return substringStartIndex;
+}
+
+
+//This is meant for parsing the summary, pulling out a chunk of information and putting it back
+//  into the dictionary under a new key.
+//@param eventDict This dictionary represents a single event that was received from Google Calendar's
+//  json that will be given to us. The summary exists within this under the "summary" key.
+//@param newKey This will be the key for the information that is pulled out of the summary and
+//  placed back into the dictionary.
+//@param possibleKeys Since human error is bound to happen, these are all the possible keys for
+//  the single chunk of information that we're pulling out of the summary and placing back into
+//  the dictionary under a new key.
+//@return eventDict will be returned, but it will possibly have a new key (or an altered object
+//  for a key if the user has permission to change events.)
+-(NSDictionary *)parseSummaryForKey:(NSDictionary *)eventDict :(NSString *)newKey :(NSArray *)possibleKeys {
+    NSMutableDictionary *dCurrentEvent = [[NSMutableDictionary alloc] initWithDictionary:eventDict];
+    
+    NSString *summary = [dCurrentEvent objectForKey:@"summary"];
+    
+    BOOL substringFound = NO;
+    int substringStartIndex = 0;
+    //This is the length of the key that was found to exist in the summary.
+    int foundKeyLength = 0;
+    
+    //Loop through each possible key looking for the substring.
+    //Then we'll break out of the look when it's found.
+    for (int i=0; i<[possibleKeys count]; i++) {
+        substringStartIndex = [self getIndexOfSubstringInString:[possibleKeys objectAtIndex:i] :summary];
+        
+        //-1 means a substring wasn't found.
+        if (substringStartIndex != -1) {
+            substringFound = YES;
+            foundKeyLength = [[possibleKeys objectAtIndex:i] length];
+            break;
+        }
+    }
+    
+    if (substringFound) {
+        //This block gets the first word after the "Category:", which is the category.
+        NSString *infoWithExtraStuff = [summary substringWithRange:NSMakeRange(substringStartIndex+foundKeyLength,
+                                                                                   [summary length] - (substringStartIndex+foundKeyLength))];
+        NSString *info = [[infoWithExtraStuff componentsSeparatedByString:@";"] objectAtIndex:0];
+        
+        int trailingSpaces = 0;
+        
+        //Determine number of trailing spaces, so we can not include them in the category.
+        for (int j=(int)[info length]-1; j>=0; j--) {
+            if ([info characterAtIndex:j] != ';') {
+                break;
+            }
+            else {
+                trailingSpaces += 1;
+            }
+        }
+        
+        //Add the category item to the dictionary.
+        [dCurrentEvent setObject:[info substringWithRange:NSMakeRange(0, [info length] - trailingSpaces)]
+                          forKey:newKey];
+    }
+    else {
+        //If none of the possible keys were valid, then we can just assume say that there's
+        //  no category and move on essentially.
+        [dCurrentEvent setObject:@"N/A" forKey:newKey];
+    }
+    
+    return (NSDictionary *)dCurrentEvent;
+}
+
 
 
 - (NSDate *)returnDateForMonth:(NSInteger)month year:(NSInteger)year day:(NSInteger)day {
@@ -431,6 +536,12 @@
             [self setSignedIn:YES];
         
             self.signInOutButton.title = @"Sign Out";
+            
+            //This is a dummy update that will be to see if the user is able to manage events.
+            [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
+                               withHttpMethod:httpMethod_POST
+                           postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                          postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]];
         }
     }
     
@@ -455,10 +566,9 @@
             
             //Loop through the events
             for (int i=0; i<[eventsInfo count]; i++) {
-                //NSMutableDictionary *mCurrentEvent = [[NSMutableDictionary alloc] initWithDictionary:[eventsInfo objectAtIndex:i]];
-                
                 NSInteger day;
                 
+                //Get the day from the event's dictionary
                 if ([[[eventsInfo objectAtIndex:i] objectForKey:@"start"] objectForKey:@"dateTime"] != nil) {
                     day = [[[[[eventsInfo objectAtIndex:i]
                                         objectForKey:@"start"]
@@ -473,17 +583,67 @@
                                       substringWithRange:NSMakeRange(8, 2)]
                                      integerValue];
                 }
-                //NSLog(@"The day of the event is %ld", day);
+                
+                //Now we must parse the summary and alter the dictionary so that it can be
+                //  used in the rest of the program easier. So we'll call parseSummaryForKey in this class
+                //  to pull info out of the Summary field in the Dictionary and place
+                //  it back into the dictionary mapped to a new key.
+                
+                NSDictionary *currentEventInfo = [eventsInfo objectAtIndex:i];
+                
+                //Parse out the summary and add it into the dictionary with the key, "summary".
+                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
+                                                            :@"description"
+                                                            :[[NSArray alloc] initWithObjects:@"Detail:",
+                                                                                              @"Detail: ",
+                                                                                              @"detail:",
+                                                                                              @"detail: ",
+                                                                                              @"Details:",
+                                                                                              @"Details: ",
+                                                                                              @"details:",
+                                                                                              @"details: ",nil]];
+                
+                //Parse out the location and add it into the dictionary with the key, "location".
+                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
+                                                            :@"location"
+                                                            :[[NSArray alloc] initWithObjects:@"Location:",
+                                                                                              @"Location: ",
+                                                                                              @"location:",
+                                                                                              @"location: ", nil]];
+                
+                //Parse out the category and add it into the dictionary with the key, "category".
+                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
+                                                            :@"category"
+                                                            :[[NSArray alloc] initWithObjects:@"Category:",
+                                                                                              @"Category: ",
+                                                                                              @"category:",
+                                                                                              @"category: ", nil]];
+                
+                //Parse out the summary and add it into the dictionary with the key, "summary".
+                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
+                                                            :@"summary"
+                                                            :[[NSArray alloc] initWithObjects:@"Abstract:",
+                                                                                              @"Abstract: ",
+                                                                                              @"abstract:",
+                                                                                              @"abstract: ", nil]];
+                
+                
+                NSLog(@"%@", currentEventInfo);
                 
                 //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                [_events AppendEvent:day :[eventsInfo objectAtIndex:i]];
+                [_events AppendEvent:day :currentEventInfo];
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
             [_collectionView reloadData];
+            
+            [_activityIndicator stopAnimating];
         }
-        
-        [_activityIndicator stopAnimating];
+    }
+    //This type of json is retrieved if an update was made to an event (currently only for authenticating.)
+    else if ([responseJSONAsString rangeOfString:@"calendar#event"].location != NSNotFound) {
+        [_auth setUserCanManageEvents:YES];
+        NSLog(@"The user can manage events!");
     }
 }
 

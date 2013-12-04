@@ -16,6 +16,9 @@ static Authentication *_sharedInstance;
 +(Authentication *) getSharedInstance {
     if (!_sharedInstance) {
         _sharedInstance = [[Authentication alloc] init];
+        
+        //Just setting the default.
+        [_sharedInstance setUserCanManageEvents:NO];
     }
     return _sharedInstance;
 }
@@ -29,5 +32,6 @@ static Authentication *_sharedInstance;
 -(void) setAuthenticator:(GoogleOAuth *)authenticator {
     _googleOAuth = authenticator;
 }
+
 
 @end

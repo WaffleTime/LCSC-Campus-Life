@@ -14,6 +14,9 @@
 // A GoogleOAuth object that handles everything regarding the Google.
 @property (nonatomic, strong) GoogleOAuth *googleOAuth;
 
+//Is for determining if the user can manage events.
+@property (nonatomic, getter=getUserCanManageEvents, setter=setUserCanManageEvents:) BOOL userCanManageEvents;
+
 
 +(Authentication *) getSharedInstance;
 

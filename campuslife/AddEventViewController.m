@@ -20,9 +20,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     CGFloat animatedDistance;
 }
 
-// A GoogleOAuth object that handles everything regarding the Google.
-@property (nonatomic, strong) GoogleOAuth *googleOAuth;
-
 @property (nonatomic) Authentication *auth;
 
 @end
@@ -58,32 +55,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 
 -(IBAction) addEvent {
-    NSDictionary *jsonDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              @"11", @"colorId",
-                              @"LCSC Gym", @"location",
-                              @"CLOWN COMEDY!", @"summary",
-                              @"Clowns will come in and perform for everybody.", @"description",
-                              [[NSDictionary alloc] initWithObjectsAndKeys:
-                                @"dateTime", @"", nil], @"start",
-                              [[NSDictionary alloc] initWithObjectsAndKeys:
-                                @"dateTime", @"", nil], @"end",
-                              nil];
-    NSError *error;
-    
-    GoogleOAuth *googleOAuth = [[GoogleOAuth alloc] initWithFrame:self.view.frame];
-    // Set self as the delegate.
-    [googleOAuth setGOAuthDelegate:self];
-    
-    [googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                          andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                            andParentView:self.view
-                                andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-
-    
-    [googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
                        withHttpMethod:httpMethod_POST
-                   postParameterNames:[NSArray arrayWithObjects:@"json", nil]
-                  postParameterValues:[NSArray arrayWithObjects:[NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&error], nil]];
+                   postParameterNames:[NSArray arrayWithObjects:@"text", nil]
+                  postParameterValues:[NSArray arrayWithObjects:@"12/7/13 12pm-1pm Cake Dance", nil]];
     
     NSLog(@"Made a quickAdd request.");
 }
