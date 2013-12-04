@@ -8,6 +8,7 @@
 
 
 #import "AddEventViewController.h"
+#import "Authentication.h"
 
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
@@ -21,6 +22,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 // A GoogleOAuth object that handles everything regarding the Google.
 @property (nonatomic, strong) GoogleOAuth *googleOAuth;
+
+@property (nonatomic) Authentication *auth;
 
 @end
 
@@ -44,16 +47,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                       initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer: tapRec];
     
-    // Initialize the googleOAuth object.
-    // Pay attention so as to initialize it with the initWithFrame: method, not just init.
-    _googleOAuth = [[GoogleOAuth alloc] initWithFrame:self.view.frame];
-    // Set self as the delegate.
-    [_googleOAuth setGOAuthDelegate:self];
-    
-    [_googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                           andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                             andParentView:self.view
-                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+    _auth = [Authentication getSharedInstance];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,10 +58,34 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 
 -(IBAction) addEvent {
-    //[_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
-    //       withHttpMethod:httpMethod_POST
-    //   postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-    //  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:lastDateOfMonth], [self toStringFromDateTime:firstDateOfMonth], nil]];
+    NSDictionary *jsonDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              @"11", @"colorId",
+                              @"LCSC Gym", @"location",
+                              @"CLOWN COMEDY!", @"summary",
+                              @"Clowns will come in and perform for everybody.", @"description",
+                              [[NSDictionary alloc] initWithObjectsAndKeys:
+                                @"dateTime", @"", nil], @"start",
+                              [[NSDictionary alloc] initWithObjectsAndKeys:
+                                @"dateTime", @"", nil], @"end",
+                              nil];
+    NSError *error;
+    
+    GoogleOAuth *googleOAuth = [[GoogleOAuth alloc] initWithFrame:self.view.frame];
+    // Set self as the delegate.
+    [googleOAuth setGOAuthDelegate:self];
+    
+    [googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
+                          andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
+                            andParentView:self.view
+                                andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+
+    
+    [googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+                       withHttpMethod:httpMethod_POST
+                   postParameterNames:[NSArray arrayWithObjects:@"json", nil]
+                  postParameterValues:[NSArray arrayWithObjects:[NSJSONSerialization dataWithJSONObject:jsonDict options:0 error:&error], nil]];
+    
+    NSLog(@"Made a quickAdd request.");
 }
 
 
@@ -213,6 +231,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+    NSLog(@"%@", responseJSONAsString);
 }
 
 -(void)accessTokenWasRevoked{

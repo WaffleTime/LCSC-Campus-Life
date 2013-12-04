@@ -14,15 +14,16 @@
 #import "CalendarViewController.h"
 #import "MonthlyEvents.h"
 #import "Preferences.h"
+#import "Authentication.h"
 
 @interface CalendarViewController ()
 
-// A GoogleOAuth object that handles everything regarding the Google.
-@property (nonatomic, strong) GoogleOAuth *googleOAuth;
 
 @property (nonatomic, setter=setSignedIn:) BOOL signedIn;
 
 @property (nonatomic) MonthlyEvents *events;
+
+@property (nonatomic) Authentication *auth;
 
 @end
 
@@ -37,16 +38,21 @@
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
     
+    _auth = [Authentication getSharedInstance];
+    
     // Initialize the googleOAuth object.
     // Pay attention so as to initialize it with the initWithFrame: method, not just init.
-    _googleOAuth = [[GoogleOAuth alloc] initWithFrame:self.view.frame];
+    GoogleOAuth *googleOAuth = [[GoogleOAuth alloc] initWithFrame:self.view.frame];
     // Set self as the delegate.
-    [_googleOAuth setGOAuthDelegate:self];
+    [googleOAuth setGOAuthDelegate:self];
     
-    [_googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
+    [googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
                            andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
                              andParentView:self.view
                                  andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+    
+    //Stores the authenticator so that it can be used
+    [_auth setAuthenticator:googleOAuth];
     
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
@@ -103,19 +109,21 @@
 - (IBAction)signOutOrSignIn:(id)sender {
     if (_signedIn) {
         // Revoke the access token.
-        [_googleOAuth revokeAccessToken];
+        [[_auth getAuthenticator] revokeAccessToken];
         
         [self setSignedIn:NO];
         
         self.signInOutButton.title = @"Sign In";
         
+        [_collectionView reloadData];
+        
         //NSLog(@"Signed out we did");
     }
     else {
-        [_googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                               andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                                 andParentView:self.view
-                                     andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+        [[_auth getAuthenticator] authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
+                                           andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
+                                             andParentView:self.view
+                                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
         
         [self setSignedIn:NO];
         self.signInOutButton.title = @"Sign In";
@@ -388,10 +396,10 @@
     // If user authorization is successful, then make an API call to get the event list for the current month.
     // For more infomation about this API call, visit:
     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-    [_googleOAuth callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
-           withHttpMethod:httpMethod_GET
-       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:lastDateOfMonth], [self toStringFromDateTime:firstDateOfMonth], nil]];
+    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+                       withHttpMethod:httpMethod_GET
+                   postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:lastDateOfMonth], [self toStringFromDateTime:firstDateOfMonth], nil]];
 }
 
 

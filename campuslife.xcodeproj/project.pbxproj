@@ -12,6 +12,7 @@
 		C17D5A491844433300DE0B26 /* selected-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A471844433300DE0B26 /* selected-ipad.png */; };
 		C17D5A4A1844433300DE0B26 /* unselected-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A481844433300DE0B26 /* unselected-ipad.png */; };
 		C19EA4C1183ECDA5002FC746 /* daysOfTheWeek-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */; };
+		C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A75FF4184E99DF0072C27F /* Authentication.m */; };
 		C1E66DF2183C333A00851B89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF1183C333A00851B89 /* Foundation.framework */; };
 		C1E66DF4183C333A00851B89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF3183C333A00851B89 /* CoreGraphics.framework */; };
 		C1E66DF6183C333A00851B89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF5183C333A00851B89 /* UIKit.framework */; };
@@ -52,6 +53,8 @@
 		C17D5A471844433300DE0B26 /* selected-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected-ipad.png"; sourceTree = "<group>"; };
 		C17D5A481844433300DE0B26 /* unselected-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected-ipad.png"; sourceTree = "<group>"; };
 		C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daysOfTheWeek-iPad.png"; sourceTree = "<group>"; };
+		C1A75FF3184E99DF0072C27F /* Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Authentication.h; sourceTree = "<group>"; };
+		C1A75FF4184E99DF0072C27F /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Authentication.m; sourceTree = "<group>"; };
 		C1E66DEE183C333A00851B89 /* campuslife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = campuslife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1E66DF1183C333A00851B89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C1E66DF3183C333A00851B89 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -161,6 +164,8 @@
 				C1E66E44183C33D000851B89 /* MonthlyEvents.m */,
 				C1E66E45183C33D000851B89 /* Preferences.h */,
 				C1E66E46183C33D000851B89 /* Preferences.m */,
+				C1A75FF3184E99DF0072C27F /* Authentication.h */,
+				C1A75FF4184E99DF0072C27F /* Authentication.m */,
 				C1E66DF8183C333A00851B89 /* Supporting Files */,
 			);
 			path = campuslife;
@@ -314,6 +319,7 @@
 				C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */,
 				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
+				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,
 				C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */,
 			);

@@ -1,0 +1,25 @@
+//
+//  Authentication.h
+//  campuslife
+//
+//  Created by Super Student on 12/3/13.
+//  Copyright (c) 2013 LCSC. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "GoogleOAuth.h"
+
+@interface Authentication : NSObject
+
+// A GoogleOAuth object that handles everything regarding the Google.
+@property (nonatomic, strong) GoogleOAuth *googleOAuth;
+
+
++(Authentication *) getSharedInstance;
+
+-(GoogleOAuth *) getAuthenticator;
+
+-(void) setAuthenticator:(GoogleOAuth *)authenticator;
+
+
+@end
