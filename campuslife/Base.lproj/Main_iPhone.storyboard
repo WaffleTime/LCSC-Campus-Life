@@ -50,6 +50,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yW4-Zx-s0b"/>
+                                    <barButtonItem enabled="NO" id="fVz-UP-Cci">
+                                        <connections>
+                                            <segue destination="bKv-S9-NZC" kind="push" id="Sfy-Ad-NBy"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calendar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dp-md-3wZ">
@@ -286,6 +291,7 @@
                     <navigationItem key="navigationItem" title="Calendar" id="xAc-fc-j1e"/>
                     <connections>
                         <outlet property="activityIndicator" destination="UHN-9p-xfZ" id="cpk-xl-61q"/>
+                        <outlet property="addEventButton" destination="fVz-UP-Cci" id="tbt-bW-Kjt"/>
                         <outlet property="cat1Btn" destination="9KE-Eg-oTH" id="ZHH-0y-v6G"/>
                         <outlet property="cat2Btn" destination="6hF-ag-m6d" id="TkJ-8W-MBK"/>
                         <outlet property="cat3Btn" destination="OS3-R2-g6O" id="iEY-ho-mJ9"/>
@@ -417,7 +423,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHu-Mg-hES" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1297" y="44"/>
+            <point key="canvasLocation" x="374" y="695"/>
         </scene>
         <!--Day Event View Controller - Day Events-->
         <scene sceneID="bdj-ao-PaR">
@@ -463,13 +469,7 @@
                             <outlet property="delegate" destination="JC5-6H-sxR" id="kSQ-BG-sse"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Day Events" id="Ymu-IQ-gLR">
-                        <barButtonItem key="rightBarButtonItem" title="Add Event" id="YoY-HE-cCQ">
-                            <connections>
-                                <segue destination="bKv-S9-NZC" kind="push" id="BlN-Tx-0VF"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Day Events" id="Ymu-IQ-gLR"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Bc-Cu-JgF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -530,7 +530,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="ZD1-vq-SQn"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="0Nz-GD-OWu"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAG-nL-nyY" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -21,6 +21,8 @@
 
 @property (nonatomic, setter=setSignedIn:) BOOL signedIn;
 
+@property (nonatomic) BOOL firstEventsJSONReceived;
+
 @property (nonatomic) MonthlyEvents *events;
 
 @property (nonatomic) Authentication *auth;
@@ -56,6 +58,8 @@
     
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
+    
+    _firstEventsJSONReceived = NO;
     
     _events = [MonthlyEvents getSharedInstance];
 
@@ -115,6 +119,9 @@
         
         self.signInOutButton.title = @"Sign In";
         
+        _addEventButton.enabled = NO;
+        _addEventButton.title = @"";
+        
         [_collectionView reloadData];
         
         //NSLog(@"Signed out we did");
@@ -127,6 +134,8 @@
         
         [self setSignedIn:NO];
         self.signInOutButton.title = @"Sign In";
+        
+        [_activityIndicator startAnimating];
         
         //NSLog(@"Signed in we did");
     }
@@ -511,13 +520,11 @@
 #pragma mark - GoogleOAuth class delegate method implementation
 
 -(void)authorizationWasSuccessful {
-    NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *date = [NSDate date];
-    
-    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
-    NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
-    
-    [self getEventsForMonth:comps.month :comps.year];
+    //This is a dummy update that will be to see if the user is able to manage events.
+    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
+                       withHttpMethod:httpMethod_POST
+                   postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                  postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]];
     
     //NSLog(@"Getting the events for the current month");
 }
@@ -537,11 +544,13 @@
         
             self.signInOutButton.title = @"Sign Out";
             
-            //This is a dummy update that will be to see if the user is able to manage events.
-            [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
-                               withHttpMethod:httpMethod_POST
-                           postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                          postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]];
+            NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+            NSDate *date = [NSDate date];
+            
+            unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
+            NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
+            
+            [self getEventsForMonth:comps.month :comps.year];
         }
     }
     
@@ -555,6 +564,13 @@
             NSLog(@"%@", [error localizedDescription]);
         }
         else{
+            if (!_firstEventsJSONReceived) {
+                _firstEventsJSONReceived = YES;
+                
+                [_activityIndicator stopAnimating];
+            }
+            
+            
             //Get the events as an array
             NSArray *eventsInfo = [eventsInfoDict objectForKey:@"items"];
             
@@ -644,6 +660,9 @@
     else if ([responseJSONAsString rangeOfString:@"calendar#event"].location != NSNotFound) {
         [_auth setUserCanManageEvents:YES];
         NSLog(@"The user can manage events!");
+        
+        _addEventButton.enabled = YES;
+        _addEventButton.title = @"Add Event";
     }
 }
 

@@ -548,7 +548,7 @@
     responseJSON = [[NSString alloc] initWithData:(NSData *)_receivedData encoding:NSUTF8StringEncoding];
     
     // Uncomment this to log the JSON response.
-    NSLog(@"response JSON: %@", responseJSON);
+    //NSLog(@"response JSON: %@", responseJSON);
     
     
     

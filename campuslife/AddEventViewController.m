@@ -39,6 +39,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [[self navigationController] setNavigationBarHidden:NO animated:NO];
 
     UITapGestureRecognizer *tapRec = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(tap:)];
