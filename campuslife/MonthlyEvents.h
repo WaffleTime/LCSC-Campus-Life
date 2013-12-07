@@ -20,6 +20,7 @@
 -(int)getFirstWeekDay;
 -(NSString *)getMonthBarDate;
 -(int)getDaysOfMonth;
+-(int)getDaysOfMonth:(int)month;
 -(int)getDaysOfPreviousMonth;
 -(void)offsetMonth:(int)offset;
 

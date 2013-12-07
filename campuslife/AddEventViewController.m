@@ -9,6 +9,7 @@
 
 #import "AddEventViewController.h"
 #import "Authentication.h"
+#import "MonthlyEvents.h"
 
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
@@ -21,6 +22,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 @property (nonatomic) Authentication *auth;
+
+//The stepper button will cycle through the possible categories.
+@property (nonatomic, strong) NSArray *categories;
 
 @end
 
@@ -47,6 +51,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.view addGestureRecognizer: tapRec];
     
     _auth = [Authentication getSharedInstance];
+    
+
+    _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,14 +64,36 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 
 -(IBAction) addEvent {
+    
+    NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@/%@/%@ %@:%@%@-%@:%@%@",
+                              _month.text,
+                              _day.text,
+                              _year.text,
+                              _fromHour.text,
+                              _fromMinute.text,
+                              _fromPeriod.titleLabel,
+                              _toHour.text,
+                              _toMinute.text,
+                              _toPeriod.titleLabel];
+    
     [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
                        withHttpMethod:httpMethod_POST
                    postParameterNames:[NSArray arrayWithObjects:@"text", nil]
                   postParameterValues:[NSArray arrayWithObjects:@"12/7/13 12pm-1pm Cake Dance", nil]];
-    
-    NSLog(@"Made a quickAdd request.");
 }
 
+- (IBAction)categoryStepper:(UIStepper *)sender {
+    _category.text = _categories[(int)[sender value]];
+}
+
+- (IBAction)periodToggle:(UIButton *)sender {
+    if ([sender.titleLabel.text isEqual:@"AM"]) {
+        [sender setTitle:@"PM" forState:UIControlStateNormal];
+    }
+    else {
+        [sender setTitle:@"AM" forState:UIControlStateNormal];
+    }
+}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     CGRect textFieldRect = [self.view.window convertRect:textField.bounds fromView:textField];
@@ -179,6 +208,121 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self.view setFrame:viewFrame];
     
     [UIView commitAnimations];
+}
+
+//This limits the characters within the date and time text fields to two characters and will display an alert if an invalid number is entered.
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    BOOL charShouldChange = YES;
+    
+    //These tags are associated with the text fields that represent the day/time of the event.
+    if (textField.tag >= 21 && textField.tag <= 27) {
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        charShouldChange = (newLength > 2) ? NO : YES;
+        
+        //Only restrict characters if the string is still valid.
+        if (charShouldChange) {
+            //If month tag.
+            if (textField.tag == 21) {
+                //Is the month invalid?
+                if ([[_month.text stringByAppendingString:string] intValue] > 12
+                    || [[_month.text stringByAppendingString:string] intValue] < 1) {
+                    charShouldChange = NO;
+                    _month.text = @"";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
+                                                                    message: @"Re-enter the month."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+            //If day tag.
+            else if (textField.tag == 22) {
+                MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+                int maxDays = 31;
+                
+                //Sets the maxDays correctl provided that a month was entered in.
+                if (![_month.text isEqualToString:@""]) {
+                    maxDays = [events getDaysOfMonth:[_month.text intValue]];
+                }
+                
+                if ([[_day.text stringByAppendingString:string] intValue] > maxDays
+                    || [[_day.text stringByAppendingString:string] intValue] < 1) {
+                    charShouldChange = NO;
+                    _day.text = @"";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
+                                                                    message: @"Re-enter the day."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+            //Ignore correcting the year field. Good luck with that one people.
+            //If from hour tag.
+            else if (textField.tag == 24) {
+                if ([[_fromHour.text stringByAppendingString:string] intValue] > 12
+                    || [[_fromHour.text stringByAppendingString:string] intValue] < 1) {
+                    charShouldChange = NO;
+                    _fromHour.text = @"";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
+                                                                    message: @"Re-enter the from hour."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+            //If from minute tag.
+            else if (textField.tag == 25) {
+                if ([[_fromMinute.text stringByAppendingString:string] intValue] > 59
+                    || [[_fromMinute.text stringByAppendingString:string] intValue] < 0) {
+                    charShouldChange = NO;
+                    _fromMinute.text = @"";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
+                                                                    message: @"Re-enter the from minute."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+            //If to hour tag.
+            else if (textField.tag == 26) {
+                if ([[_toHour.text stringByAppendingString:string] intValue] > 12
+                    || [[_toHour.text stringByAppendingString:string] intValue] < 1) {
+                    charShouldChange = NO;
+                    _toHour.text = @"";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
+                                                                    message: @"Re-enter the to hour."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+            //If to minute tag.
+            else if (textField.tag == 27) {
+                if ([[_toMinute.text stringByAppendingString:string] intValue] > 59
+                    || [[_toMinute.text stringByAppendingString:string] intValue] < 0) {
+                    charShouldChange = NO;
+                    _toMinute.text = @"";
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
+                                                                    message: @"Re-enter the to minute."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+            }
+        }
+    }
+    return charShouldChange;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSUInteger newLength = [textView.text length] + [string length] - range.length;
+    return (newLength > 2) ? NO : YES;
 }
 
 

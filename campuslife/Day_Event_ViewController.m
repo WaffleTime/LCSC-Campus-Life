@@ -7,7 +7,7 @@
 //
 
 #import "Day_Event_ViewController.h"
-
+#import "Authentication.h"
 #import "MonthlyEvents.h"
 
 
@@ -43,6 +43,15 @@
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    
+    if ([[Authentication getSharedInstance] getUserCanManageEvents])
+    {
+        self.navigationItem.rightBarButtonItem.title = @"Add Event";
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    else {
+        NSLog(@"User can't manage events.");
+    }
     
     events = [MonthlyEvents getSharedInstance];
     

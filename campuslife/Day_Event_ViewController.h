@@ -10,7 +10,6 @@
 
 @interface Day_Event_ViewController : UITableViewController
 
-
 /*
  *  Contains the index for month array.
  */

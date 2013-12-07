@@ -226,6 +226,12 @@ static MonthlyEvents *sharedInstance;
     return (int)[[_daysInMonth objectAtIndex:_selectedMonth-1] integerValue];
 }
 
+//@param month An integer in [1,12]
+//@return Should be an integer in [28,31].
+-(int)getDaysOfMonth:(int)month {
+    return (int)[[_daysInMonth objectAtIndex:month-1] integerValue];
+}
+
 //@return Should be an integer in [28,31].
 -(int)getDaysOfPreviousMonth {
     int previousMonth = 0;

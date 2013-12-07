@@ -119,8 +119,8 @@
         
         self.signInOutButton.title = @"Sign In";
         
+        _addEventButton.title = @" ";
         _addEventButton.enabled = NO;
-        _addEventButton.title = @"";
         
         [_collectionView reloadData];
         
@@ -661,8 +661,8 @@
         [_auth setUserCanManageEvents:YES];
         NSLog(@"The user can manage events!");
         
-        _addEventButton.enabled = YES;
         _addEventButton.title = @"Add Event";
+        _addEventButton.enabled = YES;
     }
 }
 
