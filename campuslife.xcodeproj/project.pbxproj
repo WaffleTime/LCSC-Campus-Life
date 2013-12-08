@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C12C28D01853E8C200274023 /* AddEventForDayViewController.m */; };
 		C17D5A4518443C5100DE0B26 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A4318443C5100DE0B26 /* selected.png */; };
 		C17D5A4618443C5100DE0B26 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A4418443C5100DE0B26 /* unselected.png */; };
 		C17D5A491844433300DE0B26 /* selected-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A471844433300DE0B26 /* selected-ipad.png */; };
@@ -48,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C12C28CF1853E8C200274023 /* AddEventForDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventForDayViewController.h; sourceTree = "<group>"; };
+		C12C28D01853E8C200274023 /* AddEventForDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventForDayViewController.m; sourceTree = "<group>"; };
 		C17D5A4318443C5100DE0B26 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
 		C17D5A4418443C5100DE0B26 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
 		C17D5A471844433300DE0B26 /* selected-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected-ipad.png"; sourceTree = "<group>"; };
@@ -160,6 +163,8 @@
 				C1E66E42183C33D000851B89 /* EventDetailViewController.m */,
 				C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */,
 				C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */,
+				C12C28CF1853E8C200274023 /* AddEventForDayViewController.h */,
+				C12C28D01853E8C200274023 /* AddEventForDayViewController.m */,
 				C1E66E43183C33D000851B89 /* MonthlyEvents.h */,
 				C1E66E44183C33D000851B89 /* MonthlyEvents.m */,
 				C1E66E45183C33D000851B89 /* Preferences.h */,
@@ -320,6 +325,7 @@
 				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
 				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,
+				C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,
 				C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */,
 			);

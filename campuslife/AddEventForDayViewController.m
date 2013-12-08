@@ -1,5 +1,5 @@
 //
-//  AddEventViewController.m
+//  AddEventForDayViewController.m
 //  campuslife
 //
 //  Created by Super Student on 12/2/13.
@@ -7,7 +7,7 @@
 //
 
 
-#import "AddEventViewController.h"
+#import "AddEventForDayViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
 
@@ -17,7 +17,7 @@ static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
 static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
 static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
-@interface AddEventViewController () {
+@interface AddEventForDayViewController () {
     CGFloat animatedDistance;
 }
 
@@ -28,7 +28,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @end
 
-@implementation AddEventViewController
+@implementation AddEventForDayViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,14 +45,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 	// Do any additional setup after loading the view.
     
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-
+    
     UITapGestureRecognizer *tapRec = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer: tapRec];
     
     _auth = [Authentication getSharedInstance];
     
-
+    
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
 }
 
@@ -71,10 +71,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         _toMinute.text = @"00";
     }
     
-    NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@/%@/%@ %@:%@%@-%@:%@%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                              _month.text,
-                              _day.text,
-                              _year.text,
+    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    
+    NSString *quickAddText = [[NSString alloc] initWithFormat:@"%d/%d/%d %@:%@%@-%@:%@%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                              events.getSelectedMonth,
+                              events.getSelectedDay,
+                              events.getSelectedYear,
                               _fromHour.text,
                               _fromMinute.text,
                               _fromPeriod.titleLabel.text,
@@ -92,6 +94,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                        withHttpMethod:httpMethod_POST
                    postParameterNames:[NSArray arrayWithObjects:@"text", nil]
                   postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]];
+    
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
                                                     message: @"Your event has been sent to the Google Calendar!"
@@ -117,14 +120,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     CGRect textFieldRect = [self.view.window convertRect:textField.bounds fromView:textField];
     CGRect viewRect = [self.view.window convertRect:self.view.bounds fromView:self.view];
-        
+    
     CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
     
     CGFloat numerator = midline - viewRect.origin.y
-                        - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
+    - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
     
     CGFloat denominator = (MAXIMUM_SCROLL_FRACTION - MINIMUM_SCROLL_FRACTION)
-                            * viewRect.size.height;
+    * viewRect.size.height;
     
     CGFloat heightFraction = numerator / denominator;
     
@@ -136,7 +139,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     {
         heightFraction = 1.0;
     }
-        
+    
     UIInterfaceOrientation orientation =[[UIApplication sharedApplication] statusBarOrientation];
     
     if (orientation == UIInterfaceOrientationPortrait ||
@@ -234,52 +237,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     BOOL charShouldChange = YES;
     
     //These tags are associated with the text fields that represent the day/time of the event.
-    if (textField.tag >= 21 && textField.tag <= 27) {
+    if (textField.tag >= 5 && textField.tag <= 8) {
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
         charShouldChange = (newLength > 2) ? NO : YES;
         
         //Only restrict characters if the string is still valid.
         if (charShouldChange) {
-            //If month tag.
-            if (textField.tag == 21) {
-                //Is the month invalid?
-                if ([[_month.text stringByAppendingString:string] intValue] > 12
-                    || [[_month.text stringByAppendingString:string] intValue] < 1) {
-                    charShouldChange = NO;
-                    _month.text = @"";
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
-                                                                    message: @"Re-enter the month."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-            //If day tag.
-            else if (textField.tag == 22) {
-                MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-                int maxDays = 31;
-                
-                //Sets the maxDays correctl provided that a month was entered in.
-                if (![_month.text isEqualToString:@""]) {
-                    maxDays = [events getDaysOfMonth:[_month.text intValue]];
-                }
-                
-                if ([[_day.text stringByAppendingString:string] intValue] > maxDays
-                    || [[_day.text stringByAppendingString:string] intValue] < 1) {
-                    charShouldChange = NO;
-                    _day.text = @"";
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
-                                                                    message: @"Re-enter the day."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-            //Ignore correcting the year field. Good luck with that one people.
             //If from hour tag.
-            else if (textField.tag == 24) {
+            if (textField.tag == 5) {
                 if ([[_fromHour.text stringByAppendingString:string] intValue] > 12
                     || [[_fromHour.text stringByAppendingString:string] intValue] < 1) {
                     charShouldChange = NO;
@@ -293,7 +258,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 }
             }
             //If from minute tag.
-            else if (textField.tag == 25) {
+            else if (textField.tag == 6) {
                 if ([[_fromMinute.text stringByAppendingString:string] intValue] > 59
                     || [[_fromMinute.text stringByAppendingString:string] intValue] < 0) {
                     charShouldChange = NO;
@@ -307,7 +272,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 }
             }
             //If to hour tag.
-            else if (textField.tag == 26) {
+            else if (textField.tag == 7) {
                 if ([[_toHour.text stringByAppendingString:string] intValue] > 12
                     || [[_toHour.text stringByAppendingString:string] intValue] < 1) {
                     charShouldChange = NO;
@@ -321,7 +286,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 }
             }
             //If to minute tag.
-            else if (textField.tag == 27) {
+            else if (textField.tag == 8) {
                 if ([[_toMinute.text stringByAppendingString:string] intValue] > 59
                     || [[_toMinute.text stringByAppendingString:string] intValue] < 0) {
                     charShouldChange = NO;

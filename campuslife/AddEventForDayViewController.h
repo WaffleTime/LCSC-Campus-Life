@@ -1,5 +1,5 @@
 //
-//  AddEventViewController.h
+//  AddEventForDayViewController.h
 //  campuslife
 //
 //  Created by Super Student on 12/2/13.
@@ -11,17 +11,13 @@
 #import <UIKit/UIKit.h>
 #import "GoogleOAuth.h"
 
-@interface AddEventViewController : UIViewController<GoogleOAuthDelegate>
+@interface AddEventForDayViewController : UIViewController<GoogleOAuthDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *summary;
 @property (weak, nonatomic) IBOutlet UITextField *where;
 @property (weak, nonatomic) IBOutlet UITextView *description;
 
 @property (weak, nonatomic) IBOutlet UILabel *category;
-
-@property (weak, nonatomic) IBOutlet UITextField *month;
-@property (weak, nonatomic) IBOutlet UITextField *day;
-@property (weak, nonatomic) IBOutlet UITextField *year;
 
 @property (weak, nonatomic) IBOutlet UITextField *fromHour;
 @property (weak, nonatomic) IBOutlet UITextField *fromMinute;

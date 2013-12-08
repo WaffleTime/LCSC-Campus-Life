@@ -122,6 +122,8 @@
         _addEventButton.title = @" ";
         _addEventButton.enabled = NO;
         
+        _refreshButton.enabled = NO;
+        
         [_collectionView reloadData];
         
         //NSLog(@"Signed out we did");
@@ -139,6 +141,12 @@
         
         //NSLog(@"Signed in we did");
     }
+}
+
+- (IBAction)refreshEvents:(id)sender {
+    [_activityIndicator startAnimating];
+    
+    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
 }
 
 - (IBAction)radioSelected:(UIButton *)sender {
@@ -520,6 +528,8 @@
 #pragma mark - GoogleOAuth class delegate method implementation
 
 -(void)authorizationWasSuccessful {
+    _refreshButton.enabled = YES;
+    
     //This is a dummy update that will be to see if the user is able to manage events.
     [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
                        withHttpMethod:httpMethod_POST
@@ -610,22 +620,18 @@
                 //Parse out the summary and add it into the dictionary with the key, "summary".
                 currentEventInfo =  [self parseSummaryForKey:currentEventInfo
                                                             :@"description"
-                                                            :[[NSArray alloc] initWithObjects:@"Detail:",
-                                                                                              @"Detail: ",
-                                                                                              @"detail:",
-                                                                                              @"detail: ",
-                                                                                              @"Details:",
-                                                                                              @"Details: ",
-                                                                                              @"details:",
-                                                                                              @"details: ",nil]];
+                                                            :[[NSArray alloc] initWithObjects:@"Desc:",
+                                                                                              @"Desc: ",
+                                                                                              @"desc:",
+                                                                                              @"desc: ", nil]];
                 
                 //Parse out the location and add it into the dictionary with the key, "location".
                 currentEventInfo =  [self parseSummaryForKey:currentEventInfo
                                                             :@"location"
-                                                            :[[NSArray alloc] initWithObjects:@"Location:",
-                                                                                              @"Location: ",
-                                                                                              @"location:",
-                                                                                              @"location: ", nil]];
+                                                            :[[NSArray alloc] initWithObjects:@"Loc:",
+                                                                                              @"Loc: ",
+                                                                                              @"loc:",
+                                                                                              @"loc: ", nil]];
                 
                 //Parse out the category and add it into the dictionary with the key, "category".
                 currentEventInfo =  [self parseSummaryForKey:currentEventInfo
