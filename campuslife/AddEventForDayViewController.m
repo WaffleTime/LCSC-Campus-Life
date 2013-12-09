@@ -62,46 +62,95 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Dispose of any resources that can be recreated.
 }
 
-
 -(IBAction) addEvent {
-    if ([_fromMinute.text isEqualToString:@""]) {
-        _fromMinute.text = @"00";
+    BOOL readyToAddEvent = YES;
+    BOOL allDayEvent = NO;
+    
+    //Check if fields are left blank. Notice the description and where fields aren't required.
+    if ([_summary.text isEqualToString:@""]) {
+        readyToAddEvent = NO;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Blank Field"
+                                                        message: @"The Summary field is empty, please fill it in and try again."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
-    if ([_toMinute.text isEqualToString:@""]) {
-        _toMinute.text = @"00";
+    
+    //An event might not have a specified time.
+    if ([_fromHour.text isEqualToString:@""]
+        || [_toHour.text isEqualToString:@""]) {
+        allDayEvent = YES;
+    }
+    else {
+        if ([_fromMinute.text isEqualToString:@""]) {
+            _fromMinute.text = @"00";
+        }
+        if ([_toMinute.text isEqualToString:@""]) {
+            _toMinute.text = @"00";
+        }
     }
     
-    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-    
-    NSString *quickAddText = [[NSString alloc] initWithFormat:@"%d/%d/%d %@:%@%@-%@:%@%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                              events.getSelectedMonth,
-                              events.getSelectedDay,
-                              events.getSelectedYear,
-                              _fromHour.text,
-                              _fromMinute.text,
-                              _fromPeriod.titleLabel.text,
-                              _toHour.text,
-                              _toMinute.text,
-                              _toPeriod.titleLabel.text,
-                              _summary.text,
-                              _description.text,
-                              _where.text,
-                              _category.text];
-    
-    NSLog(@"The quickAdd text: %@", quickAddText);
-    
-    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
-                       withHttpMethod:httpMethod_POST
-                   postParameterNames:[NSArray arrayWithObjects:@"text", nil]
-                  postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]];
-    
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
-                                                    message: @"Your event has been sent to the Google Calendar!"
-                                                   delegate: nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    if (readyToAddEvent) {
+        MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+        
+        //Events have specified time constraints unless they are all day events.
+        if (!allDayEvent) {
+            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%d/%d/%d %@:%@%@-%@:%@%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                                      events.getSelectedMonth,
+                                      events.getSelectedDay,
+                                      events.getSelectedYear,
+                                      _fromHour.text,
+                                      _fromMinute.text,
+                                      _fromPeriod.titleLabel.text,
+                                      _toHour.text,
+                                      _toMinute.text,
+                                      _toPeriod.titleLabel.text,
+                                      _summary.text,
+                                      _description.text,
+                                      _where.text,
+                                      _category.text];
+            
+            //NSLog(@"The quickAdd text: %@", quickAddText);
+            
+            [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
+                               withHttpMethod:httpMethod_POST
+                           postParameterNames:[NSArray arrayWithObjects:@"text", nil]
+                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
+                                                            message: @"Your event has been sent to the Google Calendar!"
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        else {
+            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%d/%d/%d Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                                      events.getSelectedMonth,
+                                      events.getSelectedDay,
+                                      events.getSelectedYear,
+                                      _summary.text,
+                                      _description.text,
+                                      _where.text,
+                                      _category.text];
+            
+            //NSLog(@"The quickAdd text: %@", quickAddText);
+            
+            [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
+                               withHttpMethod:httpMethod_POST
+                           postParameterNames:[NSArray arrayWithObjects:@"text", nil]
+                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
+                                                            message: @"Your all day event has been sent to the Google Calendar!"
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }
 }
 
 - (IBAction)categoryStepper:(UIStepper *)sender {

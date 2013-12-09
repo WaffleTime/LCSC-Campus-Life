@@ -1,13 +1,12 @@
 //
-//  AddEventViewController.m
+//  UpdateEventViewController.m
 //  campuslife
 //
-//  Created by Super Student on 12/2/13.
+//  Created by Super Student on 12/8/13.
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
-
-#import "AddEventViewController.h"
+#import "UpdateEventViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
 
@@ -17,7 +16,7 @@ static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
 static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
 static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
-@interface AddEventViewController () {
+@interface UpdateEventViewController () {
     CGFloat animatedDistance;
 }
 
@@ -28,7 +27,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 @end
 
-@implementation AddEventViewController
+@implementation UpdateEventViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,15 +44,18 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 	// Do any additional setup after loading the view.
     
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
-
+    
     UITapGestureRecognizer *tapRec = [[UITapGestureRecognizer alloc]
                                       initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer: tapRec];
     
     _auth = [Authentication getSharedInstance];
     
-
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
+    
+    
+    //One of the only differences between this viewController and the one for adding events is that text fields will be populated
+    //  with information that was previously for the event.
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,7 +98,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
     
+    //The following method used is a work around, because jsons have been tricky to send using http requests.
+    //  We first delete the old event, then just add a new one. It's simple and works without sending jsons.
     if (readyToAddEvent) {
+        //This deletes the old event so the new one can be added.
+        [[_auth getAuthenticator] callAPI:[@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/" stringByAppendingString:_eventInfo[@"id"]]
+                           withHttpMethod:httpMethod_DELETE
+                       postParameterNames:[NSArray arrayWithObjects: nil]
+                      postParameterValues:[NSArray arrayWithObjects: nil]];
+        
+        
         //Events have specified time constraints unless they are all day events.
         if (!allDayEvent) {
             NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@/%@/%@ %@:%@%@-%@:%@%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
@@ -171,14 +182,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     CGRect textFieldRect = [self.view.window convertRect:textField.bounds fromView:textField];
     CGRect viewRect = [self.view.window convertRect:self.view.bounds fromView:self.view];
-        
+    
     CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
     
     CGFloat numerator = midline - viewRect.origin.y
-                        - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
+    - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
     
     CGFloat denominator = (MAXIMUM_SCROLL_FRACTION - MINIMUM_SCROLL_FRACTION)
-                            * viewRect.size.height;
+    * viewRect.size.height;
     
     CGFloat heightFraction = numerator / denominator;
     
@@ -190,7 +201,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     {
         heightFraction = 1.0;
     }
-        
+    
     UIInterfaceOrientation orientation =[[UIApplication sharedApplication] statusBarOrientation];
     
     if (orientation == UIInterfaceOrientationPortrait ||

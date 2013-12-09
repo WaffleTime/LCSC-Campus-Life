@@ -257,6 +257,27 @@
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
             [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         }
+        else if (httpMethod == httpMethod_DELETE) {
+            // A string with the DELETE parameters should be built.
+            // Create an empty string.
+            NSString *postParams = @"";
+            // Iterrate through all parameters and append every POST parameter to the postParams string.
+            for (int i=0; i<[params count]; i++) {
+                postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"%@=%@",
+                                                                  [params objectAtIndex:i], [values objectAtIndex:i]]];
+                
+                // If the current parameter is not the last one then add the "&" symbol to separate post parameters.
+                if (i < [params count] - 1) {
+                    postParams = [postParams stringByAppendingString:@"&"];
+                }
+            }
+            
+            request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+            
+            // Set any other necessary options.
+            [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
+            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        }
 
         
         

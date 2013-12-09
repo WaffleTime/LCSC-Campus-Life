@@ -96,6 +96,8 @@
     [_cat3Btn setSelected:[prefs getPreference:3]];
     [_cat4Btn setSelected:[prefs getPreference:4]];
     [_cat5Btn setSelected:[prefs getPreference:5]];
+    
+    [_refreshButton setEnabled:NO];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -156,22 +158,27 @@
         case 1:
             [prefs negatePreference:1];
             [_cat1Btn setSelected:[prefs getPreference:1]];
+            [_cat1Btn setHighlighted:NO];
             break;
         case 2:
             [prefs negatePreference:2];
             [_cat2Btn setSelected:[prefs getPreference:2]];
+            [_cat2Btn setHighlighted:NO];
             break;
         case 3:
             [prefs negatePreference:3];
             [_cat3Btn setSelected:[prefs getPreference:3]];
+            [_cat3Btn setHighlighted:NO];
             break;
         case 4:
             [prefs negatePreference:4];
             [_cat4Btn setSelected:[prefs getPreference:4]];
+            [_cat4Btn setHighlighted:NO];
             break;
         case 5:
             [prefs negatePreference:5];
             [_cat5Btn setSelected:[prefs getPreference:5]];
+            [_cat5Btn setHighlighted:NO];
             break;
     }
     

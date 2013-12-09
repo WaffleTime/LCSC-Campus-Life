@@ -35,6 +35,7 @@
 		C1E66E4B183C33D000851B89 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E46183C33D000851B89 /* Preferences.m */; };
 		C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */; };
 		C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E4F183C34F000851B89 /* daysOfWeek.png */; };
+		C1F3207D1855623000811DDA /* UpdateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F3207C1855623000811DDA /* UpdateEventViewController.m */; };
 		C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,8 @@
 		C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
 		C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
 		C1E66E4F183C34F000851B89 /* daysOfWeek.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daysOfWeek.png; sourceTree = "<group>"; };
+		C1F3207B1855623000811DDA /* UpdateEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateEventViewController.h; sourceTree = "<group>"; };
+		C1F3207C1855623000811DDA /* UpdateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateEventViewController.m; sourceTree = "<group>"; };
 		C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
 		C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,6 +168,8 @@
 				C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */,
 				C12C28CF1853E8C200274023 /* AddEventForDayViewController.h */,
 				C12C28D01853E8C200274023 /* AddEventForDayViewController.m */,
+				C1F3207B1855623000811DDA /* UpdateEventViewController.h */,
+				C1F3207C1855623000811DDA /* UpdateEventViewController.m */,
 				C1E66E43183C33D000851B89 /* MonthlyEvents.h */,
 				C1E66E44183C33D000851B89 /* MonthlyEvents.m */,
 				C1E66E45183C33D000851B89 /* Preferences.h */,
@@ -319,6 +324,7 @@
 			files = (
 				C1E66E02183C333A00851B89 /* AppDelegate.m in Sources */,
 				C1E66E49183C33D000851B89 /* EventDetailViewController.m in Sources */,
+				C1F3207D1855623000811DDA /* UpdateEventViewController.m in Sources */,
 				C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */,
 				C1E66E4B183C33D000851B89 /* Preferences.m in Sources */,
 				C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */,
