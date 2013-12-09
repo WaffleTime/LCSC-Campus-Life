@@ -56,6 +56,63 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     //One of the only differences between this viewController and the one for adding events is that text fields will be populated
     //  with information that was previously for the event.
+    
+    _summary.text = _eventInfo[@"summary"];
+    _where.text = _eventInfo[@"location"];
+    _description.text = _eventInfo[@"description"];
+    
+    _category.text = _eventInfo[@"category"];
+    
+    //If dateTime exists, then the event isn't an all day event.
+    if ([_eventInfo[@"start"] objectForKey:@"dateTime"] == nil) {
+        NSRange yearRange = NSMakeRange(0, 4);
+        NSRange monthRange = NSMakeRange(5, 2);
+        NSRange dayRange = NSMakeRange(8, 2);
+        _year.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:yearRange];
+        _month.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:monthRange];
+        _day.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:dayRange];
+        
+        NSRange hrRange = NSMakeRange(11, 2);
+        NSRange minRange = NSMakeRange(14, 2);
+        _fromHour.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:hrRange];
+        _fromMinute.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:minRange];
+    
+        //Periods are set to AM by default.
+        if ([_fromHour.text intValue] >= 12) {
+            _fromPeriod.titleLabel.text = @"PM";
+            //Convert back from military time if necessary.
+            if ([_fromHour.text intValue] > 12) {
+                _fromHour.text = [NSString stringWithFormat:@"%d", ([_fromHour.text intValue]-12)];
+            }
+        }
+        else if ([_fromHour.text intValue] == 0) {
+            _fromHour.text = @"12";
+        }
+        
+        _toHour.text = [_eventInfo[@"end"][@"dateTime"] substringWithRange:hrRange];
+        _toMinute.text = [_eventInfo[@"end"][@"dateTime"] substringWithRange:minRange];
+        
+        //Periods are set to AM by default.
+        if ([_toHour.text intValue] >= 12) {
+            _toPeriod.titleLabel.text = @"PM";
+            //Convert back from military time if necessary.
+            if ([_toHour.text intValue] > 12) {
+                _toHour.text = [NSString stringWithFormat:@"%d", ([_toHour.text intValue]-12)];
+            }
+        }
+        else if ([_toHour.text intValue] == 0) {
+            _toHour.text = @"12";
+        }
+    }
+    //If dateTime doesn't exist, then it's an all night event.
+    else {
+        NSRange yearRange = NSMakeRange(0, 4);
+        NSRange monthRange = NSMakeRange(5, 2);
+        NSRange dayRange = NSMakeRange(8, 2);
+        _year.text = [_eventInfo[@"start"][@"date"] substringWithRange:yearRange];
+        _month.text = [_eventInfo[@"start"][@"date"] substringWithRange:monthRange];
+        _day.text = [_eventInfo[@"start"][@"date"] substringWithRange:dayRange];
+    }
 }
 
 - (void)didReceiveMemoryWarning
