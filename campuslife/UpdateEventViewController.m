@@ -126,6 +126,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     BOOL readyToAddEvent = YES;
     BOOL allDayEvent = NO;
     
+    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    
     //Check if fields are left blank. Notice the description and where fields aren't required.
     if ([_month.text isEqualToString:@""]
         || [_day.text isEqualToString:@""]
@@ -135,6 +137,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Blank Field"
                                                         message: @"One of the required fields is empty, please fill it in and try again."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else if ([_day.text intValue] > [events getDaysOfMonth:[_month.text intValue] :[_year.text intValue]]) {
+        readyToAddEvent = NO;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Day"
+                                                        message: @"The day entered is invalid for the given month and year."
                                                        delegate: nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -379,15 +391,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             }
             //If day tag.
             else if (textField.tag == 22) {
-                MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-                int maxDays = 31;
-                
-                //Sets the maxDays correctl provided that a month was entered in.
-                if (![_month.text isEqualToString:@""]) {
-                    maxDays = [events getDaysOfMonth:[_month.text intValue]];
-                }
-                
-                if ([[_day.text stringByAppendingString:string] intValue] > maxDays
+                if ([[_day.text stringByAppendingString:string] intValue] > 31
                     || [[_day.text stringByAppendingString:string] intValue] < 1) {
                     charShouldChange = NO;
                     _day.text = @"";
@@ -457,6 +461,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 }
             }
         }
+    }
+    //This accounts for the year field (because it allows 4 characters.)
+    else if (textField.tag == 30) {
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        charShouldChange = (newLength > 4) ? NO : YES;
     }
     else {
         NSUInteger newLength = [textField.text length] + [string length] - range.length;

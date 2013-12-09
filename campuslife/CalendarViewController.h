@@ -11,7 +11,9 @@
 
 @interface CalendarViewController : UIViewController <GoogleOAuthDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftArrow;
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *rightArrow;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *signInOutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addEventButton;

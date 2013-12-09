@@ -227,9 +227,19 @@ static MonthlyEvents *sharedInstance;
 }
 
 //@param month An integer in [1,12]
+//@param year An integer that represents the exact year. No offsets here...
 //@return Should be an integer in [28,31].
--(int)getDaysOfMonth:(int)month {
-    return (int)[[_daysInMonth objectAtIndex:month-1] integerValue];
+-(int)getDaysOfMonth:(int)month :(int)year {
+    int daysOfMonth = 0;
+    //Account for leap year when dealing with February.
+    if (year%4 == 0
+        && month == 2) {
+        daysOfMonth = 29;
+    }
+    else {
+        daysOfMonth = (int)[[_daysInMonth objectAtIndex:month-1] integerValue];
+    }
+    return daysOfMonth;
 }
 
 //@return Should be an integer in [28,31].
