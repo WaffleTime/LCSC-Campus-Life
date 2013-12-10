@@ -12,6 +12,8 @@
 		C17D5A4618443C5100DE0B26 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A4418443C5100DE0B26 /* unselected.png */; };
 		C17D5A491844433300DE0B26 /* selected-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A471844433300DE0B26 /* selected-ipad.png */; };
 		C17D5A4A1844433300DE0B26 /* unselected-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A481844433300DE0B26 /* unselected-ipad.png */; };
+		C18BB0611856BAEC0046B4AE /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = C18BB05E1856BAEC0046B4AE /* MJPopupBackgroundView.m */; };
+		C18BB0621856BAEC0046B4AE /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C18BB0601856BAEC0046B4AE /* UIViewController+MJPopupViewController.m */; };
 		C19EA4C1183ECDA5002FC746 /* daysOfTheWeek-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */; };
 		C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A75FF4184E99DF0072C27F /* Authentication.m */; };
 		C1E66DF2183C333A00851B89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1E66DF1183C333A00851B89 /* Foundation.framework */; };
@@ -56,6 +58,10 @@
 		C17D5A4418443C5100DE0B26 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
 		C17D5A471844433300DE0B26 /* selected-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected-ipad.png"; sourceTree = "<group>"; };
 		C17D5A481844433300DE0B26 /* unselected-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected-ipad.png"; sourceTree = "<group>"; };
+		C18BB05D1856BAEC0046B4AE /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPopupBackgroundView.h; sourceTree = "<group>"; };
+		C18BB05E1856BAEC0046B4AE /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPopupBackgroundView.m; sourceTree = "<group>"; };
+		C18BB05F1856BAEC0046B4AE /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
+		C18BB0601856BAEC0046B4AE /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
 		C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daysOfTheWeek-iPad.png"; sourceTree = "<group>"; };
 		C1A75FF3184E99DF0072C27F /* Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Authentication.h; sourceTree = "<group>"; };
 		C1A75FF4184E99DF0072C27F /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Authentication.m; sourceTree = "<group>"; };
@@ -184,6 +190,10 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C18BB05D1856BAEC0046B4AE /* MJPopupBackgroundView.h */,
+				C18BB05E1856BAEC0046B4AE /* MJPopupBackgroundView.m */,
+				C18BB05F1856BAEC0046B4AE /* UIViewController+MJPopupViewController.h */,
+				C18BB0601856BAEC0046B4AE /* UIViewController+MJPopupViewController.m */,
 				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
 				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C17D5A471844433300DE0B26 /* selected-ipad.png */,
@@ -325,11 +335,13 @@
 				C1E66E02183C333A00851B89 /* AppDelegate.m in Sources */,
 				C1E66E49183C33D000851B89 /* EventDetailViewController.m in Sources */,
 				C1F3207D1855623000811DDA /* UpdateEventViewController.m in Sources */,
+				C18BB0621856BAEC0046B4AE /* UIViewController+MJPopupViewController.m in Sources */,
 				C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */,
 				C1E66E4B183C33D000851B89 /* Preferences.m in Sources */,
 				C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */,
 				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
+				C18BB0611856BAEC0046B4AE /* MJPopupBackgroundView.m in Sources */,
 				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,
 				C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,

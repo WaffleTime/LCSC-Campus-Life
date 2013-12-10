@@ -11,10 +11,11 @@
 @interface EventDetailViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *locLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *addEventButton;
 
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventsDict;
 

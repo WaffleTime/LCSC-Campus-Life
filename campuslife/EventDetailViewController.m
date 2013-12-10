@@ -7,6 +7,7 @@
 //
 
 #import "EventDetailViewController.h"
+#import "Authentication.h"
 
 @interface EventDetailViewController ()
 
@@ -28,6 +29,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     _summaryLabel.text = [_eventsDict objectForKey:@"summary"];
+    _locLabel.text = [_eventsDict objectForKey:@"location"];
+    _categoryLabel.text = [_eventsDict objectForKey:@"category"];
+    _descriptLabel.text = [_eventsDict objectForKey:@"description"];
+    
+    if (![[Authentication getSharedInstance] getUserCanManageEvents]) {
+        _addEventButton.enabled = NO;
+        _addEventButton.titleLabel.text = @"";
+    }
 }
 
 - (void)didReceiveMemoryWarning
