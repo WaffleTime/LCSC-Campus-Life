@@ -13,12 +13,9 @@
 #import "Day_Event_ViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
-<<<<<<< HEAD
 #import "Preferences.h"
-=======
 #import "EventDetailViewController.h"
 #import "UIViewController+MJPopupViewController.h"
->>>>>>> 671e2bf5af4cbc90fe830930b84dc4f8afd2d9fd
 
 
 
