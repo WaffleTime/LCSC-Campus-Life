@@ -67,7 +67,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         if ([_categories[i] isEqualToString:_eventInfo[@"category"]]) {
             _categoryStepper.value = i;
             
-            NSLog(@"Stepper Value: %d", i);
+            //NSLog(@"Stepper Value: %d", i);
         }
     }
     

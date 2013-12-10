@@ -872,13 +872,6 @@
                                     <outlet property="delegate" destination="Hq8-ZE-smc" id="NDg-QS-GRR"/>
                                 </connections>
                             </textField>
-                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="smK-yL-UxC">
-                                <rect key="frame" x="20" y="276" width="94" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <action selector="categoryStepper:" destination="Hq8-ZE-smc" eventType="valueChanged" id="40J-SJ-xEo"/>
-                                </connections>
-                            </stepper>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Entertainment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXo-fg-MSA">
                                 <rect key="frame" x="20" y="237" width="143" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -998,13 +991,20 @@
                                     <action selector="periodToggle:" destination="Hq8-ZE-smc" eventType="touchUpInside" id="9B6-2i-Vtk"/>
                                 </connections>
                             </button>
+                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="yQs-nl-rO7">
+                                <rect key="frame" x="20" y="276" width="94" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <action selector="categoryStepper:" destination="Hq8-ZE-smc" eventType="valueChanged" id="dqd-ui-Jfo"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Update Event" id="hTC-53-hq9"/>
                     <connections>
                         <outlet property="category" destination="oXo-fg-MSA" id="zJV-x4-aOx"/>
-                        <outlet property="categoryStepper" destination="smK-yL-UxC" id="3tc-4i-ZdX"/>
+                        <outlet property="categoryStepper" destination="yQs-nl-rO7" id="zCO-lU-Kz5"/>
                         <outlet property="day" destination="yOb-Ft-Yma" id="8UQ-Bi-QlW"/>
                         <outlet property="description" destination="zhD-wX-Ucx" id="MTZ-FB-Tap"/>
                         <outlet property="fromHour" destination="aPZ-fz-4Dh" id="Xe4-tw-n1J"/>
@@ -1087,7 +1087,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Hq8-ZE-smc" kind="push" id="1BC-5n-6w2"/>
+                                    <segue destination="Hq8-ZE-smc" kind="push" identifier="EventDetailToUpdateEvent" id="1BC-5n-6w2"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHQ-2g-SeS">
