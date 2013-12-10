@@ -9,6 +9,7 @@
 #import "Day_Event_ViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
+#import "Preferences.h"
 
 
 
@@ -100,40 +101,99 @@
     {
         NSLog(@"entered if-loop");
         
-        for (int i = 0; i < [[events getEventsForDay:_day] count]; i++)
+        NSLog(@"Checking your preferences");
+        
+        Preferences *preferences = [Preferences getSharedInstance];
+        
+        int currentPos = 0;
+        
+        while (currentPos < [newArray count])
         {
-            NSLog(@"entered into 1st for-loop");
+            NSLog(@"Entered while-loop\n");
             
-            for (int j = 0; j < [[events getEventsForDay:_day] count] - 1; j++)
+            if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Entertainment"] && [preferences getPreference:1] == FALSE)
             {
-                NSLog(@"entered into 2nd for-loop");
+                NSLog(@"Popping Entertainment event");
                 
-            //    NSDictionary *eventTime = [[events getEventsForDay:j] objectAtIndex:indexPath.row];
-                //NSString *eventStart = [[eventTime objectForKey:@"start"] objectForKey:@"dateTime"];
+                [newArray removeObjectAtIndex:currentPos];
+            }
                 
-                NSRange startHr1 = NSMakeRange(11, 2);
-                NSRange startMn1 = NSMakeRange(14, 2);
-                NSString *startHrStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr1];
-                NSString *startMnStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
-                NSString *startTime1 =[startHrStr1 stringByAppendingString:startMnStr1];
-                int st1 = [startTime1 intValue];
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Academics"] && [preferences getPreference:2] == FALSE)
+            {
+                NSLog(@"Popping Academics event");
                 
-                NSRange startHr2 = NSMakeRange(11, 2);
-                NSRange startMn2 = NSMakeRange(14, 2);
-                NSString *startHrStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr2];
-                NSString *startMnStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
-                NSString *startTime2 =[startHrStr2 stringByAppendingString:startMnStr2];
-                int st2 = [startTime2 intValue];
+                [newArray removeObjectAtIndex:currentPos];
+            }
+            
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Activities"] && [preferences getPreference:3] == FALSE)
+            {
+                NSLog(@"Popping Activities event");
                 
+                [newArray removeObjectAtIndex:currentPos];
+            }
+            
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Residence"] && [preferences getPreference:4] == FALSE)
+            {
+                NSLog(@"Popping Residence event");
                 
+                [newArray removeObjectAtIndex:currentPos];
+            }
+            
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Athletics"] && [preferences getPreference:5] == FALSE)
+            {
+                NSLog(@"Popping Athletics event");
                 
-                if (st1 > st2)
+                [newArray removeObjectAtIndex:currentPos];
+            }
+            else
+            {
+                currentPos++;
+                
+                NSLog(@"currentPos updated to: %d.", currentPos);
+            }
+        }
+        
+        NSLog(@"Printing newArray size: %d\n", [newArray count]);
+        
+        if ([newArray count] > 1)
+        {
+            NSLog(@"Entered the sorting algorithm\n");
+            
+            for (int i = 0; i < [newArray count]; i++)
+            {
+                NSLog(@"entered into 1st for-loop");
+                
+                for (int j = 0; j < [newArray count] - 1; j++)
                 {
-                    NSDictionary *temp = newArray[j];
+                    NSLog(@"entered into 2nd for-loop");
                     
-                    newArray[j] = newArray[j+1];
+                //    NSDictionary *eventTime = [[events getEventsForDay:j] objectAtIndex:indexPath.row];
+                    //NSString *eventStart = [[eventTime objectForKey:@"start"] objectForKey:@"dateTime"];
                     
-                    newArray[j+1] = temp;
+                    NSRange startHr1 = NSMakeRange(11, 2);
+                    NSRange startMn1 = NSMakeRange(14, 2);
+                    NSString *startHrStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr1];
+                    NSString *startMnStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
+                    NSString *startTime1 =[startHrStr1 stringByAppendingString:startMnStr1];
+                    int st1 = [startTime1 intValue];
+                    
+                    NSRange startHr2 = NSMakeRange(11, 2);
+                    NSRange startMn2 = NSMakeRange(14, 2);
+                    NSString *startHrStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr2];
+                    NSString *startMnStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
+                    NSString *startTime2 =[startHrStr2 stringByAppendingString:startMnStr2];
+                    int st2 = [startTime2 intValue];
+                    
+                    
+                    
+                    if (st1 > st2)
+                    {
+                        NSDictionary *temp = newArray[j];
+                        
+                        newArray[j] = newArray[j+1];
+                        
+                        newArray[j+1] = temp;
+                    }
                 }
             }
         }
@@ -160,7 +220,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[events getEventsForDay:_day] count];
+    return [sortedArray count];
 }
 
 
