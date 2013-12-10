@@ -56,6 +56,63 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     //One of the only differences between this viewController and the one for adding events is that text fields will be populated
     //  with information that was previously for the event.
+    
+    _summary.text = _eventInfo[@"summary"];
+    _where.text = _eventInfo[@"location"];
+    _description.text = _eventInfo[@"description"];
+    
+    _category.text = _eventInfo[@"category"];
+    
+    //If dateTime exists, then the event isn't an all day event.
+    if ([_eventInfo[@"start"] objectForKey:@"dateTime"] == nil) {
+        NSRange yearRange = NSMakeRange(0, 4);
+        NSRange monthRange = NSMakeRange(5, 2);
+        NSRange dayRange = NSMakeRange(8, 2);
+        _year.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:yearRange];
+        _month.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:monthRange];
+        _day.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:dayRange];
+        
+        NSRange hrRange = NSMakeRange(11, 2);
+        NSRange minRange = NSMakeRange(14, 2);
+        _fromHour.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:hrRange];
+        _fromMinute.text = [_eventInfo[@"start"][@"dateTime"] substringWithRange:minRange];
+    
+        //Periods are set to AM by default.
+        if ([_fromHour.text intValue] >= 12) {
+            _fromPeriod.titleLabel.text = @"PM";
+            //Convert back from military time if necessary.
+            if ([_fromHour.text intValue] > 12) {
+                _fromHour.text = [NSString stringWithFormat:@"%d", ([_fromHour.text intValue]-12)];
+            }
+        }
+        else if ([_fromHour.text intValue] == 0) {
+            _fromHour.text = @"12";
+        }
+        
+        _toHour.text = [_eventInfo[@"end"][@"dateTime"] substringWithRange:hrRange];
+        _toMinute.text = [_eventInfo[@"end"][@"dateTime"] substringWithRange:minRange];
+        
+        //Periods are set to AM by default.
+        if ([_toHour.text intValue] >= 12) {
+            _toPeriod.titleLabel.text = @"PM";
+            //Convert back from military time if necessary.
+            if ([_toHour.text intValue] > 12) {
+                _toHour.text = [NSString stringWithFormat:@"%d", ([_toHour.text intValue]-12)];
+            }
+        }
+        else if ([_toHour.text intValue] == 0) {
+            _toHour.text = @"12";
+        }
+    }
+    //If dateTime doesn't exist, then it's an all night event.
+    else {
+        NSRange yearRange = NSMakeRange(0, 4);
+        NSRange monthRange = NSMakeRange(5, 2);
+        NSRange dayRange = NSMakeRange(8, 2);
+        _year.text = [_eventInfo[@"start"][@"date"] substringWithRange:yearRange];
+        _month.text = [_eventInfo[@"start"][@"date"] substringWithRange:monthRange];
+        _day.text = [_eventInfo[@"start"][@"date"] substringWithRange:dayRange];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,6 +126,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     BOOL readyToAddEvent = YES;
     BOOL allDayEvent = NO;
     
+    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    
     //Check if fields are left blank. Notice the description and where fields aren't required.
     if ([_month.text isEqualToString:@""]
         || [_day.text isEqualToString:@""]
@@ -78,6 +137,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Blank Field"
                                                         message: @"One of the required fields is empty, please fill it in and try again."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    else if ([_day.text intValue] > [events getDaysOfMonth:[_month.text intValue] :[_year.text intValue]]) {
+        readyToAddEvent = NO;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Day"
+                                                        message: @"The day entered is invalid for the given month and year."
                                                        delegate: nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -322,15 +391,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             }
             //If day tag.
             else if (textField.tag == 22) {
-                MonthlyEvents *events = [MonthlyEvents getSharedInstance];
-                int maxDays = 31;
-                
-                //Sets the maxDays correctl provided that a month was entered in.
-                if (![_month.text isEqualToString:@""]) {
-                    maxDays = [events getDaysOfMonth:[_month.text intValue]];
-                }
-                
-                if ([[_day.text stringByAppendingString:string] intValue] > maxDays
+                if ([[_day.text stringByAppendingString:string] intValue] > 31
                     || [[_day.text stringByAppendingString:string] intValue] < 1) {
                     charShouldChange = NO;
                     _day.text = @"";
@@ -400,6 +461,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 }
             }
         }
+    }
+    //This accounts for the year field (because it allows 4 characters.)
+    else if (textField.tag == 30) {
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        charShouldChange = (newLength > 4) ? NO : YES;
     }
     else {
         NSUInteger newLength = [textField.text length] + [string length] - range.length;

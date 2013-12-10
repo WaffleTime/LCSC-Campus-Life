@@ -6,10 +6,19 @@
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
+
+
 #import "Day_Event_ViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
+<<<<<<< HEAD
 #import "Preferences.h"
+=======
+#import "EventDetailViewController.h"
+#import "UIViewController+MJPopupViewController.h"
+>>>>>>> 671e2bf5af4cbc90fe830930b84dc4f8afd2d9fd
 
 
 
@@ -309,7 +318,43 @@
 }
 
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    /*
+    EventDetailViewController *detailViewController;
+    if (IDIOM != IPAD) {
+        detailViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"eventDetail"];
+        
+        [detailViewController setEvent:[sortedArray objectAtIndex:indexPath.row]];
+        [self presentPopupViewController:detailViewController animationType:0];
+        detailViewController.view.superview.bounds=CGRectMake(0.0, 0.0, 240.0, 408.0);
+        ///detailViewController.view.superview.center=detailViewController.view.center;
+        detailViewController.view.superview.clipsToBounds=YES;
+        
+    }
+    
+    else {
+        detailViewController = [[UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil] instantiateViewControllerWithIdentifier:@"eventDetail"];
+        
+        [detailViewController setEvent:[sortedArray objectAtIndex:indexPath.row]];
+        [self presentPopupViewController:detailViewController animationType:0];
+        detailViewController.view.superview.bounds=CGRectMake(0.0, 0.0, 300.0, 500.0);
+        ///detailViewController.view.superview.center=detailViewController.view.center;
+        detailViewController.view.superview.clipsToBounds=YES;
+    }*/
+    
+}
 
+
+-(void) prepareForSegue:(UIStoryboardPopoverSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"dayToEventDetail"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        EventDetailViewController *destViewController = (EventDetailViewController *)[segue destinationViewController];
+        
+        [destViewController setEvent:[sortedArray objectAtIndex:indexPath.row]];
+    }
+}
 
 
 // Useless comment!
@@ -431,15 +476,6 @@
     }
     
     return time;
-}
-
-
-
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Uncertain as to what goes in here.
 }
 
 
