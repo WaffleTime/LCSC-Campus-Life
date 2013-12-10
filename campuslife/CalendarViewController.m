@@ -543,11 +543,6 @@
 #pragma mark - GoogleOAuth class delegate method implementation
 
 -(void)authorizationWasSuccessful {
-    _refreshButton.enabled = YES;
-    
-    _leftArrow.enabled = YES;
-    _rightArrow.enabled = YES;
-    
     //This is a dummy update that will be to see if the user is able to manage events.
     [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
                        withHttpMethod:httpMethod_POST
@@ -569,6 +564,11 @@
         //If the response json isn't empty, then we signed in.
         if (![responseJSONAsString isEqualToString:@""]) {
             [self setSignedIn:YES];
+            
+            _refreshButton.enabled = YES;
+            
+            _leftArrow.enabled = YES;
+            _rightArrow.enabled = YES;
         
             self.signInOutButton.title = @"Sign Out";
             
