@@ -63,8 +63,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     _category.text = _eventInfo[@"category"];
     
+    for (int i=0; i<[_categories count]; i++) {
+        if ([_categories[i] isEqualToString:_eventInfo[@"category"]]) {
+            _categoryStepper.value = i;
+            
+            NSLog(@"Stepper Value: %d", i);
+        }
+    }
+    
     //If dateTime exists, then the event isn't an all day event.
-    if ([_eventInfo[@"start"] objectForKey:@"dateTime"] == nil) {
+    if ([_eventInfo[@"start"] objectForKey:@"dateTime"] != nil) {
         NSRange yearRange = NSMakeRange(0, 4);
         NSRange monthRange = NSMakeRange(5, 2);
         NSRange dayRange = NSMakeRange(8, 2);
@@ -467,9 +475,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
         charShouldChange = (newLength > 4) ? NO : YES;
     }
-    else {
+    else if (textField.tag == 1){
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        charShouldChange = (newLength > 25) ? NO : YES;
+        charShouldChange = (newLength > 54) ? NO : YES;
+    }
+    else if (textField.tag == 2){
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        charShouldChange = (newLength > 28) ? NO : YES;
     }
     return charShouldChange;
 }

@@ -11,7 +11,7 @@
 @interface UpdateEventViewController : UIViewController
 
 //This will be given to us from the previous class (EventDetailViewController)
-@property (nonatomic, strong) NSDictionary *eventInfo;
+@property (nonatomic, strong, setter=setEventInfo:) NSDictionary *eventInfo;
 
 
 @property (weak, nonatomic) IBOutlet UITextField *summary;
@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *description;
 
 @property (weak, nonatomic) IBOutlet UILabel *category;
+@property (weak, nonatomic) IBOutlet UIStepper *categoryStepper;
 
 @property (weak, nonatomic) IBOutlet UITextField *month;
 @property (weak, nonatomic) IBOutlet UITextField *day;

@@ -6,16 +6,11 @@
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
-#define IDIOM    UI_USER_INTERFACE_IDIOM()
-#define IPAD     UIUserInterfaceIdiomPad
-
-
 #import "Day_Event_ViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
 #import "Preferences.h"
 #import "EventDetailViewController.h"
-#import "UIViewController+MJPopupViewController.h"
 
 
 

@@ -399,9 +399,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
         charShouldChange = (newLength > 4) ? NO : YES;
     }
-    else {
+    else if (textField.tag == 1){
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        charShouldChange = (newLength > 25) ? NO : YES;
+        charShouldChange = (newLength > 54) ? NO : YES;
+    }
+    else if (textField.tag == 2){
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        charShouldChange = (newLength > 28) ? NO : YES;
     }
     return charShouldChange;
 }
