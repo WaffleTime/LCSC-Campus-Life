@@ -11,27 +11,19 @@
 #import <UIKit/UIKit.h>
 #import "GoogleOAuth.h"
 
-@interface AddEventForDayViewController : UIViewController<GoogleOAuthDelegate>
+@interface AddEventForDayViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *summary;
 @property (weak, nonatomic) IBOutlet UITextField *where;
 @property (weak, nonatomic) IBOutlet UITextView *description;
 
-@property (weak, nonatomic) IBOutlet UILabel *category;
+@property (weak, nonatomic) IBOutlet UISwitch *allDayEventSwitch;
 
-@property (weak, nonatomic) IBOutlet UITextField *fromHour;
-@property (weak, nonatomic) IBOutlet UITextField *fromMinute;
-@property (weak, nonatomic) IBOutlet UIButton *fromPeriod;
+@property (weak, nonatomic) IBOutlet UIDatePicker *startTimePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endTimePicker;
 
-
-@property (weak, nonatomic) IBOutlet UITextField *toHour;
-@property (weak, nonatomic) IBOutlet UITextField *toMinute;
-@property (weak, nonatomic) IBOutlet UIButton *toPeriod;
+@property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
 -(IBAction) addEvent;
-
-- (IBAction)categoryStepper:(id)sender;
-
-- (IBAction)periodToggle:(UIButton *)sender;
 
 @end

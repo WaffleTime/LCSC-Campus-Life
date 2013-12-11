@@ -52,7 +52,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     _auth = [Authentication getSharedInstance];
     
-    
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
 }
 
@@ -62,9 +61,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Dispose of any resources that can be recreated.
 }
 
+
 -(IBAction) addEvent {
     BOOL readyToAddEvent = YES;
-    BOOL allDayEvent = NO;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
     if ([_summary.text isEqualToString:@""]) {
@@ -78,41 +77,27 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         [alert show];
     }
     
-    //An event might not have a specified time.
-    if ([_fromHour.text isEqualToString:@""]
-        || [_toHour.text isEqualToString:@""]) {
-        allDayEvent = YES;
-    }
-    else {
-        if ([_fromMinute.text isEqualToString:@""]) {
-            _fromMinute.text = @"00";
-        }
-        if ([_toMinute.text isEqualToString:@""]) {
-            _toMinute.text = @"00";
-        }
-    }
     
     if (readyToAddEvent) {
         MonthlyEvents *events = [MonthlyEvents getSharedInstance];
         
         //Events have specified time constraints unless they are all day events.
-        if (!allDayEvent) {
-            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%d/%d/%d %@:%@%@-%@:%@%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+        if (!_allDayEventSwitch.on) {
+            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+            [timeFormatter setDateFormat:@"HH:mm"];
+            
+            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%d/%d/%d %@-%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
                                       events.getSelectedMonth,
                                       events.getSelectedDay,
                                       events.getSelectedYear,
-                                      _fromHour.text,
-                                      _fromMinute.text,
-                                      _fromPeriod.titleLabel.text,
-                                      _toHour.text,
-                                      _toMinute.text,
-                                      _toPeriod.titleLabel.text,
+                                      [timeFormatter stringFromDate:_startTimePicker.date],
+                                      [timeFormatter stringFromDate:_endTimePicker.date],
                                       _summary.text,
                                       _description.text,
                                       _where.text,
-                                      _category.text];
+                                      _categories[[_categoryPicker selectedRowInComponent:0]]];
             
-            //NSLog(@"The quickAdd text: %@", quickAddText);
+            NSLog(@"The quickAdd text: %@", quickAddText);
             
             [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
                                withHttpMethod:httpMethod_POST
@@ -134,9 +119,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                       _summary.text,
                                       _description.text,
                                       _where.text,
-                                      _category.text];
+                                      _categories[[_categoryPicker selectedRowInComponent:0]]];
             
-            //NSLog(@"The quickAdd text: %@", quickAddText);
+            NSLog(@"The quickAdd text: %@", quickAddText);
             
             [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
                                withHttpMethod:httpMethod_POST
@@ -153,18 +138,24 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
 }
 
-- (IBAction)categoryStepper:(UIStepper *)sender {
-    _category.text = _categories[(int)[sender value]];
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    //One column
+    return 1;
 }
 
-- (IBAction)periodToggle:(UIButton *)sender {
-    if ([sender.titleLabel.text isEqual:@"AM"]) {
-        [sender setTitle:@"PM" forState:UIControlStateNormal];
-    }
-    else {
-        [sender setTitle:@"AM" forState:UIControlStateNormal];
-    }
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    //set number of rows
+    return _categories.count;
 }
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    //set item per row
+    return [_categories objectAtIndex:row];
+}
+
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     CGRect textFieldRect = [self.view.window convertRect:textField.bounds fromView:textField];
@@ -285,72 +276,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     BOOL charShouldChange = YES;
     
-    //These tags are associated with the text fields that represent the day/time of the event.
-    if (textField.tag >= 5 && textField.tag <= 8) {
-        NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        charShouldChange = (newLength > 2) ? NO : YES;
-        
-        //Only restrict characters if the string is still valid.
-        if (charShouldChange) {
-            //If from hour tag.
-            if (textField.tag == 5) {
-                if ([[_fromHour.text stringByAppendingString:string] intValue] > 12
-                    || [[_fromHour.text stringByAppendingString:string] intValue] < 1) {
-                    charShouldChange = NO;
-                    _fromHour.text = @"";
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
-                                                                    message: @"Re-enter the from hour."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-            //If from minute tag.
-            else if (textField.tag == 6) {
-                if ([[_fromMinute.text stringByAppendingString:string] intValue] > 59
-                    || [[_fromMinute.text stringByAppendingString:string] intValue] < 0) {
-                    charShouldChange = NO;
-                    _fromMinute.text = @"";
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
-                                                                    message: @"Re-enter the from minute."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-            //If to hour tag.
-            else if (textField.tag == 7) {
-                if ([[_toHour.text stringByAppendingString:string] intValue] > 12
-                    || [[_toHour.text stringByAppendingString:string] intValue] < 1) {
-                    charShouldChange = NO;
-                    _toHour.text = @"";
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
-                                                                    message: @"Re-enter the to hour."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-            //If to minute tag.
-            else if (textField.tag == 8) {
-                if ([[_toMinute.text stringByAppendingString:string] intValue] > 59
-                    || [[_toMinute.text stringByAppendingString:string] intValue] < 0) {
-                    charShouldChange = NO;
-                    _toMinute.text = @"";
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Entry"
-                                                                    message: @"Re-enter the to minute."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-            }
-        }
-    }
-    else if (textField.tag == 1){
+    if (textField.tag == 1){
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
         charShouldChange = (newLength > 54) ? NO : YES;
     }
