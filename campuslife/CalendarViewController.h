@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightArrow;
 
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeLeft;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeRight;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *signInOutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addEventButton;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;

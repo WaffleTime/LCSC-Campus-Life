@@ -318,15 +318,17 @@
                         <outlet property="refreshButton" destination="Rtu-eu-kKw" id="YDW-SY-zRl"/>
                         <outlet property="rightArrow" destination="4dy-g2-40z" id="6Aa-Xg-s3b"/>
                         <outlet property="signInOutButton" destination="uVE-7V-K6i" id="zdg-0d-meu"/>
+                        <outlet property="swipeLeft" destination="JhE-A6-Mbz" id="0de-ko-9Xv"/>
+                        <outlet property="swipeRight" destination="lX3-dg-vsY" id="BjW-OR-E6U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="JhE-A6-Mbz">
+                <swipeGestureRecognizer enabled="NO" cancelsTouchesInView="NO" direction="left" id="JhE-A6-Mbz">
                     <connections>
                         <action selector="forwardMonthOffset:" destination="vXZ-lx-hvc" id="yjL-4L-eIh"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="lX3-dg-vsY">
+                <swipeGestureRecognizer enabled="NO" cancelsTouchesInView="NO" direction="right" id="lX3-dg-vsY">
                     <connections>
                         <action selector="backMonthOffset:" destination="vXZ-lx-hvc" id="8fm-gz-TVJ"/>
                     </connections>

@@ -21,6 +21,8 @@
 
 @property (nonatomic, setter=setSignedIn:) BOOL signedIn;
 
+@property (nonatomic, setter=setPermissionChecked:) BOOL permissionChecked;
+
 @property (nonatomic) BOOL firstEventsJSONReceived;
 
 @property (nonatomic) MonthlyEvents *events;
@@ -58,6 +60,8 @@
     
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
+    
+    [self setPermissionChecked:NO];
     
     _firstEventsJSONReceived = NO;
     
@@ -132,6 +136,9 @@
         _leftArrow.enabled = NO;
         _rightArrow.enabled = NO;
         
+        _swipeLeft.enabled = NO;
+        _swipeRight.enabled = NO;
+        
         _monthLabel.text = @" ";
         
         [_collectionView reloadData];
@@ -139,15 +146,15 @@
         //NSLog(@"Signed out we did");
     }
     else {
-        [[_auth getAuthenticator] authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                                           andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                                             andParentView:self.view
-                                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-        
         [self setSignedIn:NO];
         self.signInOutButton.title = @"Sign In";
         
         [_activityIndicator startAnimating];
+        
+        [[_auth getAuthenticator] authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
+                                           andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
+                                             andParentView:self.view
+                                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
         
         //NSLog(@"Signed in we did");
     }
@@ -543,44 +550,37 @@
 #pragma mark - GoogleOAuth class delegate method implementation
 
 -(void)authorizationWasSuccessful {
-    //This is a dummy update that will be to see if the user is able to manage events.
-    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
-                       withHttpMethod:httpMethod_POST
-                   postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                  postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]];
-    
-    //NSLog(@"Getting the events for the current month");
-}
-
--(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    NSError *error;
-    
     //If we reach this point and the user is not signed in, that means the user just signed in or out.
     //The problem is that when we go to sign out, an empty json is sent after we've already set _signedIn to No.
     //  So we'll just ignore cases when we get an empty json file while we're signed out.
     //  This won't be triggered while we're signed in and getting empty json strings for empty months.
     if (!_signedIn) {
+        [self setSignedIn:YES];
+        [self setPermissionChecked:NO];
         
-        //If the response json isn't empty, then we signed in.
-        if (![responseJSONAsString isEqualToString:@""]) {
-            [self setSignedIn:YES];
-            
-            _refreshButton.enabled = YES;
-            
-            _leftArrow.enabled = YES;
-            _rightArrow.enabled = YES;
+        _refreshButton.enabled = YES;
         
-            self.signInOutButton.title = @"Sign Out";
-            
-            NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-            NSDate *date = [NSDate date];
-            
-            unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
-            NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
-            
-            [self getEventsForMonth:comps.month :comps.year];
-        }
+        _leftArrow.enabled = YES;
+        _rightArrow.enabled = YES;
+        
+        _swipeLeft.enabled = YES;
+        _swipeRight.enabled = YES;
+        
+        self.signInOutButton.title = @"Sign Out";
+        
+        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDate *date = [NSDate date];
+        
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
+        NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
+        
+        [self getEventsForMonth:comps.month :comps.year];
     }
+    //NSLog(@"Getting the events for the current month");
+}
+
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
+    NSError *error;
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
         // Get the JSON data as a dictionary.
@@ -687,6 +687,15 @@
         
         _addEventButton.title = @"Add Event";
         _addEventButton.enabled = YES;
+    }
+    
+    if (!_permissionChecked) {
+        [self setPermissionChecked:YES];
+        //This is a dummy update that will be to see if the user is able to manage events.
+        [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
+                           withHttpMethod:httpMethod_POST
+                       postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                      postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]];
     }
 }
 
