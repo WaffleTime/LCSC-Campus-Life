@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UpdateEventViewController : UIViewController
+@interface UpdateEventViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 //This will be given to us from the previous class (EventDetailViewController)
 @property (nonatomic, strong, setter=setEventInfo:) NSDictionary *eventInfo;
@@ -18,26 +18,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *where;
 @property (weak, nonatomic) IBOutlet UITextView *description;
 
-@property (weak, nonatomic) IBOutlet UILabel *category;
-@property (weak, nonatomic) IBOutlet UIStepper *categoryStepper;
+@property (weak, nonatomic) IBOutlet UISwitch *allDayEventSwitch;
 
-@property (weak, nonatomic) IBOutlet UITextField *month;
-@property (weak, nonatomic) IBOutlet UITextField *day;
-@property (weak, nonatomic) IBOutlet UITextField *year;
+@property (weak, nonatomic) IBOutlet UIDatePicker *startTimePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endTimePicker;
 
-@property (weak, nonatomic) IBOutlet UITextField *fromHour;
-@property (weak, nonatomic) IBOutlet UITextField *fromMinute;
-@property (weak, nonatomic) IBOutlet UIButton *fromPeriod;
-
-
-@property (weak, nonatomic) IBOutlet UITextField *toHour;
-@property (weak, nonatomic) IBOutlet UITextField *toMinute;
-@property (weak, nonatomic) IBOutlet UIButton *toPeriod;
+@property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
 -(IBAction) addEvent;
-
-- (IBAction)categoryStepper:(id)sender;
-
-- (IBAction)periodToggle:(UIButton *)sender;
 
 @end
