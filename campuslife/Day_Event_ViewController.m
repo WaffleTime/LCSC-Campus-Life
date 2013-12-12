@@ -100,7 +100,7 @@
     
     if ([[events getEventsForDay:_day] count]>1)
     {
-        NSLog(@"entered if-loop");
+        NSLog(@"More than one event. Entered if-loop");
         
         NSLog(@"Checking your preferences");
         
@@ -110,15 +110,13 @@
         
         while (currentPos < [newArray count])
         {
-            NSLog(@"Entered while-loop\n");
-            
             if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Entertainment"] && [preferences getPreference:1] == FALSE)
             {
                 NSLog(@"Popping Entertainment event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
-                
+            
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Academics"] && [preferences getPreference:2] == FALSE)
             {
                 NSLog(@"Popping Academics event");
@@ -149,12 +147,14 @@
             else
             {
                 currentPos++;
-                
-                NSLog(@"currentPos updated to: %d.", currentPos);
             }
         }
         
-        NSLog(@"Printing newArray size: %d\n", [newArray count]);
+        
+        
+        NSLog(@"Printing newArray size: %lu\n", (unsigned long)[newArray count]);
+        
+        
         
         if ([newArray count] > 1)
         {
@@ -164,142 +164,99 @@
             
             BOOL finished = FALSE;
             
-            while (!finished)
+            while(!finished)
             {
-                if (currentPos < [newArray count] - 1)
-                {
-                    NSRange startHr1 = NSMakeRange(11, 2);
-                    NSRange startMn1 = NSMakeRange(14, 2);
-                    NSString *startHrStr1 = [[[newArray[currentPos] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr1];
-                    NSString *startMnStr1 = [[[newArray[currentPos] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
-                    NSString *startTime1 =[startHrStr1 stringByAppendingString:startMnStr1];
-                    
-                    for (int i = *(&currentPos) + 1; i < [newArray count]; i++)
-                    {
-                        NSLog(@"\n\n Entered for-loop for sorting, i = %d \n\n", i);
-                        
-                        NSRange startHr2 = NSMakeRange(11, 2);
-                        NSRange startMn2 = NSMakeRange(14, 2);
-                        NSString *startHrStr2 = [[[newArray[i] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr2];
-                        NSString *startMnStr2 = [[[newArray[i] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
-                        NSString *startTime2 =[startHrStr2 stringByAppendingString:startMnStr2];
-                    
-                        NSLog(@"\n\n comparing start times\n\n StartTime1 = %@ \n StartTime2 = %@ \n StartTime1 > StartTime2 = %d \n\n", startTime1, startTime2, startTime1 > startTime2);
-                    
-                        if (startTime1 > startTime2)
-                        {
-                            NSDictionary *temp = newArray[currentPos];
-                            
-                            newArray[currentPos] = newArray[i];
-                            
-                            newArray[i] = temp;
-                        }
-                        else
-                        {
-                            NSRange endHr1 = NSMakeRange(11, 2);
-                            NSRange endMn1 = NSMakeRange(14, 2);
-                            NSString *endHrStr1 = [[[newArray[currentPos] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endHr1];
-                            NSString *endMnStr1 = [[[newArray[currentPos] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endMn1];
-                            NSString *endTime1 =[endHrStr1 stringByAppendingString:endMnStr1];
-                            
-                            NSRange endHr2 = NSMakeRange(11, 2);
-                            NSRange endMn2 = NSMakeRange(14, 2);
-                            NSString *endHrStr2 = [[[newArray[currentPos + 1] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endHr2];
-                            NSString *endMnStr2 = [[[newArray[currentPos + 1] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endMn2];
-                            NSString *endTime2 =[endHrStr2 stringByAppendingString:endMnStr2];
-                            
-                            if (endTime1 > endTime2)
-                            {
-                                NSDictionary *temp = newArray[currentPos];
-                                
-                                newArray[currentPos] = newArray[i];
-                                
-                                newArray[i] = temp;
-                            }
-                        }
-                        
-                        if (i == [newArray count] - 1)
-                        {
-                            currentPos = currentPos + 1;
-                            
-                            NSLog(@"Updated currentPos to %d", currentPos);
-                        }
-                    }
-                }
-                else
-                {
-                    finished = TRUE;
-                }
-            }
-        }
-        
-        /*if ([newArray count] > 1)
-        {
-            NSLog(@"Entered the sorting algorithm\n");
-            
-            for (int i = 0; i < [newArray count]; i++)
-            {
-                NSLog(@"entered into 1st for-loop");
+                NSLog(@"Entered while-loop. currentPos = %d\n\n", currentPos);
                 
-                for (int j = 0; j < [newArray count] - 1; j++)
+                int lowestItem = currentPos;
+                
+                for (int i = currentPos + 1; i < [newArray count]; i++)
                 {
-                    NSLog(@"entered into 2nd for-loop");
-                    
-                //    NSDictionary *eventTime = [[events getEventsForDay:j] objectAtIndex:indexPath.row];
-                    //NSString *eventStart = [[eventTime objectForKey:@"start"] objectForKey:@"dateTime"];
+                    NSLog(@"Entered for-loop.\n\n currentPos = %d\n lowestItem = %d\n i = %d\n\n", currentPos, lowestItem, i);
                     
                     NSRange startHr1 = NSMakeRange(11, 2);
                     NSRange startMn1 = NSMakeRange(14, 2);
-                    NSString *startHrStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr1];
-                    NSString *startMnStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
+                    NSString *startHrStr1 = [[[newArray[lowestItem] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr1];
+                    NSString *startMnStr1 = [[[newArray[lowestItem] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
                     NSString *startTime1 =[startHrStr1 stringByAppendingString:startMnStr1];
-                    int st1 = [startTime1 intValue];
+                    int start1 = [startTime1 intValue];
+                    NSLog(@"start1 = %d\n\n", start1);
                     
                     NSRange startHr2 = NSMakeRange(11, 2);
                     NSRange startMn2 = NSMakeRange(14, 2);
-                    NSString *startHrStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr2];
-                    NSString *startMnStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
+                    NSString *startHrStr2 = [[[newArray[i] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startHr2];
+                    NSString *startMnStr2 = [[[newArray[i] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
                     NSString *startTime2 =[startHrStr2 stringByAppendingString:startMnStr2];
-                    int st2 = [startTime2 intValue];
+                    int start2 = [startTime2 intValue];
+                    NSLog(@"start2 = %d\n\n", start2);
                     
-                    
-                    
-                    if (st1 > st2)
+                    if (start1 > start2)
                     {
-                        NSDictionary *temp = newArray[j];
+                        NSLog(@"\n\nApparently %d > %d.\nSetting lowestItem to %d\n\n", start1, start2, i);
                         
-                        newArray[j] = newArray[j+1];
-                        
-                        newArray[j+1] = temp;
+                        lowestItem = i;
                     }
-                    else
+                    else if (start1 == start2)
                     {
+                        NSLog(@"start times fine: checking end times\n\n");
+                        
                         NSRange endHr1 = NSMakeRange(11, 2);
                         NSRange endMn1 = NSMakeRange(14, 2);
-                        NSString *endHrStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:endHr1];
-                        NSString *endMnStr1 = [[[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:endMn1];
+                        NSString *endHrStr1 = [[[newArray[lowestItem] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endHr1];
+                        NSString *endMnStr1 = [[[newArray[lowestItem] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endMn1];
                         NSString *endTime1 =[endHrStr1 stringByAppendingString:endMnStr1];
-                        int st3 = [endTime1 intValue];
+                        int end1 = [endTime1 intValue];
+                        NSLog(@"end1 = %d\n\n", end1);
                         
                         NSRange endHr2 = NSMakeRange(11, 2);
                         NSRange endMn2 = NSMakeRange(14, 2);
-                        NSString *endHrStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:endHr2];
-                        NSString *endMnStr2 = [[[newArray[j+1] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:endMn2];
+                        NSString *endHrStr2 = [[[newArray[i] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endHr2];
+                        NSString *endMnStr2 = [[[newArray[i] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endMn2];
                         NSString *endTime2 =[endHrStr2 stringByAppendingString:endMnStr2];
-                        int st4 = [endTime2 intValue];
+                        int end2 = [endTime2 intValue];
+                        NSLog(@"end2 = %d\n\n", end2);
                         
-                        if (st3 > st4)
+                        if (end1 > end2)
                         {
-                            NSDictionary *temp = newArray[j];
+                            NSLog(@"Apparently end time %d > %d.\nSetting lowestItem to %d\n\n", end1, end2, i);
                             
-                            newArray[j] = newArray[j+1];
-                            
-                            newArray[j+1] = temp;
+                            lowestItem = i;
                         }
+                    }
+                    
+                    NSLog(@"End for-loop.\n\n currentPos = %d\n lowestItem = %d\n i = %d\n\n", currentPos, lowestItem, i);
+                }
+                
+                if (lowestItem != currentPos)
+                {
+                    NSLog(@"Had to swap currentPos[%d] and lowestPos[%d]\n\n", currentPos, lowestItem);
+                    
+                    NSDictionary *temp = newArray[currentPos];
+                    
+                    newArray[currentPos] = newArray[lowestItem];
+                    
+                    newArray[lowestItem] = temp;
+                    
+                    NSLog(@"updating currentPos to %d\n\n", currentPos + 1);
+                    
+                    currentPos += 1;
+                }
+                else
+                {
+                    currentPos += 1;
+                }
+                
+                if (currentPos == [newArray count] - 1)
+                {
+                    finished = TRUE;
+                    
+                    for (int j = 0; j < [newArray count]; j++)
+                    {
+                        NSLog(@"\n\n Index %d:\n Start: %@\n End:  %@\n\n", j, [[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"], [[newArray[j] objectForKey:@"end"] objectForKey:@"dateTime"]);
                     }
                 }
             }
-        }*/
+        }
     }
     else
     {
