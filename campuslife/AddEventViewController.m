@@ -52,7 +52,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     _auth = [Authentication getSharedInstance];
     
-
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
 }
 
@@ -135,6 +134,18 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [alert show];
         }
     }
+}
+
+- (IBAction)allDayEventToggle:(id)sender {
+    if (_allDayEventSwitch.on) {
+        _startTimePicker.datePickerMode = UIDatePickerModeDate;
+        _endTimePicker.datePickerMode = UIDatePickerModeDate;
+    }
+    else {
+        _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    }
+    //NSLog(@"allDaySwitch is on: %d %d", _allDayEventSwitch.on, _endTimePicker.hidden);
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

@@ -73,12 +73,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if ([_eventInfo[@"start"] objectForKey:@"dateTime"] != nil) {
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ"];
-        NSDate *eventDate = [dateFormatter dateFromString:_eventInfo[@"start"][@"dateTime"]];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        NSDate *eventDate = [dateFormatter dateFromString:[_eventInfo[@"start"][@"dateTime"] substringToIndex:19]];
         
         [_startTimePicker setDate:eventDate];
         
-        eventDate =[dateFormatter dateFromString:_eventInfo[@"end"][@"dateTime"]];
+        eventDate =[dateFormatter dateFromString:[_eventInfo[@"end"][@"dateTime"] substringToIndex:19]];
         
         [_endTimePicker setDate:eventDate];
     }
@@ -86,12 +86,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     else {
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ"];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
         NSDate *eventDate = [dateFormatter dateFromString:_eventInfo[@"start"][@"date"]];
         
-        [_startTimePicker setDate:eventDate];
+        [_startTimePicker setDate:eventDate animated:NO];
         
         [_allDayEventSwitch setOn:YES];
+        
+        _endTimePicker.enabled = NO;
     }
 }
 
@@ -175,6 +177,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [alert show];
         }
     }
+}
+
+- (IBAction)allDayEventToggle:(id)sender {
+    _endTimePicker.enabled = !_allDayEventSwitch.on;
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

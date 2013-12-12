@@ -138,6 +138,20 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
 }
 
+- (IBAction)allDayEventToggle:(id)sender {
+    _startTimePicker.hidden = _allDayEventSwitch.on;
+    _endTimePicker.hidden = _allDayEventSwitch.on;
+    
+    if (_allDayEventSwitch.on) {
+        _startTimeLabel.text = @" ";
+        _endTimeLabel.text = @" ";
+    }
+    else {
+        _startTimeLabel.text = @"Start of Event";
+        _endTimeLabel.text = @"End of Event";
+    }
+}
+
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     //One column

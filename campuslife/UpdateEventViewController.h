@@ -26,5 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
 -(IBAction) addEvent;
+- (IBAction)allDayEventToggle:(id)sender;
 
 @end

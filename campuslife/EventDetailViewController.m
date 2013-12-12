@@ -34,9 +34,9 @@
     _categoryLabel.text = [_eventDict objectForKey:@"category"];
     _descriptionTextView.text = [_eventDict objectForKey:@"description"];
     
-    if ([[Authentication getSharedInstance] getUserCanManageEvents]) {
-        _addEventButton.enabled = YES;
-        _addEventButton.titleLabel.text = @"Update Event";
+    if (![[Authentication getSharedInstance] getUserCanManageEvents]) {
+        _addEventButton.titleLabel.text = @" ";
+        _addEventButton.enabled = NO;
     }
     
     if ([_eventDict[@"start"] objectForKey:@"dateTime"] != nil) {

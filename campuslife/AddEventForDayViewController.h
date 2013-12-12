@@ -19,11 +19,14 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *allDayEventSwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *startTimePicker;
 @property (weak, nonatomic) IBOutlet UIDatePicker *endTimePicker;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
 -(IBAction) addEvent;
+- (IBAction)allDayEventToggle:(id)sender;
 
 @end

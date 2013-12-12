@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *endTimePicker;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
+
 -(IBAction) addEvent;
+- (IBAction)allDayEventToggle:(id)sender;
 
 @end
