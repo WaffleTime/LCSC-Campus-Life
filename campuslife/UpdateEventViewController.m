@@ -91,9 +91,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         [_startTimePicker setDate:eventDate animated:NO];
         
+        eventDate = [dateFormatter dateFromString:_eventInfo[@"end"][@"date"]];
+        
+        [_endTimePicker setDate:eventDate animated:NO];
+        
         [_allDayEventSwitch setOn:YES];
         
-        _endTimePicker.enabled = NO;
+        _startTimePicker.datePickerMode = UIDatePickerModeDate;
+        _endTimePicker.datePickerMode = UIDatePickerModeDate;
     }
 }
 
@@ -180,7 +185,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 - (IBAction)allDayEventToggle:(id)sender {
-    _endTimePicker.enabled = !_allDayEventSwitch.on;
+    if (_allDayEventSwitch.on) {
+        _startTimePicker.datePickerMode = UIDatePickerModeDate;
+        _endTimePicker.datePickerMode = UIDatePickerModeDate;
+    }
+    else {
+        _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    }
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
