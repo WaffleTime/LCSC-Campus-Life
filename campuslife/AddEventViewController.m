@@ -86,13 +86,51 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
             [timeFormatter setDateFormat:@"HH:mm"];
             
-            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                                      [dateFormatter stringFromDate:_startTimePicker.date],
-                                      [timeFormatter stringFromDate:_endTimePicker.date],
-                                      _summary.text,
-                                      _description.text,
-                                      _where.text,
-                                      _categories[[_categoryPicker selectedRowInComponent:0]]];
+            NSString *quickAddText = @"";
+            
+            //No Repeat
+            if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 0) {
+                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                                [dateFormatter stringFromDate:_startTimePicker.date],
+                                [timeFormatter stringFromDate:_endTimePicker.date],
+                                _summary.text,
+                                _description.text,
+                                _where.text,
+                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            }
+            //Daily Repeat
+            else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 1) {
+                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ repeat daily for %d days Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                                [dateFormatter stringFromDate:_startTimePicker.date],
+                                [timeFormatter stringFromDate:_endTimePicker.date],
+                                (int)(roundf(_numberOfRepeatSlider.value*100.0)/100.0),
+                                _summary.text,
+                                _description.text,
+                                _where.text,
+                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            }
+            //Weekly Repeat
+            else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 2) {
+                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ repeat weekly for %d weeks Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                                [dateFormatter stringFromDate:_startTimePicker.date],
+                                [timeFormatter stringFromDate:_endTimePicker.date],
+                                (int)(roundf(_numberOfRepeatSlider.value*100.0)/100.0),
+                                _summary.text,
+                                _description.text,
+                                _where.text,
+                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            }
+            //Monthly Repeat
+            else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 3) {
+                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ repeat monthly for %d months Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+                                [dateFormatter stringFromDate:_startTimePicker.date],
+                                [timeFormatter stringFromDate:_endTimePicker.date],
+                                (int)(roundf(_numberOfRepeatSlider.value*100.0)/100.0),
+                                _summary.text,
+                                _description.text,
+                                _where.text,
+                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            }
             
             NSLog(@"The quickAdd text: %@", quickAddText);
             
@@ -112,8 +150,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"MM/dd/yyyy"];
             
-            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
+            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
                                       [dateFormatter stringFromDate:_startTimePicker.date],
+                                      [dateFormatter stringFromDate:_endTimePicker.date],
                                       _summary.text,
                                       _description.text,
                                       _where.text,
@@ -140,13 +179,79 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if (_allDayEventSwitch.on) {
         _startTimePicker.datePickerMode = UIDatePickerModeDate;
         _endTimePicker.datePickerMode = UIDatePickerModeDate;
+        
+        _repeatLabel.hidden = YES;
+        _repeatSlider.hidden = YES;
+        
+        _numberOfRepeatLabel.hidden = YES;
+        _numberOfRepeatSlider.hidden = YES;
     }
     else {
         _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        _endTimePicker.datePickerMode = UIDatePickerModeTime;
+        
+        _repeatLabel.hidden = NO;
+        _repeatSlider.hidden = NO;
+        
+        _numberOfRepeatLabel.hidden = NO;
+        _numberOfRepeatSlider.hidden = NO;
     }
     //NSLog(@"allDaySwitch is on: %d %d", _allDayEventSwitch.on, _endTimePicker.hidden);
 }
+
+- (IBAction)repeatSliderChanged:(UISlider *)sender {
+    //Check to see if the second slider needs to be shown.
+    if ([_numberOfRepeatLabel.text isEqualToString:@" "]
+        && (int)(roundf(sender.value*100.0)/100.0) != 0) {
+        _numberOfRepeatSlider.hidden = NO;
+    }
+    switch((int)(roundf(sender.value*100.0)/100.0)) {
+        case 0:
+            _numberOfRepeatLabel.text = @" ";
+            _numberOfRepeatSlider.hidden = YES;
+            
+            _repeatLabel.text = @"No Repeat";
+            break;
+        case 1:
+            _repeatLabel.text = @"Daily Repeat";
+            
+            _numberOfRepeatSlider.value = 2.5;
+            _numberOfRepeatSlider.maximumValue = 14.5;
+            
+            _numberOfRepeatLabel.text = @"For 2 Days";
+            break;
+        case 2:
+            _repeatLabel.text = @"Weekly Repeat";
+            
+            _numberOfRepeatSlider.value = 2.5;
+            _numberOfRepeatSlider.maximumValue = 8.5;
+            
+            _numberOfRepeatLabel.text = @"For 2 Weeks";
+            break;
+        case 3:
+            _repeatLabel.text = @"Monthly Repeat";
+            
+            _numberOfRepeatSlider.value = 2.5;
+            _numberOfRepeatSlider.maximumValue = 12.5;
+            
+            _numberOfRepeatLabel.text = @"For 2 Months";
+            break;
+            
+    }
+}
+
+- (IBAction)numberOfRepeatSliderChanged:(UISlider *)sender {
+    if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 1) {
+        _numberOfRepeatLabel.text = [NSString stringWithFormat:@"For %d Days", (int)(roundf(sender.value*100.0)/100.0)];
+    }
+    else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 2) {
+        _numberOfRepeatLabel.text = [NSString stringWithFormat:@"For %d Weeks", (int)(roundf(sender.value*100.0)/100.0)];
+    }
+    else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 3) {
+        _numberOfRepeatLabel.text = [NSString stringWithFormat:@"For %d Months", (int)(roundf(sender.value*100.0)/100.0)];
+    }
+}
+
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {

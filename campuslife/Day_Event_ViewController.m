@@ -59,6 +59,8 @@
     
     [self setDay:[events getSelectedDay]];
     
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ %d, %d", [events getMonthBarDate], [events getSelectedDay], [events getSelectedYear]];
+    
     sortedArray = [self eventSorter:[events getEventsForDay:_day]];
     
     [self.tableView reloadData];

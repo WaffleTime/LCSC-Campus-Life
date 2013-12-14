@@ -217,7 +217,7 @@ static MonthlyEvents *sharedInstance;
             break;
     }
     
-    return [month stringByAppendingString:[NSString stringWithFormat:@", %d", _selectedYear]];
+    return month;
 }
 
 //@return Should be an integer in [28,31].

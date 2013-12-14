@@ -205,7 +205,7 @@
     
     [_events offsetMonth:-1];
     
-    _monthLabel.text = [_events getMonthBarDate];
+    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
     
     [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     
@@ -217,7 +217,7 @@
     
     [_events offsetMonth:1];
     
-    _monthLabel.text = [_events getMonthBarDate];
+    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
     
     [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     
@@ -568,13 +568,7 @@
         
         self.signInOutButton.title = @"Sign Out";
         
-        NSCalendar * calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDate *date = [NSDate date];
-        
-        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
-        NSDateComponents *comps = [calendar components:unitFlags fromDate:date];
-        
-        [self getEventsForMonth:comps.month :comps.year];
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     }
     //NSLog(@"Getting the events for the current month");
 }
@@ -606,28 +600,10 @@
             
             [_events refreshArrayOfEvents];
             
-            _monthLabel.text = [_events getMonthBarDate];
+            _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
             
             //Loop through the events
             for (int i=0; i<[eventsInfo count]; i++) {
-                NSInteger day;
-                
-                //Get the day from the event's dictionary
-                if ([[[eventsInfo objectAtIndex:i] objectForKey:@"start"] objectForKey:@"dateTime"] != nil) {
-                    day = [[[[[eventsInfo objectAtIndex:i]
-                                        objectForKey:@"start"]
-                                       objectForKey:@"dateTime"]
-                                      substringWithRange:NSMakeRange(8, 2)]
-                                     integerValue];
-                }
-                else {
-                    day = [[[[[eventsInfo objectAtIndex:i]
-                                        objectForKey:@"start"]
-                                       objectForKey:@"date"]
-                                      substringWithRange:NSMakeRange(8, 2)]
-                                     integerValue];
-                }
-                
                 //Now we must parse the summary and alter the dictionary so that it can be
                 //  used in the rest of the program easier. So we'll call parseSummaryForKey in this class
                 //  to pull info out of the Summary field in the Dictionary and place
@@ -670,8 +646,70 @@
                 
                 NSLog(@"%@", currentEventInfo);
                 
-                //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                [_events AppendEvent:day :currentEventInfo];
+                NSInteger startDay = 0;
+                NSInteger endDay = 0;
+
+                //Determine if the event isn't an all day event type.
+                if ([[currentEventInfo objectForKey:@"start"] objectForKey:@"dateTime"] != nil) {
+                    //Determine if the startDay is within the selected month.
+                    if ([[currentEventInfo[@"start"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue]
+                        == [_events getSelectedMonth]) {
+                        startDay = [[[[currentEventInfo objectForKey:@"start"]
+                                                        objectForKey:@"dateTime"]
+                                                  substringWithRange:NSMakeRange(8, 2)]
+                                                    integerValue];
+                    }
+                    else {
+                        //Set the startDay to the first day of the month.
+                        startDay = 1;
+                    }
+                    
+                    //Determine if the endDay is within the selected month.
+                    if ([[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue]
+                        == [_events getSelectedMonth]) {
+                        endDay = [[[[currentEventInfo objectForKey:@"end"]
+                                                      objectForKey:@"dateTime"]
+                                                substringWithRange:NSMakeRange(8, 2)]
+                                                integerValue];
+                    }
+                    else {
+                        //Set the endDay to the last day of the month.
+                        endDay = [_events getDaysOfMonth];
+                    }
+                }
+                else {
+                    //Determine if the startDay is within the selected month.
+                    if ([[currentEventInfo[@"start"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue]
+                        == [_events getSelectedMonth]) {
+                        startDay = [[[[currentEventInfo objectForKey:@"start"]
+                                      objectForKey:@"date"]
+                                     substringWithRange:NSMakeRange(8, 2)]
+                                    integerValue];
+                    }
+                    else {
+                        //Set the startDay to the first day of the month.
+                        startDay = 1;
+                    }
+                    
+                    //Determine if the endDay is within the selected month.
+                    if ([[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue]
+                        == [_events getSelectedMonth]) {
+                        endDay = [[[[currentEventInfo objectForKey:@"end"]
+                                    objectForKey:@"date"]
+                                   substringWithRange:NSMakeRange(8, 2)]
+                                  integerValue];
+                    }
+                    else {
+                        //Set the endDay to the last day of the month.
+                        endDay = [_events getDaysOfMonth];
+                    }
+                }
+                
+                //Add events for the startday all the way up to the end day.
+                for (int day=startDay; day<endDay+1; day++) {
+                    //This then uses that day as an index and inserts the currentEvent into that indice's array.
+                    [_events AppendEvent:day :currentEventInfo];
+                }
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
