@@ -68,9 +68,22 @@
     }
 }
 
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)devToken
 {
-	NSLog(@"My token is: %@", deviceToken);
+	[self registerDeviceToken:devToken];
+}
+
+- (void)registerDeviceToken:(NSData *)deviceToken {
+    NSLog(@"My token is: %@", deviceToken);
+    
+    NSMutableString *string = [[NSMutableString alloc]init];
+    int length = [deviceToken length];
+    char const *bytes = [deviceToken bytes];
+    for (int i=0; i< length; i++) {
+        [string appendString:[NSString stringWithFormat:@"%02.2hhx",bytes[i]]];
+    }
+    NSLog(@"%@",string);
+    //    [self performSelectorInBackground:@selector(connectionWebRegister:) withObject:string];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
