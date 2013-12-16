@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *allDayLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *fromTimeLabel;
@@ -25,5 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *addEventButton;
 
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventDict;
+
+- (int)getIndexOfSubstringInString:(NSString *)substring :(NSString *)string;
 
 @end

@@ -51,6 +51,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     _auth = [Authentication getSharedInstance];
     
+    [_auth setDelegate:self];
+    
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
     
     

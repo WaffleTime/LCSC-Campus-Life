@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoogleOAuth.h"
 
-@interface Day_Event_ViewController : UITableViewController
+@interface Day_Event_ViewController : UITableViewController<GoogleOAuthDelegate>
 
 /*
  *  Contains the index for month array.

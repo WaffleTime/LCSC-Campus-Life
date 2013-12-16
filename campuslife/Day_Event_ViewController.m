@@ -9,6 +9,7 @@
 #import "Day_Event_ViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
+#import "Authentication.h"
 #import "Preferences.h"
 #import "EventDetailViewController.h"
 
@@ -19,7 +20,7 @@
     
     MonthlyEvents *events;
     
-    NSArray *sortedArray;
+    NSMutableArray *sortedArray;
     
 }
 
@@ -94,7 +95,7 @@
 
 
 
-- (NSArray *)eventSorter:(NSArray *)unsorted
+- (NSMutableArray *)eventSorter:(NSArray *)unsorted
 {
     NSMutableArray *newArray = [[NSMutableArray alloc] init];
     
@@ -265,7 +266,7 @@
         NSLog(@"didn't enter if-loop");
     }
     
-    return (NSArray *)newArray;
+    return newArray;
 }
 
 
@@ -392,6 +393,24 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Authentication *auth = [Authentication getSharedInstance];
+        
+        [auth setDelegate:self];
+        
+        [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/%@", sortedArray[indexPath.row][@"id"]]
+                           withHttpMethod:httpMethod_DELETE
+                       postParameterNames:[NSArray arrayWithObjects: nil]
+                      postParameterValues:[NSArray arrayWithObjects: nil]];
+        
+        [sortedArray removeObjectAtIndex:indexPath.row];
+        
+        [self.tableView reloadData];
+    }
+}
+
 
 
 
@@ -427,6 +446,39 @@
     }
     
     return time;
+}
+
+
+#pragma mark - GoogleOAuth class delegate method implementation
+
+-(void)authorizationWasSuccessful {
+}
+
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+    NSLog(@"%@", responseJSONAsString);
+}
+
+-(void)accessTokenWasRevoked{
+}
+
+
+-(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
+    // Just log the error messages.
+    NSLog(@"%@", errorShortDescription);
+    NSLog(@"%@", errorDetails);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
+                                                    message: errorDetails
+                                                   delegate: nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+
+-(void)errorInResponseWithBody:(NSString *)errorMessage{
+    // Just log the error message.
+    NSLog(@"%@", errorMessage);
 }
 
 

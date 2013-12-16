@@ -33,5 +33,9 @@ static Authentication *_sharedInstance;
     _googleOAuth = authenticator;
 }
 
+-(void) setDelegate:(UIViewController<GoogleOAuthDelegate> *)delegate {
+    [_googleOAuth setGOAuthDelegate:delegate];
+}
+
 
 @end

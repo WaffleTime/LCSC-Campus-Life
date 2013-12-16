@@ -112,6 +112,8 @@
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
     
+    [_auth setDelegate:self];
+    
     if (_signedIn) {
         [_activityIndicator startAnimating];
         
@@ -973,6 +975,13 @@
     // Just log the error messages.
     NSLog(@"%@", errorShortDescription);
     NSLog(@"%@", errorDetails);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
+                                                    message: errorDetails
+                                                   delegate: nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 

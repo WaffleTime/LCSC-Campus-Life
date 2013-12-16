@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoogleOAuth.h"
 
-@interface UpdateEventViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@interface UpdateEventViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 //This will be given to us from the previous class (EventDetailViewController)
 @property (nonatomic, strong, setter=setEventInfo:) NSDictionary *eventInfo;

@@ -24,5 +24,7 @@
 
 -(void) setAuthenticator:(GoogleOAuth *)authenticator;
 
+-(void) setDelegate:(UIViewController<GoogleOAuthDelegate> *)delegate;
+
 
 @end
