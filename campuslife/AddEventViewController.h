@@ -13,23 +13,23 @@
 
 @interface AddEventViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *summary;
-@property (weak, nonatomic) IBOutlet UITextField *where;
-@property (weak, nonatomic) IBOutlet UITextView *description;
+@property (strong, nonatomic) IBOutlet UITextField *summary;
+@property (strong, nonatomic) IBOutlet UITextField *where;
+@property (strong, nonatomic) IBOutlet UITextView *description;
 
-@property (weak, nonatomic) IBOutlet UISwitch *allDayEventSwitch;
+@property (strong, nonatomic) IBOutlet UISwitch *allDayEventSwitch;
 
-@property (weak, nonatomic) IBOutlet UIDatePicker *startTimePicker;
-@property (weak, nonatomic) IBOutlet UIDatePicker *endTimePicker;
+@property (strong, nonatomic) IBOutlet UIDatePicker *startTimePicker;
+@property (strong, nonatomic) IBOutlet UIDatePicker *endTimePicker;
 
-@property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
+@property (strong, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
 
-@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfRepeatLabel;
+@property (strong, nonatomic) IBOutlet UILabel *repeatLabel;
+@property (strong, nonatomic) IBOutlet UILabel *numberOfRepeatLabel;
 
-@property (weak, nonatomic) IBOutlet UISlider *repeatSlider;
-@property (weak, nonatomic) IBOutlet UISlider *numberOfRepeatSlider;
+@property (strong, nonatomic) IBOutlet UISlider *repeatSlider;
+@property (strong, nonatomic) IBOutlet UISlider *numberOfRepeatSlider;
 
 
 -(IBAction) addEvent;

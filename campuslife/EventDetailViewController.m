@@ -82,7 +82,7 @@
             toHour = @"12";
         }
         
-        _toTimeLabel.text = [NSString stringWithFormat:@"%@:%@%@", toHour, toMinute, toPeriod];
+        _toTimeLabel.text = [NSString stringWithFormat:@"to %@:%@%@", toHour, toMinute, toPeriod];
         
         if (![_eventDict[@"start"][@"dateTime"] isEqualToString:_eventDict[@"end"][@"dateTime"]]) {
             _dateLabel.text = [_dateLabel.text stringByAppendingString:[NSString stringWithFormat:@" to %@/%@/%@", [_eventDict[@"end"][@"dateTime"] substringWithRange:monthRange], [_eventDict[@"end"][@"dateTime"] substringWithRange:dayRange], [_eventDict[@"end"][@"dateTime"] substringWithRange:yearRange]]];

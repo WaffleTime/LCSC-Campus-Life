@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
+//This is for checking to see if an ipad is being used.
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
+
 
 #import "AddEventViewController.h"
 #import "Authentication.h"
@@ -55,6 +59,19 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [_auth setDelegate:self];
     
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
+    
+    //Check to see if we're using the iphone.
+    if (IDIOM != IPAD) {
+        _startTimePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0,0,0,162)];
+        _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        _startTimePicker.date = [NSDate date];
+        [self.view addSubview:_startTimePicker];
+        
+        _endTimePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0,180,0,162)];
+        _endTimePicker.datePickerMode = UIDatePickerModeTime;
+        _endTimePicker.date = [NSDate date];
+        [self.view addSubview:_endTimePicker];
+    }
 }
 
 - (void)didReceiveMemoryWarning

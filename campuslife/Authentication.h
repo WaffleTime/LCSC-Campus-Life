@@ -11,6 +11,7 @@
 
 @interface Authentication : NSObject
 
+
 // A GoogleOAuth object that handles everything regarding the Google.
 @property (nonatomic, strong) GoogleOAuth *googleOAuth;
 
