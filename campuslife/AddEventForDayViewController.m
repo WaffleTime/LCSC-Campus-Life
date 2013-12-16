@@ -63,18 +63,38 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 
 -(IBAction) addEvent {
-    BOOL readyToAddEvent = YES;
+    BOOL readyToAddEvent = NO;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
     if ([_summary.text isEqualToString:@""]) {
-        readyToAddEvent = NO;
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Blank Field"
                                                         message: @"The Summary field is empty, please fill it in and try again."
                                                        delegate: nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+    }
+    else {
+        if (!_allDayEventSwitch.on) {
+            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+            [timeFormatter setDateFormat:@"HHmm"];
+            //Check the times to see if they are valid.
+            if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+                < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                                message: @"The end time is less than the start time."
+                                                               delegate: nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            else
+            {
+                //If all the previous checks are alright, then we can add an event.
+                readyToAddEvent = YES;
+            }
+        }
     }
     
     

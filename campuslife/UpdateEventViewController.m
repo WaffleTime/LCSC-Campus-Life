@@ -116,12 +116,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 
 -(IBAction) addEvent {
-    BOOL readyToAddEvent = YES;
+    BOOL readyToAddEvent = NO;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
-    if ([_summary.text isEqualToString:@""]) {
-        readyToAddEvent = NO;
-        
+    if ([_summary.text isEqualToString:@""])
+    {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Blank Field"
                                                         message: @"The Summary field is empty, please fill it in and try again."
                                                        delegate: nil
@@ -129,8 +128,96 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                               otherButtonTitles:nil];
         [alert show];
     }
-    
-    
+    //We will do some other checking on the start and end times to see if they are valid.
+    else
+    {
+        //See if comparing the dates is needed.
+        if (_allDayEventSwitch.on)
+        {
+            NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
+            [yearFormatter setDateFormat:@"yyyy"];
+            
+            //Check if the end year is less than the start year
+            if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
+                < [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                                message: @"The end year is less than the start year."
+                                                               delegate: nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            else if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
+                     == [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+            {
+                NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
+                [monthFormatter setDateFormat:@"MM"];
+                //Now we check the months.
+                if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
+                    < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
+                {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                                    message: @"The end month is less than the start month."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }
+                else if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
+                         == [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
+                {
+                    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
+                    [dayFormatter setDateFormat:@"dd"];
+                    //Now we check the days.
+                    if ([[dayFormatter stringFromDate:_endTimePicker.date] intValue]
+                        < [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
+                    {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                                        message: @"The end day is less than the start day."
+                                                                       delegate: nil
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                    }
+                    else
+                    {
+                        //If all the previous checks are alright, then we can add an event.
+                        readyToAddEvent = YES;
+                    }
+                }
+                else {
+                    readyToAddEvent = YES;
+                }
+            }
+            else {
+                readyToAddEvent = YES;
+            }
+        }
+        //So we only must compare the times.
+        else
+        {
+            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+            [timeFormatter setDateFormat:@"HHmm"];
+            //Now we check the times.
+            if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+                < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                                message: @"The end time is less than the start time."
+                                                               delegate: nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
+            else
+            {
+                //If all the previous checks are alright, then we can add an event.
+                readyToAddEvent = YES;
+            }
+        }
+    }
+
     if (readyToAddEvent) {
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/%@", _eventInfo[@"id"]]
                            withHttpMethod:httpMethod_DELETE
@@ -204,6 +291,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
         else {
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -230,6 +319,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
 }

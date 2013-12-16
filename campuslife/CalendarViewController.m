@@ -111,6 +111,12 @@
     NSLog(@"view appeared");
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    
+    if (_signedIn) {
+        [_activityIndicator startAnimating];
+        
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -196,8 +202,6 @@
             [_cat5Btn setHighlighted:NO];
             break;
     }
-    
-    [_collectionView reloadData];
 }
 
 - (IBAction)backMonthOffset:(id)sender {
@@ -646,69 +650,290 @@
                 
                 NSLog(@"%@", currentEventInfo);
                 
-                NSInteger startDay = 0;
-                NSInteger endDay = 0;
-
+                int startDay = 0;
+                int startMonth = 0;
+                int startYear = 0;
+                
+                int endDay = 0;
+                
                 //Determine if the event isn't an all day event type.
                 if ([[currentEventInfo objectForKey:@"start"] objectForKey:@"dateTime"] != nil) {
-                    //Determine if the startDay is within the selected month.
-                    if ([[currentEventInfo[@"start"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue]
-                        == [_events getSelectedMonth]) {
-                        startDay = [[[[currentEventInfo objectForKey:@"start"]
-                                                        objectForKey:@"dateTime"]
-                                                  substringWithRange:NSMakeRange(8, 2)]
-                                                    integerValue];
-                    }
-                    else {
-                        //Set the startDay to the first day of the month.
-                        startDay = 1;
-                    }
+                    startDay = [[[[currentEventInfo objectForKey:@"start"]
+                                  objectForKey:@"dateTime"]
+                                 substringWithRange:NSMakeRange(8, 2)]
+                                integerValue];
                     
-                    //Determine if the endDay is within the selected month.
-                    if ([[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue]
-                        == [_events getSelectedMonth]) {
-                        endDay = [[[[currentEventInfo objectForKey:@"end"]
-                                                      objectForKey:@"dateTime"]
-                                                substringWithRange:NSMakeRange(8, 2)]
-                                                integerValue];
+                    startMonth = [[currentEventInfo[@"start"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue];
+                    
+                    startYear = [[currentEventInfo[@"start"][@"dateTime"] substringWithRange:NSMakeRange(0, 4)] intValue];
+                    
+                    //The endDay must not be the day of the month that it is on, but the number of days from the first day
+                    //  of the startMonth.
+                    if (startYear == [[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(0, 4)] intValue]) {
+                        for (int month=startMonth; month<[[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue]; month++) {
+                            endDay += [_events getDaysOfMonth:month :startYear];
+                        }
+                        //Account for days in endMonth
+                        endDay += [[[[currentEventInfo objectForKey:@"end"]
+                                     objectForKey:@"dateTime"]
+                                    substringWithRange:NSMakeRange(8, 2)]
+                                   integerValue];
                     }
                     else {
-                        //Set the endDay to the last day of the month.
-                        endDay = [_events getDaysOfMonth];
+                        //At the very beginning we'll be working with probably not a full year.
+                        for (int month=startMonth; month<13; month++) {
+                            endDay += [_events getDaysOfMonth:month :startYear];
+                        }
+                        
+                        //Start by accounting for year differences.
+                        for (int year=startYear+1; year<[[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(0, 4)] intValue]+1; year++) {
+                            int endMonth = 12;
+                            //This makes sure that we stop on the month prior to the selected month
+                            //  and then add in the days for that month.
+                            if (year == [[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(0, 4)] intValue]) {
+                                endMonth = [[currentEventInfo[@"end"][@"dateTime"] substringWithRange:NSMakeRange(5, 2)] intValue]-1;
+                                //Account for days in endMonth
+                                endDay += [[[[currentEventInfo objectForKey:@"end"]
+                                             objectForKey:@"dateTime"]
+                                            substringWithRange:NSMakeRange(8, 2)]
+                                           integerValue]-1;
+                            }
+                            
+                            //This only takes into account full months strictly inbetween the start and end months.
+                            for (int month=1; month<endMonth+1; month++) {
+                                endDay += [_events getDaysOfMonth:month :year];
+                            }
+                        }
                     }
                 }
                 else {
-                    //Determine if the startDay is within the selected month.
-                    if ([[currentEventInfo[@"start"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue]
-                        == [_events getSelectedMonth]) {
-                        startDay = [[[[currentEventInfo objectForKey:@"start"]
-                                      objectForKey:@"date"]
-                                     substringWithRange:NSMakeRange(8, 2)]
-                                    integerValue];
-                    }
-                    else {
-                        //Set the startDay to the first day of the month.
-                        startDay = 1;
-                    }
+                    startDay = [[[[currentEventInfo objectForKey:@"start"]
+                                  objectForKey:@"date"]
+                                 substringWithRange:NSMakeRange(8, 2)]
+                                integerValue];
                     
-                    //Determine if the endDay is within the selected month.
-                    if ([[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue]
-                        == [_events getSelectedMonth]) {
-                        endDay = [[[[currentEventInfo objectForKey:@"end"]
-                                    objectForKey:@"date"]
-                                   substringWithRange:NSMakeRange(8, 2)]
-                                  integerValue];
+                    startMonth = [[currentEventInfo[@"start"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue];
+                    
+                    startYear = [[currentEventInfo[@"start"][@"date"] substringWithRange:NSMakeRange(0, 4)] intValue];
+                    
+                    //The endDay must not be the day of the month that it is on, but the number of days from the first day
+                    //  of the startMonth.
+                    if (startYear == [[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(0, 4)] intValue]) {
+                        for (int month=startMonth; month<[[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue]; month++) {
+                            endDay += [_events getDaysOfMonth:month :startYear];
+                        }
+                        //Account for days in endMonth
+                        endDay += [[[[currentEventInfo objectForKey:@"end"]
+                                     objectForKey:@"date"]
+                                    substringWithRange:NSMakeRange(8, 2)]
+                                   integerValue];
                     }
                     else {
-                        //Set the endDay to the last day of the month.
-                        endDay = [_events getDaysOfMonth];
+                        //At the very beginning we'll be working with probably not a full year.
+                        for (int month=startMonth; month<13; month++) {
+                            endDay += [_events getDaysOfMonth:month :startYear];
+                        }
+                        
+                        //Start by accounting for year differences.
+                        for (int year=startYear+1; year<[[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(0, 4)] intValue]+1; year++) {
+                            int endMonth = 12;
+                            //This makes sure that we stop on the month prior to the selected month
+                            //  and then add in the days for that month.
+                            if (year == [[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(0, 4)] intValue]) {
+                                endMonth = [[currentEventInfo[@"end"][@"date"] substringWithRange:NSMakeRange(5, 2)] intValue]-1;
+                                //Account for days in endMonth
+                                endDay += [[[[currentEventInfo objectForKey:@"end"]
+                                             objectForKey:@"date"]
+                                            substringWithRange:NSMakeRange(8, 2)]
+                                           integerValue]-1;
+                            }
+                            
+                            //This only takes into account full months strictly inbetween the start and end months.
+                            for (int month=1; month<endMonth+1; month++) {
+                                endDay += [_events getDaysOfMonth:month :year];
+                            }
+                        }
                     }
                 }
                 
-                //Add events for the startday all the way up to the end day.
-                for (int day=startDay; day<endDay+1; day++) {
-                    //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                    [_events AppendEvent:day :currentEventInfo];
+                int freq = 1;
+                int repeat = 1;
+                
+                //If an event is reocurring, then we must account for that.
+                if ([currentEventInfo objectForKey:@"recurrence"] != nil) {
+                    NSLog(@"recurrence: %@", currentEventInfo[@"recurrence"][0]);
+                    
+                    //The beginning of the substring that represents the freq of the recurrence.
+                    int freqSubstringIndx = 11;
+                    
+                    //Thankfully there is only one semicolon in the string. So we use that to find the length of the frequency.
+                    int freqLen = [currentEventInfo[@"recurrence"][0] rangeOfString:@";"].location;
+                    
+                    freqLen -= freqSubstringIndx;
+
+                    //This will prevent any problems regarding the recurrence value.
+                    //  Events that repeat forever will not be usable.
+                    if (freqLen <= 250) {
+                        NSString *frequency = [currentEventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(freqSubstringIndx, freqLen)];
+                        
+                        if ([frequency isEqualToString:@"DAILY"]) {
+                            freq = 1;
+                        }
+                        else if ([frequency isEqualToString:@"WEEKLY"]) {
+                            freq = 7;
+                        }
+                        else if ([frequency isEqualToString:@"MONTHLY"]) {
+                            freq = 31;
+                        }
+                        
+                        //This 6 offsets the index so that it represents the beginning of the date we want.
+                        int untilSubstringIndx = [self getIndexOfSubstringInString:@"UNTIL=":currentEventInfo[@"recurrence"][0]];
+                        
+                        if (untilSubstringIndx != -1) {
+                            //In here we'll determine the number of ocurrences.
+                            
+                            untilSubstringIndx += 6;
+                            //Get the until substring
+                            NSString *untilString = [currentEventInfo[@"recurrence"][0] substringFromIndex:untilSubstringIndx];
+                            
+                            //Determine if the start and end are within the selected month.
+                            if (startYear == [[untilString substringWithRange:NSMakeRange(0,4)] intValue]
+                                && startMonth == [[untilString substringWithRange:NSMakeRange(4,2)] intValue]
+                                && startYear == [_events getSelectedYear]
+                                && startMonth == [_events getSelectedMonth]) {
+                                repeat = ([[untilString substringWithRange:NSMakeRange(6,2)] intValue] - startDay)/freq;
+                            }
+                            //If they aren't then we need to determine the amount of days between the start and end.
+                            else {
+                                //Add up all of the days for the months inbetween the start and end. Then do the same formula to calculate the repeat.
+                                
+                                //We know that at least the startMonth is not within the selected month.
+                                
+                                //These days is just the length from start to finish no matter if there are some holes in the middle.
+                                int daysInEventDuration = 0;
+                                
+                                if (startYear == [_events getSelectedYear]) {
+                                    //Account for days in startMonth
+                                    daysInEventDuration += [_events getDaysOfMonth:startMonth :startYear]-startDay+1;
+                                    
+                                    for (int month=startMonth+1; month<[_events getSelectedMonth]; month++) {
+                                        daysInEventDuration += [_events getDaysOfMonth:month :startYear];
+                                    }
+                                    //Account for days in endMonth
+                                    daysInEventDuration += [[untilString substringWithRange:NSMakeRange(6,2)] intValue]-1;
+                                }
+                                else {
+                                    //Account for days in startMonth
+                                    daysInEventDuration += [_events getDaysOfMonth:startMonth :startYear]-startDay+1;
+                                    
+                                    //At the very beginning we'll be working with probably not a full year.
+                                    for (int month=startMonth+1; month<13; month++) {
+                                        daysInEventDuration += [_events getDaysOfMonth:month :startYear];
+                                    }
+                                    
+                                    //Start by accounting for year differences.
+                                    for (int year=startYear+1; year<[_events getSelectedYear]+1; year++) {
+                                        int endMonth = 12;
+                                        //This makes sure that we stop on the month prior to the selected month
+                                        //  and then add in the days for that month.
+                                        if (year == [_events getSelectedYear]) {
+                                            endMonth = [_events getSelectedMonth]-1;
+                                            //Account for days in endMonth
+                                            daysInEventDuration += [[untilString substringWithRange:NSMakeRange(6,2)] intValue];
+                                        }
+                                        
+                                        //This only takes into account full months strictly inbetween the start and end months.
+                                        for (int month=1; month<endMonth+1; month++) {
+                                            daysInEventDuration += [_events getDaysOfMonth:month :year];
+                                        }
+                                    }
+                                }
+                                
+                                repeat = (daysInEventDuration) / freq;
+                                
+                                NSLog(@"The repeat number is %d", repeat);
+                            }
+                        }
+                    }
+                }
+                
+                int s = 0;
+                int e = 0;
+                
+
+                //The outer loop loops through the reocurrences.
+                for (int rep=0; rep<repeat; rep++) {
+                    BOOL iterateOverDays = YES;
+                    
+                    //Here we setup the s and e variables for the for loop.
+                    if (startYear == [_events getSelectedYear]) {
+                        //The startMonth is with respect to the startDay. The endDay quite possible
+                        //  can be going into the next month.
+                        if (startMonth == [_events getSelectedMonth]) {
+                            s = startDay;
+                            
+                            //Check if the endDay will be moving into the next month.
+                            if (endDay > [_events getDaysOfMonth:startMonth :startYear]) {
+                                e = [_events getDaysOfMonth:startMonth :startYear];
+                            }
+                            else {
+                                e = endDay;
+                            }
+                        }
+                        //Check if the startMonth is the previous month and the endDay will roll over into the next month.
+                        else if (startMonth + 1 == [_events getSelectedMonth]
+                                 && endDay > [_events getDaysOfMonth:startMonth :startYear]) {
+                            //We don't care about the days in the previous month, only that
+                            //  the rolled over days are going to be in the selected month.
+                            s = 1;
+                            
+                            //endDay is for sure going to be above the daysInMonth.
+                            e = endDay%[_events getDaysOfMonth:startMonth :startYear];
+                        }
+                        else {
+                            //We'll skip this iterating, because we won't add anything.
+                            iterateOverDays = NO;
+                        }
+                    }
+                    else if (startYear == [_events getSelectedYear]-1
+                             && startMonth == 12
+                             && endDay > [_events getDaysOfMonth:startMonth :startYear]) {
+                        //We don't care about the days in the previous month, only that
+                        //  the rolled over days are going to be in the selected month.
+                        s = 1;
+                        
+                        //endDay is for sure going to be above the daysInMonth.
+                        e = endDay%[_events getDaysOfMonth:startMonth :startYear];
+                    }
+                    else {
+                        //We'll skip this iterating, because we won't add anything.
+                        iterateOverDays = NO;
+                    }
+                    if (iterateOverDays) {
+                        //Add events for the startday all the way up to the end day.
+                        for (int day=s; day<e+1; day++) {
+                            //This then uses that day as an index and inserts the currentEvent into that indice's array.
+                            [_events AppendEvent:day :currentEventInfo];
+                        }
+                    }
+                    
+                    //Setup the start and end vars for the next repeat.
+                    startDay = startDay + freq;
+                    endDay = endDay + freq;
+                    
+                    //Check if we're moving into a new month.
+                    if (startDay%[_events getDaysOfMonth:startMonth :startYear] < startDay) {
+                        //Then we mod the startDay to get the day of the next month it will be on.
+                        startDay = startDay%[_events getDaysOfMonth:startMonth :startYear];
+                        endDay = endDay%[_events getDaysOfMonth:startMonth :startYear];
+                        startMonth += 1;
+                        
+                        //Check to see if we transitioned to a new year.
+                        if (startMonth > 12) {
+                            startMonth = startMonth%12;
+                            startYear += 1;
+                        }
+                    }
                 }
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
