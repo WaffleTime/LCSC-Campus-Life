@@ -202,6 +202,8 @@
             [_cat5Btn setHighlighted:NO];
             break;
     }
+    
+    [_collectionView reloadData];
 }
 
 - (IBAction)backMonthOffset:(id)sender {

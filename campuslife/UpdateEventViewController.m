@@ -106,6 +106,48 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         _numberOfRepeatLabel.hidden = YES;
         _numberOfRepeatSlider.hidden = YES;
     }
+    
+    if ([_eventInfo objectForKey:@"recurrence"] != nil) {
+        //Is the ocurrence daily?
+        if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"D"]) {
+            _repeatLabel.text = @"Daily Repeat";
+            _repeatSlider.value = 1.0;
+            
+            _numberOfRepeatLabel.hidden = NO;
+            _numberOfRepeatSlider.hidden = NO;
+            
+            _numberOfRepeatSlider.value = 2.5;
+            _numberOfRepeatSlider.maximumValue = 14.5;
+            
+            _numberOfRepeatLabel.text = @"For 2 Days";
+        }
+        //Is the ocurrence monthly?
+        else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"W"]) {
+            _repeatLabel.text = @"Weekly Repeat";
+            _repeatSlider.value = 2.0;
+            
+            _numberOfRepeatLabel.hidden = NO;
+            _numberOfRepeatSlider.hidden = NO;
+            
+            _numberOfRepeatSlider.value = 2.5;
+            _numberOfRepeatSlider.maximumValue = 8.5;
+            
+            _numberOfRepeatLabel.text = @"For 2 Days";
+        }
+        //Is the ocurrence yearly?
+        else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"M"]) {
+            _repeatLabel.text = @"Monthly Repeat";
+            _repeatSlider.value = 3.0;
+            
+            _numberOfRepeatLabel.hidden = NO;
+            _numberOfRepeatSlider.hidden = NO;
+            
+            _numberOfRepeatSlider.value = 2.5;
+            _numberOfRepeatSlider.maximumValue = 12.5;
+            
+            _numberOfRepeatLabel.text = @"For 2 Months";
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
