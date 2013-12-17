@@ -13,6 +13,9 @@
 
 @interface AddEventForDayViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+
 @property (weak, nonatomic) IBOutlet UITextField *summary;
 @property (weak, nonatomic) IBOutlet UITextField *where;
 @property (weak, nonatomic) IBOutlet UITextView *description;

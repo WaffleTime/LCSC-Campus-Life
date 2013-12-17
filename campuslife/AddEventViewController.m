@@ -60,17 +60,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
     
-    //Check to see if we're using the iphone.
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
     if (IDIOM != IPAD) {
-        _startTimePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0,0,0,162)];
-        _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _startTimePicker.date = [NSDate date];
-        [self.view addSubview:_startTimePicker];
-        
-        _endTimePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0,180,0,162)];
-        _endTimePicker.datePickerMode = UIDatePickerModeTime;
-        _endTimePicker.date = [NSDate date];
-        [self.view addSubview:_endTimePicker];
+        [_scrollView layoutIfNeeded];
+        _scrollView.contentSize = CGSizeMake(320, 1200);
     }
 }
 

@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
+//This is for checking to see if an ipad is being used.
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
+
 
 #import "AddEventForDayViewController.h"
 #import "Authentication.h"
@@ -55,6 +59,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [_auth setDelegate:self];
     
     _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    if (IDIOM != IPAD) {
+        [_scrollView layoutIfNeeded];
+        _scrollView.contentSize = CGSizeMake(320, 980);
+    }
 }
 
 - (void)didReceiveMemoryWarning

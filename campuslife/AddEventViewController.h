@@ -13,6 +13,9 @@
 
 @interface AddEventViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+
 @property (strong, nonatomic) IBOutlet UITextField *summary;
 @property (strong, nonatomic) IBOutlet UITextField *where;
 @property (strong, nonatomic) IBOutlet UITextView *description;

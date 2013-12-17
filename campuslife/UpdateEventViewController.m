@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 LCSC. All rights reserved.
 //
 
+//This is for checking to see if an ipad is being used.
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
+
 #import "UpdateEventViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
@@ -149,6 +153,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             
             _numberOfRepeatLabel.text = @"For 2 Months";
         }
+    }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    if (IDIOM != IPAD) {
+        [_scrollView layoutIfNeeded];
+        _scrollView.contentSize = CGSizeMake(320, 1135);
     }
 }
 

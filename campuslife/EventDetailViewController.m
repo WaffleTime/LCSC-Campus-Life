@@ -73,7 +73,7 @@
         //Periods are set to AM by default.
         if ([toHour intValue] >= 12) {
             toPeriod = @"PM";
-            //Convert back from military time if necessary.
+            //Convert back from military time if xnecessary.
             if ([toHour intValue] > 12) {
                 toHour = [NSString stringWithFormat:@"%d", ([toHour intValue]-12)];
             }

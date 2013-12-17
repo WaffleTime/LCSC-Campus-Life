@@ -14,6 +14,8 @@
 //This will be given to us from the previous class (EventDetailViewController)
 @property (nonatomic, strong, setter=setEventInfo:) NSDictionary *eventInfo;
 
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UITextField *summary;
 @property (weak, nonatomic) IBOutlet UITextField *where;
