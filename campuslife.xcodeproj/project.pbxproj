@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C108F9FC18567CD700D8EC17 /* hur_dur_Ima_icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C108F9FB18567CD700D8EC17 /* hur_dur_Ima_icon.jpeg */; };
-		C108F9FE18567DA300D8EC17 /* hur_dur_Ima_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C108F9FD18567DA300D8EC17 /* hur_dur_Ima_icon.png */; };
 		C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C12C28D01853E8C200274023 /* AddEventForDayViewController.m */; };
 		C17D5A4518443C5100DE0B26 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A4318443C5100DE0B26 /* selected.png */; };
 		C17D5A4618443C5100DE0B26 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A4418443C5100DE0B26 /* unselected.png */; };
@@ -52,8 +50,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C108F9FB18567CD700D8EC17 /* hur_dur_Ima_icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hur_dur_Ima_icon.jpeg; sourceTree = "<group>"; };
-		C108F9FD18567DA300D8EC17 /* hur_dur_Ima_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hur_dur_Ima_icon.png; sourceTree = "<group>"; };
 		C12C28CF1853E8C200274023 /* AddEventForDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventForDayViewController.h; sourceTree = "<group>"; };
 		C12C28D01853E8C200274023 /* AddEventForDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventForDayViewController.m; sourceTree = "<group>"; };
 		C17D5A4318443C5100DE0B26 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
@@ -188,8 +184,6 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C108F9FD18567DA300D8EC17 /* hur_dur_Ima_icon.png */,
-				C108F9FB18567CD700D8EC17 /* hur_dur_Ima_icon.jpeg */,
 				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
 				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C17D5A471844433300DE0B26 /* selected-ipad.png */,
@@ -305,7 +299,6 @@
 			files = (
 				C1E66E08183C333A00851B89 /* Main_iPad.storyboard in Resources */,
 				C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */,
-				C108F9FE18567DA300D8EC17 /* hur_dur_Ima_icon.png in Resources */,
 				C17D5A491844433300DE0B26 /* selected-ipad.png in Resources */,
 				C17D5A4618443C5100DE0B26 /* unselected.png in Resources */,
 				C1E66E0D183C333A00851B89 /* Images.xcassets in Resources */,
@@ -313,7 +306,6 @@
 				C17D5A4518443C5100DE0B26 /* selected.png in Resources */,
 				C1E66E05183C333A00851B89 /* Main_iPhone.storyboard in Resources */,
 				C1E66DFC183C333A00851B89 /* InfoPlist.strings in Resources */,
-				C108F9FC18567CD700D8EC17 /* hur_dur_Ima_icon.jpeg in Resources */,
 				C17D5A4A1844433300DE0B26 /* unselected-ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,13 +473,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "campuslife/campuslife-Prefix.pch";
 				INFOPLIST_FILE = "campuslife/campuslife-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B7F09424-D0FE-408E-B72E-52F1C3E27D1C";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -497,13 +489,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "campuslife/campuslife-Prefix.pch";
 				INFOPLIST_FILE = "campuslife/campuslife-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B7F09424-D0FE-408E-B72E-52F1C3E27D1C";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
