@@ -89,7 +89,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         [_endTimePicker setDate:eventDate];
     }
     //If dateTime doesn't exist, then it's an all night event.
-    else {
+    else if ([_eventInfo[@"start"] objectForKey:@"date"] != nil){
         NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
         //[dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
