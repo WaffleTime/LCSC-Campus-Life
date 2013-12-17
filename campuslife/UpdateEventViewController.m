@@ -161,7 +161,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     if (IDIOM != IPAD) {
         [_scrollView layoutIfNeeded];
-        _scrollView.contentSize = CGSizeMake(320, 1135);
+        _scrollView.contentSize = CGSizeMake(320, 1200);
     }
 }
 
