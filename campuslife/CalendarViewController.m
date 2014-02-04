@@ -616,7 +616,31 @@
             
             //NSLog(@"Putting the events into _calendarEvents.");
             
-            [_events refreshArrayOfEvents];
+            NSString *category = @"";
+            
+            //NSLog(@"Jsons previously received: %d", _jsonsReceived);
+            
+            if (_jsonsReceived == 0) {
+                //Only refresh the events if this is the first json received.
+                [_events refreshArrayOfEvents];
+                
+                NSLog(@"Refresh events");
+            }
+            else if (_jsonsReceived == 1) {
+                category = @"Academics";
+            }
+            else if (_jsonsReceived == 2) {
+                category = @"Activities";
+            }
+            else if (_jsonsReceived == 3) {
+                category = @"Residence";
+            }
+            else if (_jsonsReceived == 4) {
+                category = @"Athletics";
+            }
+            else {
+                NSLog(@"The category wasn't set for this request.");
+            }
             
             _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
             
@@ -627,42 +651,9 @@
                 //  to pull info out of the Summary field in the Dictionary and place
                 //  it back into the dictionary mapped to a new key.
                 
-                NSDictionary *currentEventInfo = [eventsInfo objectAtIndex:i];
+                NSMutableDictionary *currentEventInfo = [[NSMutableDictionary alloc] initWithDictionary:[eventsInfo objectAtIndex:i]];
                 
-                //NSLog(@"Before the parsing: %@", responseJSONAsString);
-                
-                //Parse out the summary and add it into the dictionary with the key, "summary".
-                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
-                                                            :@"description"
-                                                            :[[NSArray alloc] initWithObjects:@"Desc:",
-                                                                                              @"Desc: ",
-                                                                                              @"desc:",
-                                                                                              @"desc: ", nil]];
-                
-                //Parse out the location and add it into the dictionary with the key, "location".
-                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
-                                                            :@"location"
-                                                            :[[NSArray alloc] initWithObjects:@"Loc:",
-                                                                                              @"Loc: ",
-                                                                                              @"loc:",
-                                                                                              @"loc: ", nil]];
-                
-                //Parse out the category and add it into the dictionary with the key, "category".
-                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
-                                                            :@"category"
-                                                            :[[NSArray alloc] initWithObjects:@"Category:",
-                                                                                              @"Category: ",
-                                                                                              @"category:",
-                                                                                              @"category: ", nil]];
-                
-                //Parse out the summary and add it into the dictionary with the key, "summary".
-                currentEventInfo =  [self parseSummaryForKey:currentEventInfo
-                                                            :@"summary"
-                                                            :[[NSArray alloc] initWithObjects:@"Abstract:",
-                                                                                              @"Abstract: ",
-                                                                                              @"abstract:",
-                                                                                              @"abstract: ", nil]];
-                
+                [currentEventInfo setObject:category forKey:@"category"];
                 
                 //NSLog(@"%@", currentEventInfo);
                 
@@ -954,7 +945,7 @@
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
-            if (_jsonsReceived == 5) {
+            if (_jsonsReceived == 4) {
                 NSDate *methodFinish = [NSDate date];
                 NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:_start];
                 NSLog(@"%f is the time it took to make the calls.", executionTime);
@@ -997,15 +988,6 @@
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
                     [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
-                                       withHttpMethod:httpMethod_GET
-                                   postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
-                }
-                else if (_jsonsReceived == 4) {
-                    // If user authorization is successful, then make an API call to get the event list for the current month.
-                    // For more infomation about this API call, visit:
-                    // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_3u5gguv87sa68i3pqklufctj3c@group.calendar.google.com/events"
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
