@@ -282,16 +282,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rtu-eu-kKw">
-                                <rect key="frame" x="257" y="135" width="53" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Refresh">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="refreshEvents:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Hcr-n1-djx"/>
-                                </connections>
-                            </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="UHN-9p-xfZ">
                                 <rect key="frame" x="228" y="138" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -315,7 +305,6 @@
                         <outlet property="collectionView" destination="ttL-Bj-aDL" id="Zja-bq-1Eu"/>
                         <outlet property="leftArrow" destination="hdl-Sk-HTY" id="99f-Mp-waM"/>
                         <outlet property="monthLabel" destination="FFL-Y2-5MW" id="ozO-Aw-DcN"/>
-                        <outlet property="refreshButton" destination="Rtu-eu-kKw" id="YDW-SY-zRl"/>
                         <outlet property="rightArrow" destination="4dy-g2-40z" id="6Aa-Xg-s3b"/>
                         <outlet property="signInOutButton" destination="uVE-7V-K6i" id="zdg-0d-meu"/>
                         <outlet property="swipeLeft" destination="JhE-A6-Mbz" id="0de-ko-9Xv"/>

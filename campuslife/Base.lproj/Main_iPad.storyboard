@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oGM-Mq-788">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oGM-Mq-788">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Calendar View Controller - Calendar-->
@@ -291,17 +291,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebQ-RO-KhL">
-                                <rect key="frame" x="615" y="189" width="120" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Refresh">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="refreshEvents:" destination="DZS-au-tdA" eventType="touchUpInside" id="aCi-xz-gHj"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -322,7 +311,6 @@
                         <outlet property="collectionView" destination="EWa-JO-Uke" id="pJV-qD-v69"/>
                         <outlet property="leftArrow" destination="hbQ-y3-LPp" id="avV-qz-P7e"/>
                         <outlet property="monthLabel" destination="3p4-RS-72g" id="ov0-pZ-HfA"/>
-                        <outlet property="refreshButton" destination="ebQ-RO-KhL" id="Nji-CB-1j2"/>
                         <outlet property="rightArrow" destination="27t-8P-qmU" id="lD2-18-brU"/>
                         <outlet property="signInOutButton" destination="seZ-Kg-2nD" id="zlQ-R1-tKY"/>
                         <outlet property="swipeLeft" destination="5go-iF-r37" id="tvd-JO-LPg"/>

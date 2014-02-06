@@ -22,7 +22,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *fromTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *toTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *toLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *addEventButton;
 

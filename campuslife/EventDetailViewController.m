@@ -84,7 +84,8 @@
         
         _toTimeLabel.text = [NSString stringWithFormat:@"to %@:%@%@", toHour, toMinute, toPeriod];
         
-        if (![_eventDict[@"start"][@"dateTime"] isEqualToString:_eventDict[@"end"][@"dateTime"]]) {
+        if (![_eventDict[@"start"][@"dateTime"] isEqualToString:_eventDict[@"end"][@"dateTime"]]
+            && _eventDict[@"end"][@"dateTime"] != NULL) {
             _dateLabel.text = [_dateLabel.text stringByAppendingString:[NSString stringWithFormat:@" to %@/%@/%@", [_eventDict[@"end"][@"dateTime"] substringWithRange:monthRange], [_eventDict[@"end"][@"dateTime"] substringWithRange:dayRange], [_eventDict[@"end"][@"dateTime"] substringWithRange:yearRange]]];
         }
     }
@@ -96,12 +97,12 @@
         _dateLabel.text = [NSString stringWithFormat:@"%@/%@/%@", [_eventDict[@"start"][@"date"] substringWithRange:monthRange], [_eventDict[@"start"][@"date"] substringWithRange:dayRange], [_eventDict[@"start"][@"date"] substringWithRange:yearRange]];
         
         _fromTimeLabel.hidden = YES;
-        _toLabel.hidden = YES;
         _toTimeLabel.hidden = YES;
         
         _allDayLabel.text = @"All Day Event";
         
-        if (![_eventDict[@"start"][@"dateTime"] isEqualToString:_eventDict[@"end"][@"dateTime"]]) {
+        if (![_eventDict[@"start"][@"dateTime"] isEqualToString:_eventDict[@"end"][@"dateTime"]]
+            && _eventDict[@"end"][@"dateTime"] != NULL) {
             _dateLabel.text = [_dateLabel.text stringByAppendingString:[NSString stringWithFormat:@" to %@/%@/%@", [_eventDict[@"end"][@"dateTime"] substringWithRange:monthRange], [_eventDict[@"end"][@"dateTime"] substringWithRange:dayRange], [_eventDict[@"end"][@"dateTime"] substringWithRange:yearRange]]];
         }
     }

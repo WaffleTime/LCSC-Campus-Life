@@ -20,7 +20,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *signInOutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addEventButton;
-@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -33,7 +32,6 @@
 
 - (IBAction)signOutOrSignIn:(id)sender;
 
-- (IBAction)refreshEvents:(id)sender;
 
 - (IBAction)radioSelected:(UIButton *)sender;
 

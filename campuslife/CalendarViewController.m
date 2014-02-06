@@ -34,6 +34,12 @@
 @property (nonatomic) NSDate * firstDateOfMonth;
 
 @property (nonatomic) NSDate * lastDateOfMonth;
+
+@property (nonatomic) NSString *activitiesCalId;
+@property (nonatomic) NSString *entertainmentCalId;
+@property (nonatomic) NSString *residenceCalId;
+@property (nonatomic) NSString *athleticsCalId;
+@property (nonatomic) NSString *academicsCalId;
 @end
 
 @implementation CalendarViewController
@@ -46,6 +52,12 @@
     NSLog(@"authorizing user");
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    
+    _activitiesCalId = @"lcmail.lcsc.edu_2eqs4lb1sec1bcqvalhfu0ane8@group.calendar.google.com";
+    _entertainmentCalId = @"lcmail.lcsc.edu_7lf922s27p569sq3ndlig44g94@group.calendar.google.com";
+    _residenceCalId = @"lcmail.lcsc.edu_2k1inscpp932dkmf8q30bdo8rk@group.calendar.google.com";
+    _athleticsCalId = @"lcmail.lcsc.edu_3u5gguv87sa68i3pqklufctj3c@group.calendar.google.com";
+    _academicsCalId = @"lcmail.lcsc.edu_kmcvmjd97mk1be8pdush8lpc8s@group.calendar.google.com";
     
     _auth = [Authentication getSharedInstance];
     
@@ -104,8 +116,6 @@
     [_cat4Btn setSelected:[prefs getPreference:4]];
     [_cat5Btn setSelected:[prefs getPreference:5]];
     
-    [_refreshButton setEnabled:NO];
-    
     _leftArrow.enabled = NO;
     _rightArrow.enabled = NO;
 }
@@ -142,8 +152,6 @@
         _addEventButton.title = @" ";
         _addEventButton.enabled = NO;
         
-        _refreshButton.enabled = NO;
-        
         _leftArrow.enabled = NO;
         _rightArrow.enabled = NO;
         
@@ -170,12 +178,6 @@
         
         //NSLog(@"Signed in we did");
     }
-}
-
-- (IBAction)refreshEvents:(id)sender {
-    [_activityIndicator startAnimating];
-    
-    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
 }
 
 - (IBAction)radioSelected:(UIButton *)sender {
@@ -554,7 +556,7 @@
     // If user authorization is successful, then make an API call to get the event list for the current month.
     // For more infomation about this API call, visit:
     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _entertainmentCalId]
                        withHttpMethod:httpMethod_GET
                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
@@ -572,8 +574,6 @@
     //  This won't be triggered while we're signed in and getting empty json strings for empty months.
     if (!_signedIn) {
         [self setSignedIn:YES];
-        
-        _refreshButton.enabled = YES;
         
         _leftArrow.enabled = YES;
         _rightArrow.enabled = YES;
@@ -623,7 +623,7 @@
             if (_jsonsReceived == 0) {
                 //Only refresh the events if this is the first json received.
                 [_events refreshArrayOfEvents];
-                
+                category = @"Entertainment";
                 NSLog(@"Refresh events");
             }
             else if (_jsonsReceived == 1) {
@@ -733,7 +733,7 @@
                         endDay += [[[[currentEventInfo objectForKey:@"end"]
                                      objectForKey:@"date"]
                                     substringWithRange:NSMakeRange(8, 2)]
-                                   integerValue];
+                                   integerValue]-1;
                     }
                     else {
                         //At the very beginning we'll be working with probably not a full year.
@@ -960,7 +960,7 @@
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_3u5gguv87sa68i3pqklufctj3c@group.calendar.google.com/events"
+                    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _academicsCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
@@ -969,7 +969,7 @@
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+                    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _activitiesCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
@@ -978,7 +978,7 @@
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_3u5gguv87sa68i3pqklufctj3c@group.calendar.google.com/events"
+                    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _residenceCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
@@ -987,7 +987,7 @@
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events"
+                    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _athleticsCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
