@@ -81,31 +81,6 @@
     _firstEventsJSONReceived = NO;
     
     _events = [MonthlyEvents getSharedInstance];
-
-    if (IDIOM == IPAD) {
-        [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
-                            forState:UIControlStateSelected];
-        [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
-                            forState:UIControlStateSelected];
-        [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
-                            forState:UIControlStateSelected];
-        [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
-                            forState:UIControlStateSelected];
-        [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"selected-ipad.png"]
-                            forState:UIControlStateSelected];
-    }
-    else {
-        [_cat1Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
-                                     forState:UIControlStateSelected];
-        [_cat2Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
-                            forState:UIControlStateSelected];
-        [_cat3Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
-                            forState:UIControlStateSelected];
-        [_cat4Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
-                                     forState:UIControlStateSelected];
-        [_cat5Btn setBackgroundImage:[UIImage imageNamed:@"selected.png"]
-                                     forState:UIControlStateSelected];
-    }
     
     Preferences *prefs = [Preferences getSharedInstance];
     
