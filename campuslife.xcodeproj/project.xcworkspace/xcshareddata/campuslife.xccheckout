@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>8A5911FD-5E99-4B18-A67B-B511D733FD34</string>
+	<string>53A9ADC1-885E-4E8A-8DE4-2DF10CE92346</string>
 	<key>IDESourceControlProjectName</key>
 	<string>campuslife</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>A23C694E-292D-4DBB-BFD9-83F8967F4739</key>
+		<key>EDE2F532-6295-4766-B17E-B75B2479C433</key>
 		<string>https://github.com/JakeWaffle/LCSC-Campus-Life.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>campuslife.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>A23C694E-292D-4DBB-BFD9-83F8967F4739</key>
+		<key>EDE2F532-6295-4766-B17E-B75B2479C433</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>A23C694E-292D-4DBB-BFD9-83F8967F4739</string>
+	<string>EDE2F532-6295-4766-B17E-B75B2479C433</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>A23C694E-292D-4DBB-BFD9-83F8967F4739</string>
+			<string>EDE2F532-6295-4766-B17E-B75B2479C433</string>
 			<key>IDESourceControlWCCName</key>
 			<string>LCSC-Campus-Life</string>
 		</dict>
