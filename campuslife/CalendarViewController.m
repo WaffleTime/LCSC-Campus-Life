@@ -534,7 +534,8 @@
     [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _entertainmentCalId]
                        withHttpMethod:httpMethod_GET
                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
+                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                          requestBody:nil];
 
     _jsonsReceived = 0;
 }
@@ -562,13 +563,16 @@
         [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
                            withHttpMethod:httpMethod_POST
                        postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                      postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]];
+                      postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]
+                              requestBody:nil];
     }
     //NSLog(@"Getting the events for the current month");
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
+    
+    NSLog(@"%@",responseJSONAsString);
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
         // Get the JSON data as a dictionary.
@@ -938,7 +942,8 @@
                     [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _academicsCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
+                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                                          requestBody:nil];
                 }
                 else if(_jsonsReceived == 1) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
@@ -947,7 +952,8 @@
                     [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _activitiesCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
+                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                                          requestBody:nil];
                 }
                 else if (_jsonsReceived == 2) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
@@ -956,7 +962,8 @@
                     [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _residenceCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
+                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                                          requestBody:nil];
                 }
                 else if(_jsonsReceived == 3) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
@@ -965,7 +972,8 @@
                     [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", _athleticsCalId]
                                        withHttpMethod:httpMethod_GET
                                    postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]];
+                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                                          requestBody:nil];
                 }
                 
                 _jsonsReceived += 1;
@@ -1007,7 +1015,11 @@
     // Just log the error message.
     NSLog(@"%@", errorMessage);
     
-    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+    if ([self getIndexOfSubstringInString:@"403" :errorMessage] != -1
+        && [self getIndexOfSubstringInString:@"Forbidden" :errorMessage] != -1)
+    {
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+    }
 }
 
 @end

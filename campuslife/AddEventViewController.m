@@ -78,6 +78,25 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(IBAction) addEvent {
+    NSDateFormatter *dateTimeFormatter = [[NSDateFormatter alloc] init];
+    [dateTimeFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+    
+    [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateTimeFormatter stringFromDate:_startTimePicker.date], @"date", nil] forKey:@"start"];
+    [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateTimeFormatter stringFromDate:_endTimePicker.date], @"date", nil] forKey:@"end"];
+    [json setObject:@"HAPPY HAPPY JOY JOY!" forKey:@"summary"];
+
+    
+    
+    [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_7lf922s27p569sq3ndlig44g94@group.calendar.google.com/events/"
+                       withHttpMethod:httpMethod_POST
+                   postParameterNames:@[]
+                  postParameterValues:@[]
+                          requestBody:json];
+    
+    
+    /*
     BOOL readyToAddEvent = NO;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
@@ -277,6 +296,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [alert show];
         }
     }
+    */
 }
 
 - (IBAction)allDayEventToggle:(id)sender {
