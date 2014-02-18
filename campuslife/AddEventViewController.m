@@ -96,7 +96,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                           requestBody:json];
     
     
-    /*
     BOOL readyToAddEvent = NO;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
@@ -199,7 +198,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
     
-    
+    /*
     if (readyToAddEvent) {
         //Events have specified time constraints unless they are all day events.
         if (!_allDayEventSwitch.on) {
@@ -296,7 +295,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [alert show];
         }
     }
-    */
+     */
 }
 
 - (IBAction)allDayEventToggle:(id)sender {

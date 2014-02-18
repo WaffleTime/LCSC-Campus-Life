@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "GoogleOAuth.h"
+#import "AddEventParentViewController.h"
 
-@interface UpdateEventViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface UpdateEventViewController : AddEventParentViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 //This will be given to us from the previous class (EventDetailViewController)
 @property (nonatomic, strong, setter=setEventInfo:) NSDictionary *eventInfo;

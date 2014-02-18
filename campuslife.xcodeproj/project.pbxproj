@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */; };
+		C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */; };
+		C1182FB818B40F9600FE63F6 /* RepeatUntilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB718B40F9600FE63F6 /* RepeatUntilViewController.m */; };
 		C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C12C28D01853E8C200274023 /* AddEventForDayViewController.m */; };
 		C12C65F618612C5D0017C41C /* AppIcon29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = C12C65E818612C5D0017C41C /* AppIcon29x29.png */; };
 		C12C65F718612C5D0017C41C /* AppIcon29x29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C12C65E918612C5D0017C41C /* AppIcon29x29@2x.png */; };
@@ -66,6 +69,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventParentViewController.h; sourceTree = "<group>"; };
+		C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventParentViewController.m; sourceTree = "<group>"; };
+		C1182FB318B40F7D00FE63F6 /* RepeatFreqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatFreqViewController.h; sourceTree = "<group>"; };
+		C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatFreqViewController.m; sourceTree = "<group>"; };
+		C1182FB618B40F9600FE63F6 /* RepeatUntilViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatUntilViewController.h; sourceTree = "<group>"; };
+		C1182FB718B40F9600FE63F6 /* RepeatUntilViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatUntilViewController.m; sourceTree = "<group>"; };
 		C12C28CF1853E8C200274023 /* AddEventForDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventForDayViewController.h; sourceTree = "<group>"; };
 		C12C28D01853E8C200274023 /* AddEventForDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventForDayViewController.m; sourceTree = "<group>"; };
 		C12C65E818612C5D0017C41C /* AppIcon29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon29x29.png; sourceTree = "<group>"; };
@@ -196,12 +205,18 @@
 				C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */,
 				C1E66E41183C33D000851B89 /* EventDetailViewController.h */,
 				C1E66E42183C33D000851B89 /* EventDetailViewController.m */,
+				C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */,
+				C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */,
 				C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */,
 				C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */,
 				C12C28CF1853E8C200274023 /* AddEventForDayViewController.h */,
 				C12C28D01853E8C200274023 /* AddEventForDayViewController.m */,
 				C1F3207B1855623000811DDA /* UpdateEventViewController.h */,
 				C1F3207C1855623000811DDA /* UpdateEventViewController.m */,
+				C1182FB318B40F7D00FE63F6 /* RepeatFreqViewController.h */,
+				C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */,
+				C1182FB618B40F9600FE63F6 /* RepeatUntilViewController.h */,
+				C1182FB718B40F9600FE63F6 /* RepeatUntilViewController.m */,
 				C1E66E43183C33D000851B89 /* MonthlyEvents.h */,
 				C1E66E44183C33D000851B89 /* MonthlyEvents.m */,
 				C1E66E45183C33D000851B89 /* Preferences.h */,
@@ -394,7 +409,10 @@
 				C1F3207D1855623000811DDA /* UpdateEventViewController.m in Sources */,
 				C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */,
 				C1E66E4B183C33D000851B89 /* Preferences.m in Sources */,
+				C1182FB818B40F9600FE63F6 /* RepeatUntilViewController.m in Sources */,
 				C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */,
+				C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */,
+				C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */,
 				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
 				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,

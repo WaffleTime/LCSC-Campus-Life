@@ -10,8 +10,9 @@
 
 #import <UIKit/UIKit.h>
 #import "GoogleOAuth.h"
+#import "AddEventParentViewController.h"
 
-@interface AddEventForDayViewController : UIViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddEventForDayViewController : AddEventParentViewController<GoogleOAuthDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
