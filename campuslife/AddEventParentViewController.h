@@ -10,7 +10,7 @@
 
 @interface AddEventParentViewController : UIViewController
 
-@property(strong, nonatomic) NSString *repeatFreq;
-@property(strong, nonatomic) NSString *repeatUntil;
+@property(strong, nonatomic, setter=setRepFreq:) NSString *repeatFreq;
+@property(strong, nonatomic,setter=setRepUntil:) NSString *repeatUntil;
 
 @end

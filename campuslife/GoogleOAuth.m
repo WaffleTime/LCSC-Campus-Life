@@ -225,6 +225,11 @@
                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:json
                                                                    options:(NSJSONWritingOptions) 0
                                                                      error:&error];
+                
+                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                NSLog(@"URL:%@", urlString);
+                NSLog(@"Body:%@",jsonString);
+                
                 // Set any other necessary options.
                 [request setHTTPBody:jsonData];
             }
@@ -266,6 +271,9 @@
             apiURL = [apiURL stringByReplacingOccurrencesOfString:@"@" withString:@"%40"];
             
             getParams = [getParams stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
+            
+            NSLog(@"URL:%@", urlString);
+            NSLog(@"Body:%@",getParams);
             
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@&%@", apiURL, accessTokenString, getParams]]];
         }

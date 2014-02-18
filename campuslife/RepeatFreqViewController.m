@@ -7,8 +7,11 @@
 //
 
 #import "RepeatFreqViewController.h"
+#import "AddEventParentViewController.h"
 
 @interface RepeatFreqViewController ()
+
+@property(strong, nonatomic) NSString *repFreq;
 
 @end
 
@@ -26,12 +29,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    _repFreq = @"Never";
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)viewWillDisappear
+{
+    AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+    
+    [eventController setRepFreq:_repFreq];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,7 +59,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -59,60 +67,54 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    if (indexPath.row == 0)
+    {
+        ((UILabel *)[cell viewWithTag:5]).text = @"Daily";
+    }
+    else if (indexPath.row == 1)
+    {
+        ((UILabel *)[cell viewWithTag:5]).text = @"Weekly";
+    }
+    else if (indexPath.row == 2)
+    {
+        ((UILabel *)[cell viewWithTag:5]).text = @"Monthly";
+    }
+    else if (indexPath.row == 3)
+    {
+        ((UILabel *)[cell viewWithTag:5]).text = @"Yearly";
+    }
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (indexPath.row == 0)
+    {
+        _repFreq = @"Daily";
+    }
+    else if (indexPath.row == 1)
+    {
+        _repFreq = @"Weekly";
+    }
+    else if (indexPath.row == 2)
+    {
+        _repFreq = @"Monthly";
+    }
+    else if (indexPath.row == 3)
+    {
+        _repFreq = @"Yearly";
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
 }
 
- */
 
 @end
