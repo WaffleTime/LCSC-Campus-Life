@@ -59,27 +59,27 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view hidden="YES" tag="13" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vDw-Xy-zcL">
-                                                    <rect key="frame" x="47" y="82" width="14" height="14"/>
+                                                    <rect key="frame" x="33" y="105" width="13" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.93333333333333335" green="0.53333333333333333" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
                                                 <view hidden="YES" tag="12" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZDI-rs-Zo7">
-                                                    <rect key="frame" x="9" y="82" width="14" height="14"/>
+                                                    <rect key="frame" x="18" y="105" width="13" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <view hidden="YES" tag="11" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qu2-Wz-7et">
-                                                    <rect key="frame" x="9" y="104" width="14" height="14"/>
+                                                    <rect key="frame" x="63" y="105" width="13" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.52941176469999995" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="deviceRGB"/>
                                                 </view>
                                                 <view hidden="YES" tag="14" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g65-uX-AYy">
-                                                    <rect key="frame" x="47" y="104" width="14" height="14"/>
+                                                    <rect key="frame" x="78" y="105" width="13" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.12156862745098039" green="0.45882352941176469" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
                                                 <view hidden="YES" tag="15" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tmr-G5-ZvR">
-                                                    <rect key="frame" x="85" y="82" width="14" height="14"/>
+                                                    <rect key="frame" x="48" y="105" width="13" height="13"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
@@ -96,7 +96,7 @@
                                                     <color key="backgroundColor" white="0.79826108870967749" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hk0-e2-IrR">
-                                                    <rect key="frame" x="108" y="0.0" width="1" height="127"/>
+                                                    <rect key="frame" x="108" y="82" width="1" height="127"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.79826108870000001" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                                 </imageView>
@@ -109,6 +109,26 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="109" height="1"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.79826108870000001" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="newAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="DrL-Wa-K71">
+                                                    <rect key="frame" x="18" y="105" width="13" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="newAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="zed-On-Lnb">
+                                                    <rect key="frame" x="63" y="105" width="13" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="newAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="DJw-uZ-GOe">
+                                                    <rect key="frame" x="78" y="105" width="13" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="newAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="pVh-Fw-Um1">
+                                                    <rect key="frame" x="33" y="105" width="13" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="newAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="2uQ-16-ztz">
+                                                    <rect key="frame" x="48" y="105" width="13" height="13"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -179,63 +199,96 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEa-h2-qGF">
-                                <rect key="frame" x="33" y="959" width="172" height="50"/>
+                                <rect key="frame" x="266" y="959" width="236" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Entertainment">
-                                    <color key="titleColor" red="0.52941176470588236" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.52941176469999995" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="radioSelected:" destination="DZS-au-tdA" eventType="touchUpInside" id="hAy-O9-puz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ezD-J5-Fdc">
-                                <rect key="frame" x="33" y="896" width="146" height="50"/>
+                                <rect key="frame" x="266" y="896" width="236" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Academics">
-                                    <color key="titleColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.31764705882352939" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.31764705879999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="radioSelected:" destination="DZS-au-tdA" eventType="touchUpInside" id="Yxg-FN-hnN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxK-Pz-okp">
-                                <rect key="frame" x="313" y="896" width="142" height="50"/>
+                                <rect key="frame" x="502" y="896" width="236" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Activities">
-                                    <color key="titleColor" red="0.93333333333333335" green="0.53333333333333333" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.93333333330000001" green="0.53333333329999999" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="radioSelected:" destination="DZS-au-tdA" eventType="touchUpInside" id="1HY-mp-ZFG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUU-M4-7hD">
-                                <rect key="frame" x="285" y="959" width="198" height="50"/>
+                                <rect key="frame" x="502" y="959" width="236" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Residence Life">
-                                    <color key="titleColor" red="0.12156862745098039" green="0.45882352941176469" blue="0.23529411764705882" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.1215686275" green="0.45882352939999999" blue="0.23529411759999999" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="radioSelected:" destination="DZS-au-tdA" eventType="touchUpInside" id="yF7-Kr-xLi"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyf-ZU-ohz">
-                                <rect key="frame" x="553" y="896" width="152" height="50"/>
+                                <rect key="frame" x="30" y="959" width="236" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Athletics">
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
                                     <color key="titleColor" red="0.20000000000000001" green="0.40000000000000002" blue="0.59999999999999998" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="radioSelected:" destination="DZS-au-tdA" eventType="touchUpInside" id="MT1-lJ-Jth"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PrC-7E-W8y">
+                                <rect key="frame" x="30" y="896" width="236" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="All">
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" white="0.6043031754" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.40253795910000001" green="0.70458621020000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="radioSelected:" destination="DZS-au-tdA" eventType="touchUpInside" id="Gc6-DL-U3j"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -259,6 +312,7 @@
                         <outlet property="leftArrow" destination="hbQ-y3-LPp" id="avV-qz-P7e"/>
                         <outlet property="monthLabel" destination="3p4-RS-72g" id="ov0-pZ-HfA"/>
                         <outlet property="rightArrow" destination="27t-8P-qmU" id="lD2-18-brU"/>
+                        <outlet property="selectAllBtn" destination="PrC-7E-W8y" id="F2T-An-QQW"/>
                         <outlet property="signInOutButton" destination="seZ-Kg-2nD" id="zlQ-R1-tKY"/>
                         <outlet property="swipeLeft" destination="5go-iF-r37" id="tvd-JO-LPg"/>
                         <outlet property="swipeRight" destination="MTA-n5-25a" id="xDy-XV-NLl"/>
@@ -297,7 +351,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="20" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12:00pm to 12:00am" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="75" translatesAutoresizingMaskIntoConstraints="NO" id="xaS-l5-jgp">
                                             <rect key="frame" x="20" y="0.0" width="75" height="64"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -312,7 +366,7 @@
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Summary" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="584" translatesAutoresizingMaskIntoConstraints="NO" id="2dO-ui-ABv">
                                             <rect key="frame" x="151" y="0.0" width="584" height="64"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1121,6 +1175,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="1225" y="1312"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="newAlphaCircle.png" width="13" height="13"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
         <simulatedOrientationMetrics key="orientation"/>

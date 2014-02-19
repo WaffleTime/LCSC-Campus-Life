@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cat3Btn;
 @property (weak, nonatomic) IBOutlet UIButton *cat4Btn;
 @property (weak, nonatomic) IBOutlet UIButton *cat5Btn;
+@property (weak, nonatomic) IBOutlet UIButton *selectAllBtn;
 
 - (IBAction)signOutOrSignIn:(id)sender;
 

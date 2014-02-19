@@ -82,6 +82,17 @@
     
     _events = [MonthlyEvents getSharedInstance];
     
+    
+    /*
+    //goes here
+    [_cat1Btn setTitleColor:[UIColor colorWithRed:135.0/256.0 green:17.0/256.0 blue:17.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+    [_cat2Btn setTitleColor:[UIColor colorWithRed:81.0/256.0 green:81.0/256.0 blue:81.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+    [_cat3Btn setTitleColor:[UIColor colorWithRed:238.0/256.0 green:136.0/256.0 blue:0.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+    [_cat4Btn setTitleColor:[UIColor colorWithRed:31.0/256.0 green:117.0/256.0 blue:60.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+    [_cat5Btn setTitleColor:[UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+    */
+    
+    
     Preferences *prefs = [Preferences getSharedInstance];
     
     //Here we load the actual state of the selected buttons.
@@ -158,32 +169,65 @@
 - (IBAction)radioSelected:(UIButton *)sender {
     Preferences *prefs = [Preferences getSharedInstance];
     
+    if (sender.tag != 6)
+    {
+        [_selectAllBtn setSelected:YES];
+    }
+    
     switch (sender.tag) {
         case 1:
-            [prefs negatePreference:1];
+            [prefs negatePreference:1]; //                              <-- Entertainment
             [_cat1Btn setSelected:[prefs getPreference:1]];
             [_cat1Btn setHighlighted:NO];
             break;
         case 2:
-            [prefs negatePreference:2];
+            [prefs negatePreference:2]; //                              <-- Academics
             [_cat2Btn setSelected:[prefs getPreference:2]];
             [_cat2Btn setHighlighted:NO];
             break;
         case 3:
-            [prefs negatePreference:3];
+            [prefs negatePreference:3]; //                              <-- Activities
             [_cat3Btn setSelected:[prefs getPreference:3]];
             [_cat3Btn setHighlighted:NO];
             break;
         case 4:
-            [prefs negatePreference:4];
+            [prefs negatePreference:4]; //                              <-- Residence
             [_cat4Btn setSelected:[prefs getPreference:4]];
             [_cat4Btn setHighlighted:NO];
             break;
         case 5:
-            [prefs negatePreference:5];
+            [prefs negatePreference:5]; //                              <-- Athletics
             [_cat5Btn setSelected:[prefs getPreference:5]];
             [_cat5Btn setHighlighted:NO];
             break;
+        case 6:
+            if ([_selectAllBtn isSelected] == TRUE) {
+                NSLog(@"_selectAllBtn = %hhd", [_selectAllBtn isSelected]);
+                [_cat1Btn setSelected:YES];
+                [_cat2Btn setSelected:YES];
+                [_cat3Btn setSelected:YES];
+                [_cat4Btn setSelected:YES];
+                [_cat5Btn setSelected:YES];
+                
+                for (int i=1; i<6; i++)
+                {
+                    if (![prefs getPreference:i])
+                        [prefs negatePreference:i];
+                }
+                
+                [_selectAllBtn setSelected:NO];
+            }
+            
+            break;
+    }
+    
+    if ([_cat1Btn isSelected] &&
+        [_cat2Btn isSelected] &&
+        [_cat3Btn isSelected] &&
+        [_cat4Btn isSelected] &&
+        [_cat5Btn isSelected])
+    {
+        [_selectAllBtn setSelected:NO];
     }
     
     [_collectionView reloadData];

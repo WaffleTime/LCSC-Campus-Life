@@ -364,27 +364,27 @@
     if ([[eventTime objectForKey:@"category"] isEqualToString:@"Entertainment"])
     {
         UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor redColor];
+        color.backgroundColor = [UIColor colorWithRed:135.0/256.0 green:17.0/256.0 blue:17.0/256.0 alpha:1.0];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Academics"])
     {
         UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:50.0/255.0f green:50.0/255.0f blue:255.0/255.0f alpha:1.0];
+        color.backgroundColor = [UIColor colorWithRed:81.0/256.0 green:81.0/256.0 blue:81.0/256.0 alpha:1.0];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Activities"])
     {
         UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor yellowColor];
+        color.backgroundColor = [UIColor colorWithRed:238.0/256.0 green:136.0/256.0 blue:0.0/256.0 alpha:1.0];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Residence"])
     {
         UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor orangeColor];
+        color.backgroundColor = [UIColor colorWithRed:31.0/256.0 green:117.0/256.0 blue:60.0/256.0 alpha:1.0];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Athletics"])
     {
         UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor greenColor];
+        color.backgroundColor = [UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0];
     }
     
     UILabel *summary = (UILabel *)[cell viewWithTag:22];
