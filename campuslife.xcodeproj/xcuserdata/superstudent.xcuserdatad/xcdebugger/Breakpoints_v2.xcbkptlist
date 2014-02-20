@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/AddEventViewController.m"
-            timestampString = "409000337.796378"
+            timestampString = "414454951.716108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "-allDayEventToggle:"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/AddEventViewController.m"
-            timestampString = "409000337.796378"
+            timestampString = "414454951.716108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
             landmarkName = "-allDayEventToggle:"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/AddEventViewController.m"
-            timestampString = "409000337.796378"
+            timestampString = "414454951.716108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "-addEvent"
             landmarkType = "5">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/UpdateEventViewController.m"
-            timestampString = "409002171.938843"
+            timestampString = "414022405.637683"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "-addEvent"
             landmarkType = "5">
          </BreakpointContent>
@@ -255,6 +255,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "802"
             endingLineNumber = "802"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "762"
+            endingLineNumber = "762"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -271,6 +276,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "808"
             endingLineNumber = "808"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "768"
+            endingLineNumber = "768"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -287,6 +297,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "810"
             endingLineNumber = "810"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "770"
+            endingLineNumber = "770"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -303,210 +318,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "898"
             endingLineNumber = "898"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "915"
-            endingLineNumber = "915"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "918"
-            endingLineNumber = "918"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "929"
-            endingLineNumber = "929"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "950"
-            endingLineNumber = "950"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "960"
-            endingLineNumber = "960"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "967"
-            endingLineNumber = "967"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "972"
-            endingLineNumber = "972"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "798"
-            endingLineNumber = "798"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "695"
-            endingLineNumber = "695"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "892"
-            endingLineNumber = "892"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "855"
-            endingLineNumber = "855"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "865"
-            endingLineNumber = "865"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "414459421.149267"
+            timestampString = "414022693.251474"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "858"
@@ -525,8 +337,286 @@
             timestampString = "414459421.149267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "915"
+            endingLineNumber = "915"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "875"
+            endingLineNumber = "875"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "918"
+            endingLineNumber = "918"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "878"
+            endingLineNumber = "878"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "929"
+            endingLineNumber = "929"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "889"
+            endingLineNumber = "889"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "950"
+            endingLineNumber = "950"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "910"
+            endingLineNumber = "910"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "960"
+            endingLineNumber = "960"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "920"
+            endingLineNumber = "920"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "967"
+            endingLineNumber = "967"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "927"
+            endingLineNumber = "927"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "972"
+            endingLineNumber = "972"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "932"
+            endingLineNumber = "932"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "798"
+            endingLineNumber = "798"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "758"
+            endingLineNumber = "758"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "695"
+            endingLineNumber = "695"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "655"
+            endingLineNumber = "655"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "892"
+            endingLineNumber = "892"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "852"
+            endingLineNumber = "852"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "855"
+            endingLineNumber = "855"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "815"
+            endingLineNumber = "815"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "865"
+            endingLineNumber = "865"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "825"
+            endingLineNumber = "825"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "858"
+            endingLineNumber = "858"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "818"
+            endingLineNumber = "818"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "414459421.149267"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "861"
             endingLineNumber = "861"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "821"
+            endingLineNumber = "821"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -573,6 +663,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "907"
             endingLineNumber = "907"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "867"
+            endingLineNumber = "867"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -589,6 +684,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "963"
             endingLineNumber = "963"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "923"
+            endingLineNumber = "923"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -605,6 +705,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "933"
             endingLineNumber = "933"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "893"
+            endingLineNumber = "893"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -621,6 +726,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "948"
             endingLineNumber = "948"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "908"
+            endingLineNumber = "908"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -637,6 +747,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "924"
             endingLineNumber = "924"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "884"
+            endingLineNumber = "884"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -653,6 +768,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "904"
             endingLineNumber = "904"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "864"
+            endingLineNumber = "864"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -669,6 +789,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "952"
             endingLineNumber = "952"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "912"
+            endingLineNumber = "912"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -715,6 +840,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "911"
             endingLineNumber = "911"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "871"
+            endingLineNumber = "871"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -731,6 +861,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "922"
             endingLineNumber = "922"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "882"
+            endingLineNumber = "882"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -747,6 +882,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "902"
             endingLineNumber = "902"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "862"
+            endingLineNumber = "862"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -793,6 +933,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "905"
             endingLineNumber = "905"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "865"
+            endingLineNumber = "865"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -809,6 +954,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "954"
             endingLineNumber = "954"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "914"
+            endingLineNumber = "914"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -825,6 +975,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "965"
             endingLineNumber = "965"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "925"
+            endingLineNumber = "925"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -841,6 +996,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "970"
             endingLineNumber = "970"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "930"
+            endingLineNumber = "930"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -857,6 +1017,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "594"
             endingLineNumber = "594"
+            timestampString = "414022405.637683"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "551"
+            endingLineNumber = "551"
             landmarkName = "-authorizationWasSuccessful"
             landmarkType = "5">
          </BreakpointContent>
@@ -873,6 +1038,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "617"
             endingLineNumber = "617"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -889,6 +1059,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "760"
             endingLineNumber = "760"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "720"
+            endingLineNumber = "720"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -949,6 +1124,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "764"
             endingLineNumber = "764"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "724"
+            endingLineNumber = "724"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -995,6 +1175,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "771"
             endingLineNumber = "771"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "731"
+            endingLineNumber = "731"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1041,6 +1226,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "776"
             endingLineNumber = "776"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "736"
+            endingLineNumber = "736"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1101,6 +1291,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "780"
             endingLineNumber = "780"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "740"
+            endingLineNumber = "740"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1147,6 +1342,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "783"
             endingLineNumber = "783"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "743"
+            endingLineNumber = "743"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1193,6 +1393,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "790"
             endingLineNumber = "790"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "750"
+            endingLineNumber = "750"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1239,6 +1444,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "791"
             endingLineNumber = "791"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "751"
+            endingLineNumber = "751"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1255,6 +1465,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "772"
             endingLineNumber = "772"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "732"
+            endingLineNumber = "732"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1271,6 +1486,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "765"
             endingLineNumber = "765"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "725"
+            endingLineNumber = "725"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1317,6 +1537,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "766"
             endingLineNumber = "766"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "726"
+            endingLineNumber = "726"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1363,6 +1588,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "784"
             endingLineNumber = "784"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "744"
+            endingLineNumber = "744"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1409,6 +1639,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "914"
             endingLineNumber = "914"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "874"
+            endingLineNumber = "874"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1425,6 +1660,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "921"
             endingLineNumber = "921"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "881"
+            endingLineNumber = "881"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1441,6 +1681,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "749"
             endingLineNumber = "749"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "709"
+            endingLineNumber = "709"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1457,6 +1702,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "748"
             endingLineNumber = "748"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "708"
+            endingLineNumber = "708"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1473,6 +1723,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "759"
             endingLineNumber = "759"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "719"
+            endingLineNumber = "719"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1519,6 +1774,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "747"
             endingLineNumber = "747"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1535,6 +1795,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "761"
             endingLineNumber = "761"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "721"
+            endingLineNumber = "721"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1551,6 +1816,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "797"
             endingLineNumber = "797"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "757"
+            endingLineNumber = "757"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1567,6 +1837,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "932"
             endingLineNumber = "932"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "892"
+            endingLineNumber = "892"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1583,6 +1858,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "908"
             endingLineNumber = "908"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "868"
+            endingLineNumber = "868"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1599,6 +1879,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "910"
             endingLineNumber = "910"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "870"
+            endingLineNumber = "870"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1615,6 +1900,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "741"
             endingLineNumber = "741"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "701"
+            endingLineNumber = "701"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1661,6 +1951,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "734"
             endingLineNumber = "734"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "694"
+            endingLineNumber = "694"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1707,6 +2002,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "715"
             endingLineNumber = "715"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "675"
+            endingLineNumber = "675"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -1748,7 +2048,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/Day_Event_ViewController.m"
-            timestampString = "408918118.005653"
+            timestampString = "414456764.876315"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
@@ -1764,7 +2064,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/Day_Event_ViewController.m"
-            timestampString = "408918118.005653"
+            timestampString = "414456764.876315"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "399"
@@ -1796,7 +2096,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/UpdateEventViewController.h"
-            timestampString = "408917878.561161"
+            timestampString = "414454951.716108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "10"
@@ -1952,11 +2252,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "campuslife/AddEventViewController.h"
-            timestampString = "409000879.596482"
+            timestampString = "414454951.716108"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "-numberOfRepeatSliderChanged:"
             landmarkType = "4">
          </BreakpointContent>
@@ -1973,6 +2273,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "942"
             endingLineNumber = "942"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "902"
+            endingLineNumber = "902"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1989,6 +2294,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "703"
             endingLineNumber = "703"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "663"
+            endingLineNumber = "663"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -2035,6 +2345,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "700"
             endingLineNumber = "700"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2051,6 +2366,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "753"
             endingLineNumber = "753"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "713"
+            endingLineNumber = "713"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -2097,6 +2417,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "752"
             endingLineNumber = "752"
+            timestampString = "414022693.251474"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "712"
+            endingLineNumber = "712"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
             <Locations>
@@ -2129,6 +2454,38 @@
                   offsetFromSymbolStart = "7403">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/AddEventViewController.h"
+            timestampString = "414452831.239756"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "@interface AddEventViewController"
+            landmarkType = "2">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "campuslife/RepeatFreqViewController.m"
+            timestampString = "414456764.876315"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-viewWillDisappear"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

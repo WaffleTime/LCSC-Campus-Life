@@ -403,7 +403,8 @@
         [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/%@", sortedArray[indexPath.row][@"id"]]
                            withHttpMethod:httpMethod_DELETE
                        postParameterNames:[NSArray arrayWithObjects: nil]
-                      postParameterValues:[NSArray arrayWithObjects: nil]];
+                     postParameterValues:[NSArray arrayWithObjects: nil]
+                             requestBody:nil];
         
         [sortedArray removeObjectAtIndex:indexPath.row];
         

@@ -279,7 +279,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/%@", _eventInfo[@"id"]]
                            withHttpMethod:httpMethod_DELETE
                        postParameterNames:[NSArray arrayWithObjects: nil]
-                      postParameterValues:[NSArray arrayWithObjects: nil]];
+                      postParameterValues:[NSArray arrayWithObjects: nil]
+                              requestBody:nil];
         
         //Events have specified time constraints unless they are all day events.
         if (!_allDayEventSwitch.on) {
@@ -340,7 +341,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
                                withHttpMethod:httpMethod_POST
                            postParameterNames:[NSArray arrayWithObjects:@"text", nil]
-                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]];
+                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]
+                                  requestBody:nil];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
                                                             message: @"Your event has been sent to the Google Calendar!"
@@ -368,7 +370,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
                                withHttpMethod:httpMethod_POST
                            postParameterNames:[NSArray arrayWithObjects:@"text", nil]
-                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]];
+                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]
+                                  requestBody:nil];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
                                                             message: @"Your all day event has been sent to the Google Calendar!"

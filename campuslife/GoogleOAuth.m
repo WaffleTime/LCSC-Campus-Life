@@ -192,8 +192,9 @@
 
 
 -(void)callAPI:(NSString *)apiURL withHttpMethod:(HTTP_Method)httpMethod
-                            postParameterNames:(NSArray *)params
-                            postParameterValues:(NSArray *)values{
+                              postParameterNames:(NSArray *)params
+                             postParameterValues:(NSArray *)values
+                                     requestBody:(NSDictionary *)json{
     
     // Check if the httpMethod value is valid.
     // If not then notify for error.
@@ -209,28 +210,48 @@
         // Create a mutable request.
         NSMutableURLRequest *request;
         
+        
+        
 
         // In case of POST httpMethod value, set the parameters and any other necessary properties.
         if (httpMethod == httpMethod_POST) {
-            // A string with the POST parameters should be built.
-            // Create an empty string.
-            NSString *postParams = @"";
-            // Iterrate through all parameters and append every POST parameter to the postParams string.
-            for (int i=0; i<[params count]; i++) {
-                postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"%@=%@",
-                                                                  [params objectAtIndex:i], [values objectAtIndex:i]]];
-                
-                // If the current parameter is not the last one then add the "&" symbol to separate post parameters.
-                if (i < [params count] - 1) {
-                    postParams = [postParams stringByAppendingString:@"&"];
-                }
-            }
-            
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
             
-            // Set any other necessary options.
-            [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
-            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            //Add the json if it exists.
+            if (json != nil) {
+                [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+                
+                NSError *error;
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:json
+                                                                   options:(NSJSONWritingOptions) 0
+                                                                     error:&error];
+                
+                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                NSLog(@"URL:%@", urlString);
+                NSLog(@"Body:%@",jsonString);
+                
+                // Set any other necessary options.
+                [request setHTTPBody:jsonData];
+            }
+            else {
+                // A string with the POST parameters should be built.
+                NSString *postParams = @"";
+                
+                [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+                
+                // Iterrate through all parameters and append every POST parameter to the postParams string.
+                for (int i=0; i<[params count]; i++) {
+                    postParams = [postParams stringByAppendingString:[NSString stringWithFormat:@"%@=%@",
+                                                                      [params objectAtIndex:i], [values objectAtIndex:i]]];
+                    
+                    // If the current parameter is not the last one then add the "&" symbol to separate post parameters.
+                    if (i < [params count] - 1) {
+                        postParams = [postParams stringByAppendingString:@"&"];
+                    }
+                }
+                // Set any other necessary options.
+                [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
+            }
         }
         else if (httpMethod == httpMethod_GET) {
             //A string with the GET parameters should be built
@@ -250,6 +271,9 @@
             apiURL = [apiURL stringByReplacingOccurrencesOfString:@"@" withString:@"%40"];
             
             getParams = [getParams stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
+            
+            NSLog(@"URL:%@", urlString);
+            NSLog(@"Body:%@",getParams);
             
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@&%@", apiURL, accessTokenString, getParams]]];
         }
