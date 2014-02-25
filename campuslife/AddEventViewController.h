@@ -35,6 +35,9 @@
 @property (strong, nonatomic) IBOutlet UISlider *repeatSlider;
 @property (strong, nonatomic) IBOutlet UISlider *numberOfRepeatSlider;
 
+@property (weak, nonatomic) IBOutlet UIButton *repFreqBtn;
+@property (weak, nonatomic) IBOutlet UILabel *repUntilLabel;
+@property (weak, nonatomic) IBOutlet UIButton *repUntilBtn;
 
 -(IBAction) addEvent;
 - (IBAction)allDayEventToggle:(id)sender;

@@ -57,6 +57,7 @@
 		C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */ = {isa = PBXBuildFile; fileRef = C1E66E4F183C34F000851B89 /* daysOfWeek.png */; };
 		C1F3207D1855623000811DDA /* UpdateEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F3207C1855623000811DDA /* UpdateEventViewController.m */; };
 		C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */; };
+		C1FAE44818B6AAB300449F57 /* bigAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C1FAE44718B6AAB300449F57 /* bigAlphaCircle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		C1F3207C1855623000811DDA /* UpdateEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateEventViewController.m; sourceTree = "<group>"; };
 		C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventViewController.h; sourceTree = "<group>"; };
 		C1F8CF2E184D25BC0003E2A1 /* AddEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventViewController.m; sourceTree = "<group>"; };
+		C1FAE44718B6AAB300449F57 /* bigAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigAlphaCircle.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C1FAE44718B6AAB300449F57 /* bigAlphaCircle.png */,
 				C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */,
 				C12C660418612C670017C41C /* iTunesArtwork.png */,
 				C12C660518612C670017C41C /* iTunesArtwork@2x.png */,
@@ -386,6 +389,7 @@
 				C12C65F618612C5D0017C41C /* AppIcon29x29.png in Resources */,
 				C12C660318612C5D0017C41C /* AppIcon76x76@2x.png in Resources */,
 				C1E66DFC183C333A00851B89 /* InfoPlist.strings in Resources */,
+				C1FAE44818B6AAB300449F57 /* bigAlphaCircle.png in Resources */,
 				C12C65FE18612C5D0017C41C /* AppIcon60x60.png in Resources */,
 				C12C660718612C670017C41C /* iTunesArtwork@2x.png in Resources */,
 				C12C660618612C670017C41C /* iTunesArtwork.png in Resources */,

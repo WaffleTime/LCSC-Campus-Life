@@ -7,6 +7,7 @@
 //
 
 #import "RepeatUntilViewController.h"
+#import "AddEventParentViewController.h"
 
 @interface RepeatUntilViewController ()
 
@@ -27,6 +28,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+    
+    [eventController setRepUntil:_untilDate.date];
 }
 
 - (void)didReceiveMemoryWarning

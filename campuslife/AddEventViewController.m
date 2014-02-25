@@ -62,6 +62,33 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"RepFreq: %@", super.repeatFreq);
+    NSLog(@"RepUntil: %@", super.repeatUntil);
+    
+    if (super.repeatFreq == NULL)
+    {
+        _repFreqBtn.titleLabel.text = @"Never";
+    }
+    else
+    {
+        _repFreqBtn.titleLabel.text = super.repeatFreq;
+        _repUntilBtn.enabled = YES;
+        
+        _repUntilBtn.titleLabel.text = @"mm/dd/yyyy";
+        _repUntilLabel.text = @"End Repeat";
+    }
+    
+    if (super.repeatUntil != NULL)
+    {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+        
+        _repUntilBtn.titleLabel.text = [dateFormatter stringFromDate:super.repeatUntil];
+    }
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
@@ -78,6 +105,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(IBAction) addEvent {
+    /*
     NSDateFormatter *dateTimeFormatter = [[NSDateFormatter alloc] init];
     [dateTimeFormatter setDateFormat:@"yyyy-MM-dd"];
     
@@ -85,7 +113,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateTimeFormatter stringFromDate:_startTimePicker.date], @"date", nil] forKey:@"start"];
     [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateTimeFormatter stringFromDate:_endTimePicker.date], @"date", nil] forKey:@"end"];
-    [json setObject:@"HAPPY HAPPY JOY JOY!" forKey:@"summary"];
+    [json setObject:_summary.text forKey:@"summary"];
+    [json setObject:_description.text forKey:@"description"];
+    [json setObject:_where.text forKey:@"where"];
 
     
     
@@ -94,6 +124,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                    postParameterNames:@[]
                   postParameterValues:@[]
                           requestBody:json];
+     */
     
     
     BOOL readyToAddEvent = NO;
@@ -174,29 +205,147 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 readyToAddEvent = YES;
             }
         }
-        //So we only must compare the times.
+
+        //We compare the times regardless of the type of event (all-day, non all-day.)
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        [timeFormatter setDateFormat:@"HHmm"];
+        //Now we check the times.
+        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                            message: @"The end time is less than the start time."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
         else
         {
-            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-            [timeFormatter setDateFormat:@"HHmm"];
-            //Now we check the times.
-            if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-                < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                                message: @"The end time is less than the start time."
-                                                               delegate: nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-            else
-            {
-                //If all the previous checks are alright, then we can add an event.
-                readyToAddEvent = YES;
-            }
+            //If all the previous checks are alright, then we can add an event.
+            readyToAddEvent = YES;
         }
     }
+    
+    NSString *calId = @"";
+    if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
+        calId = [_auth getEntertainmentCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Activities"]) {
+        calId = [_auth getActivitiesCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
+        calId = [_auth getAcademicsCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Athletics"]) {
+        calId = [_auth getAthleticsCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence"]) {
+        calId = [_auth getResidenceCalId];
+    }
+    
+    if (readyToAddEvent) {
+        //Events have specified time constraints unless they are all day events.
+        if (!_allDayEventSwitch.on) {
+            NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+            
+            [json setObject:_summary.text forKey:@"summary"];
+            [json setObject:_description.text forKey:@"description"];
+            [json setObject:_where.text forKey:@"where"];
+            
+             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ"];
+
+            if (super.repeatFreq == NULL) {
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"dateTime", nil] forKey:@"start"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"dateTime", nil] forKey:@"end"];
+            }
+            else {
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"dateTime",
+                                 [[NSTimeZone localTimeZone] name], @"timeZone",nil] forKey:@"start"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"dateTime",
+                                 [[NSTimeZone localTimeZone] name], @"timeZone", nil] forKey:@"end"];
+            }
+            
+            [dateFormatter setDateFormat:@"yyyyMMdd"];
+            
+            //Weekly Repeat
+            if ([super.repeatFreq isEqualToString:@"Weekly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=WEEKLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Monthly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Monthly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=MONTHLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Yearly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Yearly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=YEARLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            
+            [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", calId]
+                               withHttpMethod:httpMethod_POST
+                           postParameterNames:@[]
+                          postParameterValues:@[]
+                                  requestBody:json];
+             
+
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
+                                                            message: @"Your event has been sent to the Google Calendar!"
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+             
+        }
+        else {
+            
+            NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
+            
+            [json setObject:_summary.text forKey:@"summary"];
+            [json setObject:_description.text forKey:@"description"];
+            [json setObject:_where.text forKey:@"where"];
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            
+            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date", nil] forKey:@"start"];
+            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date", nil] forKey:@"end"];
+            
+            [dateFormatter setDateFormat:@"yyyyMMdd"];
+            
+            //Weekly Repeat
+            if ([super.repeatFreq isEqualToString:@"Weekly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=WEEKLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Monthly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Monthly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=MONTHLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Yearly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Yearly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=YEARLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            
+            [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", calId]
+                               withHttpMethod:httpMethod_POST
+                           postParameterNames:@[]
+                          postParameterValues:@[]
+                                  requestBody:json];
+            
+            
+            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date", nil] forKey:@"start"];
+            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date", nil] forKey:@"end"];
+
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
+                                                            message: @"Your all day event has been sent to the Google Calendar!"
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+
     
     /*
     if (readyToAddEvent) {

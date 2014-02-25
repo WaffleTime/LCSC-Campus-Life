@@ -10,4 +10,6 @@
 
 @interface RepeatUntilViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *untilDate;
+
 @end

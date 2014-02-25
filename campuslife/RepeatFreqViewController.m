@@ -32,12 +32,13 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     _repFreq = @"Never";
 }
 
-- (void)viewWillDisappear
-{
-    AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
     
     [eventController setRepFreq:_repFreq];
 }
@@ -53,13 +54,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -69,17 +70,13 @@
     
     if (indexPath.row == 0)
     {
-        ((UILabel *)[cell viewWithTag:5]).text = @"Daily";
+        ((UILabel *)[cell viewWithTag:5]).text = @"Weekly";
     }
     else if (indexPath.row == 1)
     {
-        ((UILabel *)[cell viewWithTag:5]).text = @"Weekly";
-    }
-    else if (indexPath.row == 2)
-    {
         ((UILabel *)[cell viewWithTag:5]).text = @"Monthly";
     }
-    else if (indexPath.row == 3)
+    else if (indexPath.row == 2)
     {
         ((UILabel *)[cell viewWithTag:5]).text = @"Yearly";
     }
@@ -91,30 +88,16 @@
 {
     if (indexPath.row == 0)
     {
-        _repFreq = @"Daily";
+        _repFreq = @"Weekly";
     }
     else if (indexPath.row == 1)
     {
-        _repFreq = @"Weekly";
-    }
-    else if (indexPath.row == 2)
-    {
         _repFreq = @"Monthly";
     }
-    else if (indexPath.row == 3)
+    else if (indexPath.row == 2)
     {
         _repFreq = @"Yearly";
     }
 }
-
-
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
-}
-
 
 @end
