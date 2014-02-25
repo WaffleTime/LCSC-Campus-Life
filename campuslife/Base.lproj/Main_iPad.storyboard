@@ -611,6 +611,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <rect key="frame" x="167" y="517" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
+                                    <action selector="allDayEventToggle:" destination="LlB-ae-1w4" eventType="valueChanged" id="0z2-ZE-0W8"/>
                                     <action selector="allDayEventToggle:" destination="aWt-tq-riR" eventType="valueChanged" id="DAK-41-Kq3"/>
                                 </connections>
                             </switch>
