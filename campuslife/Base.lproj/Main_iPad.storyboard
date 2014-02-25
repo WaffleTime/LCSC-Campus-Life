@@ -96,7 +96,7 @@
                                                     <color key="backgroundColor" white="0.79826108870967749" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hk0-e2-IrR">
-                                                    <rect key="frame" x="108" y="82" width="1" height="127"/>
+                                                    <rect key="frame" x="108" y="0.0" width="1" height="127"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.79826108870000001" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
                                                 </imageView>
@@ -356,7 +356,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" tag="21" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAW-Z7-Fum">
-                                            <rect key="frame" x="103" y="12" width="40" height="40"/>
+                                            <rect key="frame" x="103" y="17" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -364,16 +364,20 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Summary" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="584" translatesAutoresizingMaskIntoConstraints="NO" id="2dO-ui-ABv">
-                                            <rect key="frame" x="151" y="0.0" width="584" height="64"/>
+                                            <rect key="frame" x="141" y="0.0" width="584" height="64"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bigAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="rx2-eW-rx4">
+                                            <rect key="frame" x="103" y="17" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="1rB-Rl-fmZ" kind="push" identifier="dayToEventDetail" id="qy0-Nq-Wbo"/>
+                                    <segue destination="1rB-Rl-fmZ" kind="push" id="Dhf-Wk-QBc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -817,7 +821,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gEg-nr-jqx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2140" y="175"/>
+            <point key="canvasLocation" x="2323" y="781"/>
         </scene>
         <!--Update Event View Controller - Update Event-->
         <scene sceneID="Lhx-Qk-hLM">
@@ -1035,7 +1039,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d1O-bw-WXh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2155" y="1341"/>
+            <point key="canvasLocation" x="3327" y="-393"/>
         </scene>
         <!--Event Detail View Controller - Current Event-->
         <scene sceneID="Q9o-QN-7b9">
@@ -1172,10 +1176,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Af-9I-Q74" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1225" y="1312"/>
+            <point key="canvasLocation" x="2323" y="-393"/>
         </scene>
     </scenes>
     <resources>
+        <image name="bigAlphaCircle.png" width="30" height="30"/>
         <image name="newAlphaCircle.png" width="13" height="13"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1184,6 +1189,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="O0M-ym-Wts"/>
+        <segue reference="ibb-91-zEn"/>
     </inferredMetricsTieBreakers>
 </document>

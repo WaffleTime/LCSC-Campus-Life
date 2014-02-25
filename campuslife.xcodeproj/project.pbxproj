@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C105A2A018B6A992007C841C /* bigAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C105A29F18B6A992007C841C /* bigAlphaCircle.png */; };
 		C10BC49A18AD8C5D004C91CD /* newAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */; };
 		C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */; };
 		C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C105A29F18B6A992007C841C /* bigAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigAlphaCircle.png; sourceTree = "<group>"; };
 		C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newAlphaCircle.png; sourceTree = "<group>"; };
 		C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventParentViewController.h; sourceTree = "<group>"; };
 		C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventParentViewController.m; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C105A29F18B6A992007C841C /* bigAlphaCircle.png */,
 				C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */,
 				C12C660418612C670017C41C /* iTunesArtwork.png */,
 				C12C660518612C670017C41C /* iTunesArtwork@2x.png */,
@@ -386,6 +389,7 @@
 				C12C65F618612C5D0017C41C /* AppIcon29x29.png in Resources */,
 				C12C660318612C5D0017C41C /* AppIcon76x76@2x.png in Resources */,
 				C1E66DFC183C333A00851B89 /* InfoPlist.strings in Resources */,
+				C105A2A018B6A992007C841C /* bigAlphaCircle.png in Resources */,
 				C12C65FE18612C5D0017C41C /* AppIcon60x60.png in Resources */,
 				C12C660718612C670017C41C /* iTunesArtwork@2x.png in Resources */,
 				C12C660618612C670017C41C /* iTunesArtwork.png in Resources */,
