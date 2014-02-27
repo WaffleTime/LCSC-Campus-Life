@@ -57,9 +57,9 @@
     [googleOAuth setGOAuthDelegate:self];
     
     [googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                           andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                             andParentView:self.view
-                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+                          andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
+                            andParentView:self.view
+                                andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
     
     //Stores the authenticator so that it can be used
     [_auth setAuthenticator:googleOAuth];
@@ -79,13 +79,13 @@
     
     
     /*
-    //goes here
-    [_cat1Btn setTitleColor:[UIColor colorWithRed:135.0/256.0 green:17.0/256.0 blue:17.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-    [_cat2Btn setTitleColor:[UIColor colorWithRed:81.0/256.0 green:81.0/256.0 blue:81.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-    [_cat3Btn setTitleColor:[UIColor colorWithRed:238.0/256.0 green:136.0/256.0 blue:0.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-    [_cat4Btn setTitleColor:[UIColor colorWithRed:31.0/256.0 green:117.0/256.0 blue:60.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-    [_cat5Btn setTitleColor:[UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-    */
+     //goes here
+     [_cat1Btn setTitleColor:[UIColor colorWithRed:135.0/256.0 green:17.0/256.0 blue:17.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+     [_cat2Btn setTitleColor:[UIColor colorWithRed:81.0/256.0 green:81.0/256.0 blue:81.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+     [_cat3Btn setTitleColor:[UIColor colorWithRed:238.0/256.0 green:136.0/256.0 blue:0.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+     [_cat4Btn setTitleColor:[UIColor colorWithRed:31.0/256.0 green:117.0/256.0 blue:60.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+     [_cat5Btn setTitleColor:[UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0] forState:UIControlStateSelected];
+     */
     
     
     Preferences *prefs = [Preferences getSharedInstance];
@@ -155,7 +155,7 @@
                                            andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
                                              andParentView:self.view
                                                  andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-
+        
         
         //NSLog(@"Signed in we did");
     }
@@ -292,7 +292,7 @@
         cell = (UICollectionViewCell *)[_collectionView dequeueReusableCellWithReuseIdentifier:@"OtherMonthCell" forIndexPath:indexPath];
         
         UILabel *dayLbl = (UILabel *)[cell viewWithTag:100];
-
+        
         dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [_events getFirstWeekDay] - [_events getDaysOfMonth]];
     }
     else {
@@ -329,7 +329,7 @@
         
         //Showing relevant category by making the colorful squares not hidden anymore.
         NSArray *dayEvents = [_events getEventsForDay:(int)indexPath.row+1 - [_events getFirstWeekDay]];
-
+        
         //Iterate through all events and determine categories that are present.
         for (int i=0; i<[dayEvents count]; i++) {
             //NSString *category = [[dayEvents objectAtIndex:i] objectForKey:@"category"];
@@ -426,9 +426,9 @@
 //  the summary of the.
 - (int)getIndexOfSubstringInString:(NSString *)substring :(NSString *)string {
     BOOL substringFound = NO;
-
+    
     int substringStartIndex = -1;
-
+    
     //Iterate through the string to find the first character in the substring.
     for (int i=0; i<[string length]; i++) {
         //Check to see if the substring character has been found.
@@ -464,7 +464,7 @@
             }
         }
     }
-
+    
     return substringStartIndex;
 }
 
@@ -506,7 +506,7 @@
     if (substringFound) {
         //This block gets the first word after the "Category:", which is the category.
         NSString *infoWithExtraStuff = [summary substringWithRange:NSMakeRange(substringStartIndex+foundKeyLength,
-                                                                                   [summary length] - (substringStartIndex+foundKeyLength))];
+                                                                               [summary length] - (substringStartIndex+foundKeyLength))];
         NSString *info = [[infoWithExtraStuff componentsSeparatedByString:@";"] objectAtIndex:0];
         
         int trailingSpaces = 0;
@@ -795,7 +795,7 @@
                     int freqLen = [currentEventInfo[@"recurrence"][0] rangeOfString:@";"].location;
                     
                     freqLen -= freqSubstringIndx;
-
+                    
                     //This will prevent any problems regarding the recurrence value.
                     //  Events that repeat forever will not be usable.
                     if (freqLen <= 250) {
@@ -885,7 +885,7 @@
                 int s = 0;
                 int e = 0;
                 
-
+                
                 //The outer loop loops through the reocurrences.
                 for (int rep=0; rep<repeat; rep++) {
                     BOOL iterateOverDays = YES;

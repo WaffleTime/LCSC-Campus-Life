@@ -42,9 +42,6 @@
 -(IBAction) addEvent;
 - (IBAction)allDayEventToggle:(id)sender;
 
-- (IBAction)repeatSliderChanged:(id)sender;
-- (IBAction)numberOfRepeatSliderChanged:(id)sender;
-
 
 
 @end
