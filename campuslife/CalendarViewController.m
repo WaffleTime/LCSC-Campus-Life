@@ -15,6 +15,7 @@
 #import "MonthlyEvents.h"
 #import "Preferences.h"
 #import "Authentication.h"
+#import "AddEventParentViewController.h"
 
 @interface CalendarViewController ()
 
@@ -69,6 +70,8 @@
     [_auth setResidenceCalId:@"lcmail.lcsc.edu_2k1inscpp932dkmf8q30bdo8rk@group.calendar.google.com"];
     [_auth setAthleticsCalId:@"lcmail.lcsc.edu_3u5gguv87sa68i3pqklufctj3c@group.calendar.google.com"];
     [_auth setAcademicsCalId:@"lcmail.lcsc.edu_kmcvmjd97mk1be8pdush8lpc8s@group.calendar.google.com"];
+    [_auth setCampusRecCalId:@"lcmail.lcsc.edu_u1tqmcehmtauiv3t4cm18fugto@group.calendar.google.com"];
+
     
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
@@ -76,17 +79,6 @@
     _firstEventsJSONReceived = NO;
     
     _events = [MonthlyEvents getSharedInstance];
-    
-    
-    /*
-     //goes here
-     [_cat1Btn setTitleColor:[UIColor colorWithRed:135.0/256.0 green:17.0/256.0 blue:17.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-     [_cat2Btn setTitleColor:[UIColor colorWithRed:81.0/256.0 green:81.0/256.0 blue:81.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-     [_cat3Btn setTitleColor:[UIColor colorWithRed:238.0/256.0 green:136.0/256.0 blue:0.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-     [_cat4Btn setTitleColor:[UIColor colorWithRed:31.0/256.0 green:117.0/256.0 blue:60.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-     [_cat5Btn setTitleColor:[UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0] forState:UIControlStateSelected];
-     */
-    
     
     Preferences *prefs = [Preferences getSharedInstance];
     
@@ -96,9 +88,12 @@
     [_cat3Btn setSelected:[prefs getPreference:3]];
     [_cat4Btn setSelected:[prefs getPreference:4]];
     [_cat5Btn setSelected:[prefs getPreference:5]];
+    [_cat6Btn setSelected:[prefs getPreference:6]];
     
     _leftArrow.enabled = NO;
     _rightArrow.enabled = NO;
+    
+    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -163,12 +158,7 @@
 
 - (IBAction)radioSelected:(UIButton *)sender {
     Preferences *prefs = [Preferences getSharedInstance];
-    
-    if (sender.tag != 6)
-    {
-        [_selectAllBtn setSelected:YES];
-    }
-    
+
     switch (sender.tag) {
         case 1:
             [prefs negatePreference:1]; //                              <-- Entertainment
@@ -196,33 +186,10 @@
             [_cat5Btn setHighlighted:NO];
             break;
         case 6:
-            if ([_selectAllBtn isSelected] == TRUE) {
-                NSLog(@"_selectAllBtn = %hhd", [_selectAllBtn isSelected]);
-                [_cat1Btn setSelected:YES];
-                [_cat2Btn setSelected:YES];
-                [_cat3Btn setSelected:YES];
-                [_cat4Btn setSelected:YES];
-                [_cat5Btn setSelected:YES];
-                
-                for (int i=1; i<6; i++)
-                {
-                    if (![prefs getPreference:i])
-                        [prefs negatePreference:i];
-                }
-                
-                [_selectAllBtn setSelected:NO];
-            }
-            
+            [prefs negatePreference:6]; //                              <-- Campus Rec
+            [_cat6Btn setSelected:[prefs getPreference:6]];
+            [_cat6Btn setHighlighted:NO];
             break;
-    }
-    
-    if ([_cat1Btn isSelected] &&
-        [_cat2Btn isSelected] &&
-        [_cat3Btn isSelected] &&
-        [_cat4Btn isSelected] &&
-        [_cat5Btn isSelected])
-    {
-        [_selectAllBtn setSelected:NO];
     }
     
     [_collectionView reloadData];
@@ -323,6 +290,10 @@
         if (!cat5.hidden) {
             cat5.hidden = YES;
         }
+        UIView *cat6 = (UIView *)[cell viewWithTag:16];
+        if (!cat6.hidden) {
+            cat6.hidden = YES;
+        }
         
         //This holds the preferences based on the legend at the top.
         Preferences *prefs = [Preferences getSharedInstance];
@@ -373,6 +344,14 @@
                     //Check to see if this category is selected.
                     if ([prefs getPreference:5]) {
                         cat5.hidden = NO;
+                    }
+                }
+            }
+            else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Campus Rec"]) {
+                if (cat6.hidden) {
+                    //Check to see if this category is selected.
+                    if ([prefs getPreference:6]) {
+                        cat6.hidden = NO;
                     }
                 }
             }
@@ -498,7 +477,7 @@
         //-1 means a substring wasn't found.
         if (substringStartIndex != -1) {
             substringFound = YES;
-            foundKeyLength = [[possibleKeys objectAtIndex:i] length];
+            foundKeyLength = (int)[[possibleKeys objectAtIndex:i] length];
             break;
         }
     }
@@ -598,11 +577,13 @@
         
         self.signInOutButton.title = @"Sign Out";
         
+        _jsonsReceived = 0;
+        
         //This is a dummy update that will be to see if the user is able to manage events.
-        [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/6smpqs3orp11pm5kc6qubg8f38/move"
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
                            withHttpMethod:httpMethod_POST
                        postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                      postParameterValues:[NSArray arrayWithObjects:@"lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
                               requestBody:nil];
     }
     //NSLog(@"Getting the events for the current month");
@@ -656,6 +637,9 @@
             else if (_jsonsReceived == 4) {
                 category = @"Athletics";
             }
+            else if (_jsonsReceived == 5) {
+                category = @"Campus Rec";
+            }
             else {
                 NSLog(@"The category wasn't set for this request.");
             }
@@ -683,7 +667,7 @@
                 
                 //Determine if the event isn't an all day event type.
                 if ([[currentEventInfo objectForKey:@"start"] objectForKey:@"dateTime"] != nil) {
-                    startDay = [[[[currentEventInfo objectForKey:@"start"]
+                    startDay = (int)[[[[currentEventInfo objectForKey:@"start"]
                                   objectForKey:@"dateTime"]
                                  substringWithRange:NSMakeRange(8, 2)]
                                 integerValue];
@@ -732,7 +716,7 @@
                     }
                 }
                 else {
-                    startDay = [[[[currentEventInfo objectForKey:@"start"]
+                    startDay = (int)[[[[currentEventInfo objectForKey:@"start"]
                                   objectForKey:@"date"]
                                  substringWithRange:NSMakeRange(8, 2)]
                                 integerValue];
@@ -781,8 +765,11 @@
                     }
                 }
                 
-                int freq = 1;
+                float freq = 1.0;
                 int repeat = 1;
+                
+                //If monthly or yearly, we'll update this.
+                NSString *otherRepeatType = @"";
                 
                 //If an event is reocurring, then we must account for that.
                 if ([currentEventInfo objectForKey:@"recurrence"] != nil) {
@@ -792,7 +779,7 @@
                     int freqSubstringIndx = 11;
                     
                     //Thankfully there is only one semicolon in the string. So we use that to find the length of the frequency.
-                    int freqLen = [currentEventInfo[@"recurrence"][0] rangeOfString:@";"].location;
+                    int freqLen = (int)[currentEventInfo[@"recurrence"][0] rangeOfString:@";"].location;
                     
                     freqLen -= freqSubstringIndx;
                     
@@ -801,18 +788,23 @@
                     if (freqLen <= 250) {
                         NSString *frequency = [currentEventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(freqSubstringIndx, freqLen)];
                         
+                        //This 6 offsets the index so that it represents the beginning of the date we want.
+                        int untilSubstringIndx = -1;
+                        
                         if ([frequency isEqualToString:@"DAILY"]) {
-                            freq = 1;
+                            freq = 1.0;
+                            untilSubstringIndx = [self getIndexOfSubstringInString:@"UNTIL=":currentEventInfo[@"recurrence"][0]];
                         }
                         else if ([frequency isEqualToString:@"WEEKLY"]) {
-                            freq = 7;
+                            freq = 7.0;
+                            untilSubstringIndx = [self getIndexOfSubstringInString:@"UNTIL=":currentEventInfo[@"recurrence"][0]];
                         }
                         else if ([frequency isEqualToString:@"MONTHLY"]) {
-                            freq = 31;
+                            otherRepeatType = @"MONTHLY";
                         }
-                        
-                        //This 6 offsets the index so that it represents the beginning of the date we want.
-                        int untilSubstringIndx = [self getIndexOfSubstringInString:@"UNTIL=":currentEventInfo[@"recurrence"][0]];
+                        else if ([frequency isEqualToString:@"YEARLY"]) {
+                            otherRepeatType = @"YEARLY";
+                        }
                         
                         if (untilSubstringIndx != -1) {
                             //In here we'll determine the number of ocurrences.
@@ -835,7 +827,7 @@
                                 //We know that at least the startMonth is not within the selected month.
                                 
                                 //These days is just the length from start to finish no matter if there are some holes in the middle.
-                                int daysInEventDuration = 0;
+                                float daysInEventDuration = 0.0;
                                 
                                 if (startYear == [_events getSelectedYear]) {
                                     //Account for days in startMonth
@@ -874,7 +866,7 @@
                                     }
                                 }
                                 
-                                repeat = (daysInEventDuration) / freq;
+                                repeat = daysInEventDuration / freq;
                                 
                                 NSLog(@"The repeat number is %d", repeat);
                             }
@@ -886,27 +878,43 @@
                 int e = 0;
                 
                 
-                //The outer loop loops through the reocurrences.
-                for (int rep=0; rep<repeat; rep++) {
-                    BOOL iterateOverDays = YES;
-                    
-                    //Here we setup the s and e variables for the for loop.
-                    if (startYear == [_events getSelectedYear]) {
-                        //The startMonth is with respect to the startDay. The endDay quite possible
-                        //  can be going into the next month.
-                        if (startMonth == [_events getSelectedMonth]) {
-                            s = startDay;
-                            
-                            //Check if the endDay will be moving into the next month.
-                            if (endDay > [_events getDaysOfMonth:startMonth :startYear]) {
-                                e = [_events getDaysOfMonth:startMonth :startYear];
+                if ([otherRepeatType isEqualToString:@""]) {
+                    //The outer loop loops through the reocurrences.
+                    for (int rep=0; rep<repeat; rep++) {
+                        BOOL iterateOverDays = YES;
+                        
+                        //Here we setup the s and e variables for the for loop.
+                        if (startYear == [_events getSelectedYear]) {
+                            //The startMonth is with respect to the startDay. The endDay quite possible
+                            //  can be going into the next month.
+                            if (startMonth == [_events getSelectedMonth]) {
+                                s = startDay;
+                                
+                                //Check if the endDay will be moving into the next month.
+                                if (endDay > [_events getDaysOfMonth:startMonth :startYear]) {
+                                    e = [_events getDaysOfMonth:startMonth :startYear];
+                                }
+                                else {
+                                    e = endDay;
+                                }
+                            }
+                            //Check if the startMonth is the previous month and the endDay will roll over into the next month.
+                            else if (startMonth + 1 == [_events getSelectedMonth]
+                                     && endDay > [_events getDaysOfMonth:startMonth :startYear]) {
+                                //We don't care about the days in the previous month, only that
+                                //  the rolled over days are going to be in the selected month.
+                                s = 1;
+                                
+                                //endDay is for sure going to be above the daysInMonth.
+                                e = endDay%[_events getDaysOfMonth:startMonth :startYear];
                             }
                             else {
-                                e = endDay;
+                                //We'll skip this iterating, because we won't add anything.
+                                iterateOverDays = NO;
                             }
                         }
-                        //Check if the startMonth is the previous month and the endDay will roll over into the next month.
-                        else if (startMonth + 1 == [_events getSelectedMonth]
+                        else if (startYear == [_events getSelectedYear]-1
+                                 && startMonth == 12
                                  && endDay > [_events getDaysOfMonth:startMonth :startYear]) {
                             //We don't care about the days in the previous month, only that
                             //  the rolled over days are going to be in the selected month.
@@ -919,54 +927,49 @@
                             //We'll skip this iterating, because we won't add anything.
                             iterateOverDays = NO;
                         }
-                    }
-                    else if (startYear == [_events getSelectedYear]-1
-                             && startMonth == 12
-                             && endDay > [_events getDaysOfMonth:startMonth :startYear]) {
-                        //We don't care about the days in the previous month, only that
-                        //  the rolled over days are going to be in the selected month.
-                        s = 1;
+                        if (iterateOverDays) {
+                            //Add events for the startday all the way up to the end day.
+                            for (int day=s; day<e+1; day++) {
+                                //This then uses that day as an index and inserts the currentEvent into that indice's array.
+                                [_events AppendEvent:day :currentEventInfo];
+                            }
+                        }
                         
-                        //endDay is for sure going to be above the daysInMonth.
-                        e = endDay%[_events getDaysOfMonth:startMonth :startYear];
-                    }
-                    else {
-                        //We'll skip this iterating, because we won't add anything.
-                        iterateOverDays = NO;
-                    }
-                    if (iterateOverDays) {
-                        //Add events for the startday all the way up to the end day.
-                        for (int day=s; day<e+1; day++) {
-                            //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                            [_events AppendEvent:day :currentEventInfo];
+                        //Setup the start and end vars for the next repeat.
+                        startDay = startDay + freq;
+                        endDay = endDay + freq;
+                        
+                        //Check if we're moving into a new month.
+                        if (startDay%[_events getDaysOfMonth:startMonth :startYear] < startDay) {
+                            //Then we mod the startDay to get the day of the next month it will be on.
+                            startDay = startDay%[_events getDaysOfMonth:startMonth :startYear];
+                            endDay = endDay%[_events getDaysOfMonth:startMonth :startYear];
+                            startMonth += 1;
+                            
+                            //Check to see if we transitioned to a new year.
+                            if (startMonth > 12) {
+                                startMonth = startMonth%12;
+                                startYear += 1;
+                            }
                         }
                     }
+                }
+                //Alternative method for adding monthly events to the calendar.
+                else if ([otherRepeatType isEqualToString:@"MONTHLY"]) {
+                    //[_events AppendEvent:day :currentEventInfo];
+                }
+                //Alternative method for adding yearly events to the calendar.
+                else if ([otherRepeatType isEqualToString:@"YEARLY"]) {
                     
-                    //Setup the start and end vars for the next repeat.
-                    startDay = startDay + freq;
-                    endDay = endDay + freq;
-                    
-                    //Check if we're moving into a new month.
-                    if (startDay%[_events getDaysOfMonth:startMonth :startYear] < startDay) {
-                        //Then we mod the startDay to get the day of the next month it will be on.
-                        startDay = startDay%[_events getDaysOfMonth:startMonth :startYear];
-                        endDay = endDay%[_events getDaysOfMonth:startMonth :startYear];
-                        startMonth += 1;
-                        
-                        //Check to see if we transitioned to a new year.
-                        if (startMonth > 12) {
-                            startMonth = startMonth%12;
-                            startYear += 1;
-                        }
-                    }
                 }
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
-            if (_jsonsReceived == 4) {
-                NSDate *methodFinish = [NSDate date];
-                NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:_start];
-                NSLog(@"%f is the time it took to make the calls.", executionTime);
+            if (_jsonsReceived == 5) {
+                //This is a performance test for how long it took to make the 6 http requests!
+                //NSDate *methodFinish = [NSDate date];
+                //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:_start];
+                //NSLog(@"%f is the time it took to make the calls.", executionTime);
                 
                 [_collectionView reloadData];
                 [_activityIndicator stopAnimating];
@@ -1014,6 +1017,16 @@
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                                           requestBody:nil];
                 }
+                else if(_jsonsReceived == 4) {
+                    // If user authorization is successful, then make an API call to get the event list for the current month.
+                    // For more infomation about this API call, visit:
+                    // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getCampusRecCalId]]
+                                       withHttpMethod:httpMethod_GET
+                                   postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                                          requestBody:nil];
+                }
                 
                 _jsonsReceived += 1;
             }
@@ -1022,12 +1035,84 @@
     //This type of json is retrieved if an update was made to an event (currently only for authenticating.)
     else if ([responseJSONAsString rangeOfString:@"calendar#event"].location != NSNotFound) {
         [_auth setUserCanManageEvents:YES];
-        NSLog(@"The user can manage events!");
-        
+
         _addEventButton.title = @"Add Event";
         _addEventButton.enabled = YES;
         
-        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        if (_jsonsReceived == 5) {
+            [[_auth getAuthCals] setObject:@"YES" forKey:@"Campus Rec"];
+            NSLog(@"The user can manage Campus Rec events!");
+            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        }
+        else {
+            if (_jsonsReceived == 0) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/t5kqf70qrqft0fadc89t6i2vlk/move", [_auth getAcademicsCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAcademicsCalId]], nil]
+                                      requestBody:nil];
+                
+                [[_auth getAuthCals] setObject:@"YES" forKey:@"Entertainment"];
+                
+                NSLog(@"The user can manage Entertainment events!");
+            }
+            else if(_jsonsReceived == 1) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/lcr2f93ciuu73jca61gjt57c4g/move", [_auth getActivitiesCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getActivitiesCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"YES" forKey:@"Academics"];
+                NSLog(@"The user can manage Academics events!");
+            }
+            else if (_jsonsReceived == 2) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/s812dv7rj3lasfb149nkgoegk0/move", [_auth getResidenceCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getResidenceCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"YES" forKey:@"Activities"];
+                
+                NSLog(@"The user can manage Activities events!");
+            }
+            else if(_jsonsReceived == 3) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/jucggn6i17ecs40cc5oug0dglg/move", [_auth getAthleticsCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAthleticsCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"YES" forKey:@"Residence"];
+                
+                NSLog(@"The user can manage Residences events!");
+            }
+            else if(_jsonsReceived == 4) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/9jaa8fgfgt8a9stc9cejtn5tps/move", [_auth getCampusRecCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCampusRecCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"YES" forKey:@"Athletics"];
+                
+                NSLog(@"The user can manage Athletics events!");
+            }
+            
+            _jsonsReceived += 1;
+        }
     }
 }
 
@@ -1038,8 +1123,8 @@
 
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
     // Just log the error messages.
-    NSLog(@"%@", errorShortDescription);
-    NSLog(@"%@", errorDetails);
+    NSLog(@"Error:%@", errorShortDescription);
+    NSLog(@"Details:%@", errorDetails);
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
                                                     message: errorDetails
@@ -1052,12 +1137,86 @@
 
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
-    NSLog(@"%@", errorMessage);
+    NSLog(@"Error:%@", errorMessage);
     
     if ([self getIndexOfSubstringInString:@"403" :errorMessage] != -1
         && [self getIndexOfSubstringInString:@"Forbidden" :errorMessage] != -1)
     {
-        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        if (_jsonsReceived == 5) {
+            [[_auth getAuthCals] setObject:@"YES" forKey:@"Campus Rec"];
+            NSLog(@"The user can manage Campus Rec events!");
+            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        }
+        else {
+            if (_jsonsReceived == 0) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/t5kqf70qrqft0fadc89t6i2vlk/move", [_auth getAcademicsCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAcademicsCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"NO" forKey:@"Entertainment"];
+                
+                NSLog(@"The user can't manage Entertainment events!");
+            }
+            else if(_jsonsReceived == 1) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/lcr2f93ciuu73jca61gjt57c4g/move", [_auth getActivitiesCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getActivitiesCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"NO" forKey:@"Academics"];
+                
+                NSLog(@"The user can't manage Academics events!");
+            }
+            else if (_jsonsReceived == 2) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/s812dv7rj3lasfb149nkgoegk0/move", [_auth getResidenceCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getResidenceCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"NO" forKey:@"Activities"];
+                
+                NSLog(@"The user can't manage Athletics events!");
+            }
+            else if(_jsonsReceived == 3) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/jucggn6i17ecs40cc5oug0dglg/move", [_auth getAthleticsCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAthleticsCalId]], nil]
+                                      requestBody:nil];
+                
+                [[_auth getAuthCals] setObject:@"NO" forKey:@"Residence"];
+                
+                NSLog(@"The user can't manage Residence events!");
+            }
+            else if(_jsonsReceived == 4) {
+                // If user authorization is successful, then make an API call to get the event list for the current month.
+                // For more infomation about this API call, visit:
+                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/9jaa8fgfgt8a9stc9cejtn5tps/move", [_auth getCampusRecCalId]]
+                                   withHttpMethod:httpMethod_POST
+                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCampusRecCalId]], nil]
+                                      requestBody:nil];
+                [[_auth getAuthCals] setObject:@"YES" forKey:@"Athletics"];
+                
+                NSLog(@"The user can manage Athletics events!");
+            }
+            
+            _jsonsReceived += 1;
+        }
     }
 }
 

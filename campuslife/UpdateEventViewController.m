@@ -57,7 +57,18 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     [_auth setDelegate:self];
     
-    _categories = [[NSArray alloc] initWithObjects:@"Entertainment", @"Academics", @"Activities", @"Residence", @"Athletics", nil];
+    NSMutableArray *cats = [[NSMutableArray alloc] init];
+    
+    for (NSString* categoryName in [_auth getAuthCals]) {
+        if ([[[_auth getAuthCals] objectForKey:categoryName] isEqualToString:@"YES"]) {
+            [cats addObject:categoryName];
+        }
+    }
+    
+    _categories = [[NSArray alloc] initWithArray:[cats sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+    
+    [_categoryPicker reloadAllComponents];
+    [_categoryPicker selectRow:(int)floor(_categories.count/2.) inComponent:0 animated:NO];
     
     
     //One of the only differences between this viewController and the one for adding events is that text fields will be populated
@@ -105,53 +116,60 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         _startTimePicker.datePickerMode = UIDatePickerModeDate;
         _endTimePicker.datePickerMode = UIDatePickerModeDate;
-            
-        _repeatLabel.hidden = YES;
-        _repeatSlider.hidden = YES;
-        
-        _numberOfRepeatLabel.hidden = YES;
-        _numberOfRepeatSlider.hidden = YES;
     }
     
     if ([_eventInfo objectForKey:@"recurrence"] != nil) {
         //Is the ocurrence daily?
         if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"D"]) {
-            _repeatLabel.text = @"Daily Repeat";
-            _repeatSlider.value = 1.0;
-            
-            _numberOfRepeatLabel.hidden = NO;
-            _numberOfRepeatSlider.hidden = NO;
-            
-            _numberOfRepeatSlider.value = 2.5;
-            _numberOfRepeatSlider.maximumValue = 14.5;
-            
-            _numberOfRepeatLabel.text = @"For 2 Days";
+
         }
         //Is the ocurrence monthly?
         else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"W"]) {
-            _repeatLabel.text = @"Weekly Repeat";
-            _repeatSlider.value = 2.0;
-            
-            _numberOfRepeatLabel.hidden = NO;
-            _numberOfRepeatSlider.hidden = NO;
-            
-            _numberOfRepeatSlider.value = 2.5;
-            _numberOfRepeatSlider.maximumValue = 8.5;
-            
-            _numberOfRepeatLabel.text = @"For 2 Days";
+
         }
         //Is the ocurrence yearly?
         else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"M"]) {
-            _repeatLabel.text = @"Monthly Repeat";
-            _repeatSlider.value = 3.0;
+
+        }
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    NSLog(@"RepFreq: %@", super.repeatFreq);
+    NSLog(@"RepUntil: %@", super.repeatUntil);
+    
+    if ([super.repeatFreq isEqualToString:@"Never"])
+    {
+        _repFreqBtn.titleLabel.text = @"Never";
+        
+        _repUntilBtn.titleLabel.text = @"         ";
+        _repUntilBtn.enabled = NO;
+        
+        _repUntilLabel.text = @"       ";
+        
+        super.repeatUntil = NULL;
+    }
+    else
+    {
+        _repFreqBtn.titleLabel.text = super.repeatFreq;
+        _repUntilBtn.enabled = YES;
+        
+        _repUntilLabel.text = @"End Repeat";
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+        
+        if (super.repeatUntil != NULL) {
+            _repUntilBtn.titleLabel.text = [dateFormatter stringFromDate:super.repeatUntil];
+        }
+        else {
+            NSDate *curDate = [NSDate date];
+            super.repeatUntil = curDate;
             
-            _numberOfRepeatLabel.hidden = NO;
-            _numberOfRepeatSlider.hidden = NO;
-            
-            _numberOfRepeatSlider.value = 2.5;
-            _numberOfRepeatSlider.maximumValue = 12.5;
-            
-            _numberOfRepeatLabel.text = @"For 2 Months";
+            _repUntilBtn.titleLabel.text = [dateFormatter stringFromDate:curDate];
         }
     }
 }
@@ -251,98 +269,90 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 readyToAddEvent = YES;
             }
         }
-        //So we only must compare the times.
+        
+        //We compare the times regardless of the type of event (all-day, non all-day.)
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        [timeFormatter setDateFormat:@"HHmm"];
+        //Now we check the times.
+        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                            message: @"The end time is less than the start time."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
         else
         {
-            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-            [timeFormatter setDateFormat:@"HHmm"];
-            //Now we check the times.
-            if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-                < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                                message: @"The end time is less than the start time."
-                                                               delegate: nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-            else
-            {
-                //If all the previous checks are alright, then we can add an event.
-                readyToAddEvent = YES;
-            }
+            //If all the previous checks are alright, then we can add an event.
+            readyToAddEvent = YES;
         }
     }
-
+    
+    NSString *calId = @"";
+    if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
+        calId = [_auth getEntertainmentCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Activities"]) {
+        calId = [_auth getActivitiesCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
+        calId = [_auth getAcademicsCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Athletics"]) {
+        calId = [_auth getAthleticsCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence"]) {
+        calId = [_auth getResidenceCalId];
+    }
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {
+        calId = [_auth getCampusRecCalId];
+    }
+    
     if (readyToAddEvent) {
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/%@", _eventInfo[@"id"]]
-                           withHttpMethod:httpMethod_DELETE
-                       postParameterNames:[NSArray arrayWithObjects: nil]
-                      postParameterValues:[NSArray arrayWithObjects: nil]
-                              requestBody:nil];
+        NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
         
         //Events have specified time constraints unless they are all day events.
         if (!_allDayEventSwitch.on) {
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"MM/dd/yyyy HH:mm"];
+            [json setObject:_summary.text forKey:@"summary"];
+            [json setObject:_description.text forKey:@"description"];
+            [json setObject:_where.text forKey:@"where"];
             
-            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-            [timeFormatter setDateFormat:@"HH:mm"];
-
-            NSString *quickAddText = @"";
-
-            //No Repeat
-            if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 0) {
-                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                                      [dateFormatter stringFromDate:_startTimePicker.date],
-                                      [timeFormatter stringFromDate:_endTimePicker.date],
-                                      _summary.text,
-                                      _description.text,
-                                      _where.text,
-                                      _categories[[_categoryPicker selectedRowInComponent:0]]];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZ"];
+            
+            if (super.repeatFreq == NULL) {
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"dateTime", nil] forKey:@"start"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"dateTime", nil] forKey:@"end"];
             }
-            //Daily Repeat
-            else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 1) {
-                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ repeat daily for %d days Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                                [dateFormatter stringFromDate:_startTimePicker.date],
-                                [timeFormatter stringFromDate:_endTimePicker.date],
-                                (int)(roundf(_numberOfRepeatSlider.value*100.0)/100.0),
-                                _summary.text,
-                                _description.text,
-                                _where.text,
-                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            else {
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"dateTime",
+                                 [[NSTimeZone localTimeZone] name], @"timeZone",nil] forKey:@"start"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"dateTime",
+                                 [[NSTimeZone localTimeZone] name], @"timeZone", nil] forKey:@"end"];
             }
+            
+            [dateFormatter setDateFormat:@"yyyyMMdd"];
+            
             //Weekly Repeat
-            else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 2) {
-                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ repeat weekly for %d weeks Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                                [dateFormatter stringFromDate:_startTimePicker.date],
-                                [timeFormatter stringFromDate:_endTimePicker.date],
-                                (int)(roundf(_numberOfRepeatSlider.value*100.0)/100.0),
-                                _summary.text,
-                                _description.text,
-                                _where.text,
-                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            if ([super.repeatFreq isEqualToString:@"Weekly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=WEEKLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Bi-Weekly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Bi-Weekly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
             }
             //Monthly Repeat
-            else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 3) {
-                quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ repeat monthly for %d months Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                                [dateFormatter stringFromDate:_startTimePicker.date],
-                                [timeFormatter stringFromDate:_endTimePicker.date],
-                                (int)(roundf(_numberOfRepeatSlider.value*100.0)/100.0),
-                                _summary.text,
-                                _description.text,
-                                _where.text,
-                                _categories[[_categoryPicker selectedRowInComponent:0]]];
+            else if ([super.repeatFreq isEqualToString:@"Monthly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=MONTHLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Yearly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Yearly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=YEARLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
             }
             
-            NSLog(@"The quickAdd text: %@", quickAddText);
-            
-            [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
-                               withHttpMethod:httpMethod_POST
-                           postParameterNames:[NSArray arrayWithObjects:@"text", nil]
-                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]
-                                  requestBody:nil];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
                                                             message: @"Your event has been sent to the Google Calendar!"
@@ -351,27 +361,44 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   otherButtonTitles:nil];
             [alert show];
             
-            [self.navigationController popToRootViewControllerAnimated:YES];
         }
         else {
+            [json setObject:_summary.text forKey:@"summary"];
+            [json setObject:_description.text forKey:@"description"];
+            [json setObject:_where.text forKey:@"where"];
+            
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
             
-            NSString *quickAddText = [[NSString alloc] initWithFormat:@"%@-%@ Abstract:%@; Desc:%@; Loc:%@; Category:%@;",
-                                      [dateFormatter stringFromDate:_startTimePicker.date],
-                                      [dateFormatter stringFromDate:_endTimePicker.date],
-                                      _summary.text,
-                                      _description.text,
-                                      _where.text,
-                                      _categories[[_categoryPicker selectedRowInComponent:0]]];
+            if (super.repeatFreq == NULL) {
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date", nil] forKey:@"start"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date", nil] forKey:@"end"];
+            }
+            else {
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date",
+                                 [[NSTimeZone localTimeZone] name], @"timeZone",nil] forKey:@"start"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date",
+                                 [[NSTimeZone localTimeZone] name], @"timeZone", nil] forKey:@"end"];
+            }
             
-            NSLog(@"The quickAdd text: %@", quickAddText);
+            [dateFormatter setDateFormat:@"yyyyMMdd"];
             
-            [[_auth getAuthenticator] callAPI:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/quickAdd"
-                               withHttpMethod:httpMethod_POST
-                           postParameterNames:[NSArray arrayWithObjects:@"text", nil]
-                          postParameterValues:[NSArray arrayWithObjects:quickAddText, nil]
-                                  requestBody:nil];
+            //Weekly Repeat
+            if ([super.repeatFreq isEqualToString:@"Weekly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=WEEKLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Bi-Weekly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Bi-Weekly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Monthly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Monthly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=MONTHLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
+            //Yearly Repeat
+            else if ([super.repeatFreq isEqualToString:@"Yearly"]) {
+                [json setObject:@[[NSString stringWithFormat:@"RRULE:FREQ=YEARLY;UNTIL=%@T120000Z", [dateFormatter stringFromDate:super.repeatUntil]]] forKey:@"recurrence"];
+            }
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Event"
                                                             message: @"Your all day event has been sent to the Google Calendar!"
@@ -379,9 +406,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
         }
+        
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", calId]
+                           withHttpMethod:httpMethod_POST
+                       postParameterNames:@[]
+                      postParameterValues:@[]
+                              requestBody:json];
     }
 }
 
@@ -389,77 +420,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if (_allDayEventSwitch.on) {
         _startTimePicker.datePickerMode = UIDatePickerModeDate;
         _endTimePicker.datePickerMode = UIDatePickerModeDate;
-        
-        _repeatLabel.hidden = YES;
-        _repeatSlider.hidden = YES;
-        
-        _numberOfRepeatLabel.hidden = YES;
-        _numberOfRepeatSlider.hidden = YES;
     }
     else {
         _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
         _endTimePicker.datePickerMode = UIDatePickerModeTime;
-        
-        _repeatLabel.hidden = NO;
-        _repeatSlider.hidden = NO;
-        
-        _numberOfRepeatLabel.hidden = NO;
-        _numberOfRepeatSlider.hidden = NO;
     }
 }
 
-- (IBAction)repeatSliderChanged:(UISlider *)sender {
-    //Check to see if the second slider needs to be shown.
-    if ([_numberOfRepeatLabel.text isEqualToString:@" "]
-        && (int)(roundf(sender.value*100.0)/100.0) != 0) {
-        _numberOfRepeatSlider.hidden = NO;
-    }
-    switch((int)(roundf(sender.value*100.0)/100.0)) {
-        case 0:
-            _numberOfRepeatLabel.text = @" ";
-            _numberOfRepeatSlider.hidden = YES;
-            
-            _repeatLabel.text = @"No Repeat";
-            break;
-        case 1:
-            _repeatLabel.text = @"Daily Repeat";
-            
-            _numberOfRepeatSlider.value = 2.5;
-            _numberOfRepeatSlider.maximumValue = 14.5;
-            
-            _numberOfRepeatLabel.text = @"For 2 Days";
-            break;
-        case 2:
-            _repeatLabel.text = @"Weekly Repeat";
-            
-            _numberOfRepeatSlider.value = 2.5;
-            _numberOfRepeatSlider.maximumValue = 8.5;
-            
-            _numberOfRepeatLabel.text = @"For 2 Weeks";
-            break;
-        case 3:
-            _repeatLabel.text = @"Monthly Repeat";
-            
-            _numberOfRepeatSlider.value = 2.5;
-            _numberOfRepeatSlider.maximumValue = 12.5;
-            
-            _numberOfRepeatLabel.text = @"For 2 Months";
-            break;
-            
-    }
-}
-
-- (IBAction)numberOfRepeatSliderChanged:(UISlider *)sender {
-    if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 1) {
-        _numberOfRepeatLabel.text = [NSString stringWithFormat:@"For %d Days", (int)(roundf(sender.value*100.0)/100.0)];
-    }
-    else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 2) {
-        _numberOfRepeatLabel.text = [NSString stringWithFormat:@"For %d Weeks", (int)(roundf(sender.value*100.0)/100.0)];
-    }
-    else if ((int)(roundf(_repeatSlider.value*100.0)/100.0) == 3) {
-        _numberOfRepeatLabel.text = [NSString stringWithFormat:@"For %d Months", (int)(roundf(sender.value*100.0)/100.0)];
-    }
-}
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {

@@ -28,6 +28,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+    
+    //NSDate* derrr = [eventController getRepUntil];
+    
+    if ([eventController getRepUntil] != NULL) {
+        _untilDate.date = [eventController getRepUntil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

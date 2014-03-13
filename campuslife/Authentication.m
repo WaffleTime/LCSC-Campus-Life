@@ -19,6 +19,8 @@ static Authentication *_sharedInstance;
         
         //Just setting the default.
         [_sharedInstance setUserCanManageEvents:NO];
+        
+        [_sharedInstance setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Activities", @"NO", @"Athletics", @"NO", @"Entertainment", @"NO", @"Residence", @"NO", @"Campus Rec", nil]];
     }
     return _sharedInstance;
 }

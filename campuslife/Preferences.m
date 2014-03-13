@@ -39,6 +39,9 @@ static Preferences *_sharedInstance;
         case 5:
             [self setPrefFive:isSelected];
             break;
+        case 6:
+            [self setPrefSix:isSelected];
+            break;
     }
 }
 
@@ -58,6 +61,9 @@ static Preferences *_sharedInstance;
             break;
         case 5:
             [self setPrefFive:!_prefFive];
+            break;
+        case 6:
+            [self setPrefSix:!_prefSix];
             break;
     }
 }
@@ -81,6 +87,9 @@ static Preferences *_sharedInstance;
         case 5:
             isSelected = _prefFive;
             break;
+        case 6:
+            isSelected = _prefSix;
+            break;
     }
     
     return isSelected;
@@ -102,6 +111,7 @@ static Preferences *_sharedInstance;
     [self setPrefThree:![defaults boolForKey:@"prefThree"]];
     [self setPrefFour:![defaults boolForKey:@"prefFour"]];
     [self setPrefFive:![defaults boolForKey:@"prefFive"]];
+    [self setPrefSix:![defaults boolForKey:@"prefSix"]];
 }
 
 //This is called within AppDelegate when the app is being closed or brought to the background.
@@ -118,6 +128,7 @@ static Preferences *_sharedInstance;
     [defaults setBool:!_prefThree forKey:@"prefThree"];
     [defaults setBool:!_prefFour forKey:@"prefFour"];
     [defaults setBool:!_prefFive forKey:@"prefFive"];
+    [defaults setBool:!_prefSix forKey:@"prefSix"];
     
     [defaults synchronize];
 }

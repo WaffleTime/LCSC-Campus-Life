@@ -23,6 +23,9 @@
 @property (nonatomic, strong, setter=setResidenceCalId:, getter=getResidenceCalId) NSString *residenceCalId;
 @property (nonatomic, strong, setter=setAthleticsCalId:, getter=getAthleticsCalId) NSString *athleticsCalId;
 @property (nonatomic, strong, setter=setAcademicsCalId:, getter=getAcademicsCalId) NSString *academicsCalId;
+@property (nonatomic, strong, setter=setCampusRecCalId:, getter=getCampusRecCalId) NSString *campusRecCalId;
+
+@property (nonatomic, strong, setter=setAuthCals:, getter=getAuthCals) NSMutableDictionary *authorizedCalendars;
 
 
 +(Authentication *) getSharedInstance;

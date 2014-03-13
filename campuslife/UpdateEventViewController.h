@@ -29,14 +29,11 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
-@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
-@property (weak, nonatomic) IBOutlet UISlider *repeatSlider;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfRepeatLabel;
-@property (weak, nonatomic) IBOutlet UISlider *numberOfRepeatSlider;
+@property (weak, nonatomic) IBOutlet UIButton *repFreqBtn;
+@property (weak, nonatomic) IBOutlet UILabel *repUntilLabel;
+@property (weak, nonatomic) IBOutlet UIButton *repUntilBtn;
 
 -(IBAction) addEvent;
 - (IBAction)allDayEventToggle:(id)sender;
 
-- (IBAction)repeatSliderChanged:(UISlider *)sender;
-- (IBAction)numberOfRepeatSliderChanged:(UISlider *)sender;
 @end

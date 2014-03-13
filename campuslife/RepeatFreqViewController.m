@@ -33,14 +33,17 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _repFreq = @"Never";
+    _repFreq = NULL;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
     
-    [eventController setRepFreq:_repFreq];
+    if (_repFreq != NULL) {
+        AddEventParentViewController *eventController = (AddEventParentViewController *)[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+        
+        [eventController setRepFreq:_repFreq];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,7 +63,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 3;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,13 +73,21 @@
     
     if (indexPath.row == 0)
     {
-        ((UILabel *)[cell viewWithTag:5]).text = @"Weekly";
+        ((UILabel *)[cell viewWithTag:5]).text = @"Never";
     }
     else if (indexPath.row == 1)
     {
-        ((UILabel *)[cell viewWithTag:5]).text = @"Monthly";
+        ((UILabel *)[cell viewWithTag:5]).text = @"Weekly";
     }
     else if (indexPath.row == 2)
+    {
+        ((UILabel *)[cell viewWithTag:5]).text = @"Bi-Weekly";
+    }
+    else if (indexPath.row == 3)
+    {
+        ((UILabel *)[cell viewWithTag:5]).text = @"Monthly";
+    }
+    else if (indexPath.row == 4)
     {
         ((UILabel *)[cell viewWithTag:5]).text = @"Yearly";
     }
@@ -88,13 +99,21 @@
 {
     if (indexPath.row == 0)
     {
-        _repFreq = @"Weekly";
+        _repFreq = @"Never";
     }
     else if (indexPath.row == 1)
     {
-        _repFreq = @"Monthly";
+        _repFreq = @"Weekly";
     }
     else if (indexPath.row == 2)
+    {
+        _repFreq = @"Bi-Weekly";
+    }
+    else if (indexPath.row == 3)
+    {
+        _repFreq = @"Monthly";
+    }
+    else if (indexPath.row == 4)
     {
         _repFreq = @"Yearly";
     }
