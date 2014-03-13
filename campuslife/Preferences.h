@@ -20,6 +20,8 @@
 @property (nonatomic, setter=setPrefFour:) BOOL prefFour;
 //Athletics
 @property (nonatomic, setter=setPrefFive:) BOOL prefFive;
+//Athletics
+@property (nonatomic, setter=setPrefSix:) BOOL prefSix;
 
 +(Preferences *) getSharedInstance;
 

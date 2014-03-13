@@ -29,12 +29,6 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
 
-@property (strong, nonatomic) IBOutlet UILabel *repeatLabel;
-@property (strong, nonatomic) IBOutlet UILabel *numberOfRepeatLabel;
-
-@property (strong, nonatomic) IBOutlet UISlider *repeatSlider;
-@property (strong, nonatomic) IBOutlet UISlider *numberOfRepeatSlider;
-
 @property (weak, nonatomic) IBOutlet UIButton *repFreqBtn;
 @property (weak, nonatomic) IBOutlet UILabel *repUntilLabel;
 @property (weak, nonatomic) IBOutlet UIButton *repUntilBtn;

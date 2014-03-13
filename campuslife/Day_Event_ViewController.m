@@ -101,7 +101,7 @@
     
     [newArray addObjectsFromArray:unsorted];
     
-    if ([[events getEventsForDay:_day] count]>1)
+    if ([[events getEventsForDay:_day] count]>=1)
     {
         NSLog(@"More than one event. Entered if-loop");
         
@@ -144,6 +144,12 @@
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Athletics"] && [preferences getPreference:5] == FALSE)
             {
                 NSLog(@"Popping Athletics event");
+                
+                [newArray removeObjectAtIndex:currentPos];
+            }
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Campus Rec"] && [preferences getPreference:6] == FALSE)
+            {
+                NSLog(@"Popping Campus Rec event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
@@ -294,7 +300,6 @@
         ///detailViewController.view.superview.center=detailViewController.view.center;
         detailViewController.view.superview.clipsToBounds=YES;
     }*/
-    
 }
 
 
@@ -386,6 +391,11 @@
         UIView *color = (UILabel *)[cell viewWithTag:21];
         color.backgroundColor = [UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0];
     }
+    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Campus Rec"])
+    {
+        UIView *color = (UILabel *)[cell viewWithTag:21];
+        color.backgroundColor = [UIColor colorWithRed:116.0/256.0 green:178.0/256.0 blue:188.0/256.0 alpha:1.0];
+    }
     
     UILabel *summary = (UILabel *)[cell viewWithTag:22];
     summary.text = [eventTime objectForKey:@"summary"];
@@ -400,15 +410,38 @@
         
         [auth setDelegate:self];
         
-        [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/lcmail.lcsc.edu_09hhfhm9kcn5h9dhu83ogsd0u8@group.calendar.google.com/events/%@", sortedArray[indexPath.row][@"id"]]
-                           withHttpMethod:httpMethod_DELETE
-                       postParameterNames:[NSArray arrayWithObjects: nil]
-                     postParameterValues:[NSArray arrayWithObjects: nil]
-                             requestBody:nil];
-        
-        [sortedArray removeObjectAtIndex:indexPath.row];
-        
-        [self.tableView reloadData];
+        if ([[[auth getAuthCals] objectForKey:sortedArray[indexPath.row][@"category"]] isEqualToString:@"YES"]) {
+            NSString *calId = @"";
+            if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Entertainment"]) {
+                calId = [auth getEntertainmentCalId];
+            }
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Academics"]) {
+                calId = [auth getAcademicsCalId];
+            }
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Activities"]) {
+                calId = [auth getActivitiesCalId];
+            }
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Residence"]) {
+                calId = [auth getResidenceCalId];
+            }
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Athletics"]) {
+                calId = [auth getAthleticsCalId];
+            }
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Campus Rec"]) {
+                calId = [auth getCampusRecCalId];
+            }
+            
+            
+            [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, sortedArray[indexPath.row][@"id"]]
+                               withHttpMethod:httpMethod_DELETE
+                           postParameterNames:[NSArray arrayWithObjects: nil]
+                         postParameterValues:[NSArray arrayWithObjects: nil]
+                                 requestBody:nil];
+            
+            [sortedArray removeObjectAtIndex:indexPath.row];
+            
+            [self.tableView reloadData];
+        }
     }
 }
 

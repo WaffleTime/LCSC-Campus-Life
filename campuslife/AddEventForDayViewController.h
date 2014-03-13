@@ -30,6 +30,10 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *categoryPicker;
 
+@property (weak, nonatomic) IBOutlet UIButton *repFreqBtn;
+@property (weak, nonatomic) IBOutlet UILabel *repUntilLabel;
+@property (weak, nonatomic) IBOutlet UIButton *repUntilBtn;
+
 -(IBAction) addEvent;
 - (IBAction)allDayEventToggle:(id)sender;
 

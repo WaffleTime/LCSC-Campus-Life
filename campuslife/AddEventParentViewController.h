@@ -11,6 +11,8 @@
 @interface AddEventParentViewController : UIViewController
 
 @property(strong, nonatomic, setter=setRepFreq:) NSString *repeatFreq;
-@property(strong, nonatomic,setter=setRepUntil:) NSDate *repeatUntil;
+@property(strong, nonatomic, setter=setRepUntil:, getter=getRepUntil) NSDate *repeatUntil;
+
+@property (weak, nonatomic) IBOutlet UITextView *descriptionView;
 
 @end
