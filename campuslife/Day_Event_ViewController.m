@@ -11,7 +11,7 @@
 #import "MonthlyEvents.h"
 #import "Authentication.h"
 #import "Preferences.h"
-#import "EventDetailViewController.h"
+#import "EventDetailTableViewController.h"
 
 
 
@@ -304,10 +304,10 @@
 
 
 -(void) prepareForSegue:(UIStoryboardPopoverSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"dayToEventDetail"]) {
+    if ([segue.identifier isEqualToString:@"dayToEventDetailTable"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
-        EventDetailViewController *destViewController = (EventDetailViewController *)[segue destinationViewController];
+        EventDetailTableViewController *destViewController = (EventDetailTableViewController *)[segue destinationViewController];
         
         [destViewController setEvent:[sortedArray objectAtIndex:indexPath.row]];
     }

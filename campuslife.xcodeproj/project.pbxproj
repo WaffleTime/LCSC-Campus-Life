@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C105A2A018B6A992007C841C /* bigAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C105A29F18B6A992007C841C /* bigAlphaCircle.png */; };
 		C10BC49A18AD8C5D004C91CD /* newAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */; };
+		C111B76D18C6929200B957F2 /* EventDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */; };
 		C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */; };
 		C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */; };
 		C1182FB818B40F9600FE63F6 /* RepeatUntilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB718B40F9600FE63F6 /* RepeatUntilViewController.m */; };
@@ -73,6 +74,8 @@
 /* Begin PBXFileReference section */
 		C105A29F18B6A992007C841C /* bigAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigAlphaCircle.png; sourceTree = "<group>"; };
 		C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newAlphaCircle.png; sourceTree = "<group>"; };
+		C111B76B18C6929200B957F2 /* EventDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailTableViewController.h; sourceTree = "<group>"; };
+		C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailTableViewController.m; sourceTree = "<group>"; };
 		C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventParentViewController.h; sourceTree = "<group>"; };
 		C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventParentViewController.m; sourceTree = "<group>"; };
 		C1182FB318B40F7D00FE63F6 /* RepeatFreqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatFreqViewController.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 				C1E66E01183C333A00851B89 /* AppDelegate.m */,
 				C1E66E03183C333A00851B89 /* Main_iPhone.storyboard */,
 				C1E66E06183C333A00851B89 /* Main_iPad.storyboard */,
+				C111B76B18C6929200B957F2 /* EventDetailTableViewController.h */,
+				C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */,
 				C1E66E0C183C333A00851B89 /* Images.xcassets */,
 				C1E66E3D183C33D000851B89 /* CalendarViewController.h */,
 				C1E66E3E183C33D000851B89 /* CalendarViewController.m */,
@@ -426,6 +431,7 @@
 				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,
 				C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,
+				C111B76D18C6929200B957F2 /* EventDetailTableViewController.m in Sources */,
 				C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,7 +574,7 @@
 				GCC_PREFIX_HEADER = "campuslife/campuslife-Prefix.pch";
 				INFOPLIST_FILE = "campuslife/campuslife-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "D71C12B1-B623-4A6D-8C0E-17A5B9990AC4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -583,7 +589,7 @@
 				GCC_PREFIX_HEADER = "campuslife/campuslife-Prefix.pch";
 				INFOPLIST_FILE = "campuslife/campuslife-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "D71C12B1-B623-4A6D-8C0E-17A5B9990AC4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
