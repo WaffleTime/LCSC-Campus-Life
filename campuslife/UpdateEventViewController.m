@@ -119,17 +119,36 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
     
     if ([_eventInfo objectForKey:@"recurrence"] != nil) {
+        NSLog(@"Recurrence: %@", [_eventInfo objectForKey:@"recurrence"]);
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmss'Z'"];
+        
         //Is the ocurrence daily?
         if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"D"]) {
-
+            super.repeatFreq = @"Daily";
+            super.repeatUntil = [dateFormatter dateFromString:[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(23, 16)]];
         }
-        //Is the ocurrence monthly?
+        //Is the ocurrence Weekly?
         else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"W"]) {
-
+            if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(18, 10)] isEqualToString:@"INTERVAL=2"]) {
+                super.repeatFreq = @"Bi-Weekly";
+                super.repeatUntil = [dateFormatter dateFromString:[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(35, 16)]];
+            }
+            else {
+                super.repeatFreq = @"Weekly";
+                super.repeatUntil = [dateFormatter dateFromString:[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(24, 16)]];
+            }
         }
-        //Is the ocurrence yearly?
+        //Is the ocurrence Monthly?
         else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"M"]) {
-
+            super.repeatFreq = @"Monthly";
+            super.repeatUntil = [dateFormatter dateFromString:[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(25, 16)]];
+        }
+        //Is the ocurrence Monthly?
+        else if ([[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"Y"]) {
+            super.repeatFreq = @"Yearly";
+            super.repeatUntil = [dateFormatter dateFromString:[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(24, 16)]];
         }
     }
 }
@@ -407,6 +426,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   otherButtonTitles:nil];
             [alert show];
         }
+        
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventInfo[@"id"]]
+                          withHttpMethod:httpMethod_DELETE
+                      postParameterNames:[NSArray arrayWithObjects: nil]
+                     postParameterValues:[NSArray arrayWithObjects: nil]
+                             requestBody:nil];
         
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", calId]
                            withHttpMethod:httpMethod_POST
