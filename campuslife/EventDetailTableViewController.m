@@ -86,7 +86,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
-            cell.backgroundColor = [UIColor colorWithRed:200.0/256.0 green:200.0/256.0 blue:200.0/256.0 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
         if (indexPath.row == 1)
@@ -113,7 +113,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
-            cell.backgroundColor = [UIColor colorWithRed:200.0/256.0 green:200.0/256.0 blue:200.0/256.0 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
         if (indexPath.row == 1)
@@ -135,14 +135,29 @@
             UILabel *title = (UILabel *)[cell viewWithTag:5];
             title.text = @"Start";
             
+            /*
+             
+             reformat the string. ex: Mar 18, 2014  1:00PM
+             
+             */
             UILabel *timeLbl = (UILabel *)[cell viewWithTag:6];
             if ([[_eventDict objectForKey:@"start"] objectForKey:@"date"])
             {
-                timeLbl.text = [[_eventDict objectForKey:@"start"] objectForKey:@"date"];
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                NSDate *date = [[NSDate alloc] init];
+                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"start"] objectForKey:@"date"]];
+                timeLbl.text = [dateFormatter stringFromDate:date];
+                NSLog(@"\n\n\n dayLbl.text = %@ \n\n\n", timeLbl.text);
             }
             else
             {
-                timeLbl.text = [[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"];
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                NSDate *date = [[NSDate alloc] init];
+                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"]];
+                timeLbl.text = [dateFormatter stringFromDate:date];
+                NSLog(@"\n\n\n dayTimeLbl.text = %@ \n\n\n", timeLbl.text);
             }
         }
         
@@ -155,11 +170,23 @@
             UILabel *timeLbl = (UILabel *)[cell viewWithTag:6];
             if ([[_eventDict objectForKey:@"end"] objectForKey:@"date"])
             {
-                timeLbl.text = [[_eventDict objectForKey:@"end"] objectForKey:@"date"];
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                NSDate *date = [[NSDate alloc] init];
+                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"end"] objectForKey:@"date"]];
+                timeLbl.text = [dateFormatter stringFromDate:date];
+                NSLog(@"\n\n\n dayLbl.text = %@ \n\n\n", timeLbl.text);
             }
             else
             {
-                timeLbl.text = [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"];
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                NSDate *date = [[NSDate alloc] init];
+                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"]];
+                NSLog(@"endPrintOut = %@", [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"]);
+                NSLog(@"nsdatePrintOut = %@", date);
+                timeLbl.text = [dateFormatter stringFromDate:date];
+                NSLog(@"dayTimeLbl.text = %@", timeLbl.text);
             }
             
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
@@ -170,7 +197,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
-            cell.backgroundColor = [UIColor colorWithRed:200.0/256.0 green:200.0/256.0 blue:200.0/256.0 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
         if (indexPath.row == 1)
@@ -192,7 +219,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
-            cell.backgroundColor = [UIColor colorWithRed:200.0/256.0 green:200.0/256.0 blue:200.0/256.0 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
         if (indexPath.row == 1)
@@ -207,6 +234,41 @@
     }
     
     return cell;
+}
+
+
+
+- (NSString *)twentyFourToTwelve:(NSString *)time
+{
+    NSRange stringHourRange = NSMakeRange(0, 2);
+    NSString *stringHour = [time substringWithRange:stringHourRange];
+    int hourInt = [stringHour intValue];
+    
+    NSRange stringMinRange = NSMakeRange(2, 3);
+    NSString *restOfString = [time substringWithRange:stringMinRange];
+    
+    
+    if (hourInt == 0)
+    {
+        time = [NSString stringWithFormat:@"%d%@ AM", 12, restOfString];
+    }
+    
+    else if(hourInt < 10)
+    {
+        time = [NSString stringWithFormat:@"%d%@ AM", hourInt, restOfString];
+    }
+    
+    else if (hourInt == 12)
+    {
+        time = [NSString stringWithFormat:@"%d%@ PM", 12, restOfString];
+    }
+    
+    else if (hourInt >= 13)
+    {
+        time = [NSString stringWithFormat:@"%d%@ PM", hourInt - 12, restOfString];
+    }
+    
+    return time;
 }
 
 

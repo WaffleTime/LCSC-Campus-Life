@@ -52,4 +52,6 @@ typedef enum {
 -(void)revokeAccessToken;
 -(void)callAPI:(NSString *)apiURL withHttpMethod:(HTTP_Method)httpMethod postParameterNames:(NSArray *)params postParameterValues:(NSArray *)values requestBody:(NSDictionary *)json;
 
+- (void)backButtonPressed:(id)sender;
+
 @end
