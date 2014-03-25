@@ -358,9 +358,35 @@
     [self setScalesPageToFit:YES];
     [self setAutoresizingMask:_parentView.autoresizingMask];
     
+    
+    
+    //Adding a toolbar! Pray for us... O.o
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, self.frame.size.height - 60, self.frame.size.width, 60.0f);
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    CGRect frame = CGRectMake(0, 0, 100.0f, 60.0f);
+    UIButton *backButton = [[UIButton alloc] initWithFrame:frame];
+    [backButton setTitle:@"Home" forState:UIControlStateNormal & UIControlStateHighlighted];
+    [backButton setTitleColor:[UIColor colorWithRed:106.0/255.0 green:126.0/255.0 blue:255.0/255.0 alpha:1.0] forState:UIControlStateNormal & UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    [items addObject:back];
+    [toolbar setItems:items animated:NO];
+    [self addSubview:toolbar];
+    
+    
+    //http://stackoverflow.com/questions/10444104/bar-button-item-add-toolbar-programetically
+    
+    
     // Make the request and add self (webview) to the parent view.
     [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:targetURLString]]];
     [_parentView addSubview:self];
+}
+
+
+- (void)backButtonPressed:(id)sender
+{
+    [self goBack];
 }
 
 
@@ -568,6 +594,8 @@
             [webView removeFromSuperview];
         }
     }
+    
+    //back.enabled = self.canGoBack;
 }
 
 
