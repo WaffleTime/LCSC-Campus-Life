@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C105A2A018B6A992007C841C /* bigAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C105A29F18B6A992007C841C /* bigAlphaCircle.png */; };
 		C10BC49A18AD8C5D004C91CD /* newAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */; };
+		C10C84F918E23B4400C7CB09 /* ToDo in Resources */ = {isa = PBXBuildFile; fileRef = C10C84F818E23B4400C7CB09 /* ToDo */; };
 		C111B76D18C6929200B957F2 /* EventDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */; };
 		C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */; };
 		C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		C105A29F18B6A992007C841C /* bigAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigAlphaCircle.png; sourceTree = "<group>"; };
 		C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newAlphaCircle.png; sourceTree = "<group>"; };
+		C10C84F818E23B4400C7CB09 /* ToDo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ToDo; sourceTree = "<group>"; };
 		C111B76B18C6929200B957F2 /* EventDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailTableViewController.h; sourceTree = "<group>"; };
 		C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailTableViewController.m; sourceTree = "<group>"; };
 		C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventParentViewController.h; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C10C84F818E23B4400C7CB09 /* ToDo */,
 				C105A29F18B6A992007C841C /* bigAlphaCircle.png */,
 				C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */,
 				C12C660418612C670017C41C /* iTunesArtwork.png */,
@@ -372,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C12C65FD18612C5D0017C41C /* AppIcon57x57@2x.png in Resources */,
+				C10C84F918E23B4400C7CB09 /* ToDo in Resources */,
 				C1E66E08183C333A00851B89 /* Main_iPad.storyboard in Resources */,
 				C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */,
 				C12C65F918612C5D0017C41C /* AppIcon40x40@2x.png in Resources */,
