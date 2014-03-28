@@ -24,11 +24,15 @@
 
 @property (nonatomic) BOOL firstEventsJSONReceived;
 
+@property (nonatomic) BOOL authenticating;
+
+@property (nonatomic) int jsonsToIgnore;
+
 @property (nonatomic) MonthlyEvents *events;
 
 @property (nonatomic) Authentication *auth;
 
-@property (nonatomic) int jsonsReceived;
+@property (nonatomic) int jsonsSent;
 
 @property (nonatomic) NSDate *start;
 
@@ -92,6 +96,9 @@
     
     _leftArrow.enabled = NO;
     _rightArrow.enabled = NO;
+    
+    _jsonsToIgnore = 0;
+    _jsonsSent = 0;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -194,27 +201,31 @@
 }
 
 - (IBAction)backMonthOffset:(id)sender {
-    [_activityIndicator startAnimating];
-    
-    [_events offsetMonth:-1];
-    
-    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
-    
-    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-    
-    //NSLog(@"went to previous month");
+    if (_authenticating != YES) {
+        NSLog(@"went to previous month, jsons received: %d", _jsonsSent);
+        
+        [_activityIndicator startAnimating];
+        
+        [_events offsetMonth:-1];
+        
+        _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
+        
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+    }
 }
 
 - (IBAction)forwardMonthOffset:(id)sender {
-    [_activityIndicator startAnimating];
-    
-    [_events offsetMonth:1];
-    
-    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
-    
-    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-    
-    //NSLog(@"went to next month");
+    if (_authenticating != YES) {
+        NSLog(@"went to next month, jsons received: %d", _jsonsSent);
+        
+        [_activityIndicator startAnimating];
+        
+        [_events offsetMonth:1];
+        
+        _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
+        
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+    }
 }
 
 
@@ -546,16 +557,23 @@
     
     _start = [NSDate date];
     
-    _jsonsReceived = 0;
-    
-    // If user authorization is successful, then make an API call to get the event list for the current month.
-    // For more infomation about this API call, visit:
-    // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getEntertainmentCalId]]
-                       withHttpMethod:httpMethod_GET
-                   postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                  postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                          requestBody:nil];
+    if (_jsonsSent != 0) {
+        _jsonsToIgnore += 1;
+    }
+    else {
+        NSLog(@"jsonsSent before first request: %d", _jsonsSent);
+        
+        // If user authorization is successful, then make an API call to get the event list for the current month.
+        // For more infomation about this API call, visit:
+        // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getEntertainmentCalId]]
+                           withHttpMethod:httpMethod_GET
+                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                              requestBody:nil];
+        
+        _jsonsSent += 1;
+    }
 }
 
 
@@ -577,7 +595,7 @@
         
         self.signInOutButton.title = @"Sign Out";
         
-        _jsonsReceived = 0;
+        _authenticating = YES;
         
         //This is a dummy update that will be to see if the user is able to manage events.
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
@@ -585,6 +603,8 @@
                        postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                       postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
                               requestBody:nil];
+        
+        _jsonsSent += 1;
     }
     //NSLog(@"Getting the events for the current month");
 }
@@ -595,13 +615,21 @@
     //NSLog(@"%@",responseJSONAsString);
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
+        NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
-        
         if (error) {
             // This is the case that an error occured during converting JSON data to dictionary.
             // Simply log the error description.
             NSLog(@"%@", [error localizedDescription]);
+        }
+        else if (_jsonsToIgnore != 0) {
+            _jsonsToIgnore -= 1;
+            NSLog(@"jsonsSent and one being ignored, %d", _jsonsSent);
+            _jsonsSent = 0;
+            
+            [_events refreshArrayOfEvents];
+            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
         }
         else{
             if (!_firstEventsJSONReceived) {
@@ -619,25 +647,25 @@
             
             //NSLog(@"Jsons previously received: %d", _jsonsReceived);
             
-            if (_jsonsReceived == 0) {
+            if (_jsonsSent == 1) {
                 //Only refresh the events if this is the first json received.
                 [_events refreshArrayOfEvents];
                 category = @"Entertainment";
                 NSLog(@"Refresh events");
             }
-            else if (_jsonsReceived == 1) {
+            else if (_jsonsSent == 2) {
                 category = @"Academics";
             }
-            else if (_jsonsReceived == 2) {
+            else if (_jsonsSent == 3) {
                 category = @"Activities";
             }
-            else if (_jsonsReceived == 3) {
+            else if (_jsonsSent == 4) {
                 category = @"Residence";
             }
-            else if (_jsonsReceived == 4) {
+            else if (_jsonsSent == 5) {
                 category = @"Athletics";
             }
-            else if (_jsonsReceived == 5) {
+            else if (_jsonsSent == 6) {
                 category = @"Campus Rec";
             }
             else {
@@ -705,7 +733,7 @@
                                 endDay += [[[[currentEventInfo objectForKey:@"end"]
                                              objectForKey:@"dateTime"]
                                             substringWithRange:NSMakeRange(8, 2)]
-                                           integerValue]-1;
+                                           integerValue];
                             }
                             
                             //This only takes into account full months strictly inbetween the start and end months.
@@ -735,7 +763,7 @@
                         endDay += [[[[currentEventInfo objectForKey:@"end"]
                                      objectForKey:@"date"]
                                     substringWithRange:NSMakeRange(8, 2)]
-                                   integerValue]-1;
+                                   integerValue];
                     }
                     else {
                         //At the very beginning we'll be working with probably not a full year.
@@ -754,7 +782,7 @@
                                 endDay += [[[[currentEventInfo objectForKey:@"end"]
                                              objectForKey:@"date"]
                                             substringWithRange:NSMakeRange(8, 2)]
-                                           integerValue]-1;
+                                           integerValue];
                             }
                             
                             //This only takes into account full months strictly inbetween the start and end months.
@@ -804,7 +832,7 @@
                         if (freq == 31) {
                             //Count the months between the start day and end day.
                             if (startYear == [_events getSelectedYear]) {
-                                for (int month=startMonth; month<[_events getSelectedMonth]+1; month++) {
+                                for (int month=startMonth; month<[_events getSelectedMonth]; month++) {
                                     repeat += 1;
                                 }
                             }
@@ -830,11 +858,8 @@
                             }
                         }
                         else if (freq == 365) {
-                            if (startYear == [_events getSelectedYear]) {
-                                repeat = 1;
-                            }
-                            else {
-                                for (int year=startYear; year<[_events getSelectedYear]+1; year++) {
+                            if (startYear != [_events getSelectedYear]){
+                                for (int year=startYear; year<[_events getSelectedYear]-1; year++) {
                                     repeat += 1;
                                 }
                             }
@@ -908,11 +933,16 @@
                                 
                                 repeat = (daysInEventDuration / freq) + 1;
                                 
-                                NSLog(@"The repeat number is %d", repeat);
+                                //NSLog(@"The repeat number is %d", repeat);
                             }
                         }
                     }
                 }
+                
+                //This will hold the number of days into the next month.
+                int wrappedDays = endDay-[_events getDaysOfMonth:startMonth :startYear];
+
+                //The e variable isn't being set properly. So fix it!
                 
                 int s = 0;
                 int e = 0;
@@ -933,6 +963,7 @@
                             freq = 365;
                         }
                     }
+
                     
                     //Here we setup the s and e variables for the for loop.
                     if (startYear == [_events getSelectedYear]) {
@@ -990,19 +1021,30 @@
                     
                     //Setup the start and end vars for the next repeat.
                     startDay = startDay + freq;
+                    
                     endDay = endDay + freq;
+
                     
                     //Check if we're moving into a new month.
                     if (startDay%[_events getDaysOfMonth:startMonth :startYear] < startDay) {
                         //Then we mod the startDay to get the day of the next month it will be on.
-                        startDay = startDay%[_events getDaysOfMonth:startMonth :startYear];
-                        endDay = endDay%[_events getDaysOfMonth:startMonth :startYear];
+                        startDay = startDay-[_events getDaysOfMonth:startMonth :startYear];
+                        endDay = endDay-[_events getDaysOfMonth:startMonth :startYear];
                         startMonth += 1;
                         
                         //Check to see if we transitioned to a new year.
                         if (startMonth > 12) {
                             startMonth = 1;
                             startYear += 1;
+                        }
+                    }
+                    
+                    if (wrappedDays > 0) {
+                        if (startMonth != 1) {
+                            endDay += [_events getDaysOfMonth:startMonth :startYear] - [_events getDaysOfMonth:startMonth-1 :startYear];
+                        }
+                        else {
+                            endDay += [_events getDaysOfMonth:startMonth :startYear] - [_events getDaysOfMonth:12 :startYear-1];
                         }
                     }
                 }
@@ -1027,11 +1069,13 @@
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
-            if (_jsonsReceived == 5) {
+            if (_jsonsSent == 6) {
                 //This is a performance test for how long it took to make the 6 http requests!
                 //NSDate *methodFinish = [NSDate date];
                 //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:_start];
                 //NSLog(@"%f is the time it took to make the calls.", executionTime);
+                
+                _jsonsSent = 0;
                 
                 [_collectionView reloadData];
                 [_activityIndicator stopAnimating];
@@ -1039,7 +1083,7 @@
             else {
                 
                 
-                if (_jsonsReceived == 0) {
+                if (_jsonsSent == 1) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1049,7 +1093,7 @@
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                                           requestBody:nil];
                 }
-                else if(_jsonsReceived == 1) {
+                else if(_jsonsSent == 2) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1059,7 +1103,7 @@
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                                           requestBody:nil];
                 }
-                else if (_jsonsReceived == 2) {
+                else if (_jsonsSent == 3) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1069,7 +1113,7 @@
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                                           requestBody:nil];
                 }
-                else if(_jsonsReceived == 3) {
+                else if(_jsonsSent == 4) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1079,7 +1123,7 @@
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                                           requestBody:nil];
                 }
-                else if(_jsonsReceived == 4) {
+                else if(_jsonsSent == 5) {
                     // If user authorization is successful, then make an API call to get the event list for the current month.
                     // For more infomation about this API call, visit:
                     // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1089,7 +1133,7 @@
                                   postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                                           requestBody:nil];
                 }
-                _jsonsReceived += 1;
+                _jsonsSent += 1;
             }
         }
     }
@@ -1100,13 +1144,15 @@
         _addEventButton.title = @"Add Event";
         _addEventButton.enabled = YES;
         
-        if (_jsonsReceived == 5) {
+        if (_jsonsSent == 6) {
+            _jsonsSent = 0;
+            _authenticating = NO;
             [[_auth getAuthCals] setObject:@"YES" forKey:@"Campus Rec"];
             NSLog(@"The user can manage Campus Rec events!");
             [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
         }
         else {
-            if (_jsonsReceived == 0) {
+            if (_jsonsSent == 1) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1120,7 +1166,7 @@
                 
                 NSLog(@"The user can manage Entertainment events!");
             }
-            else if(_jsonsReceived == 1) {
+            else if(_jsonsSent == 2) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1132,7 +1178,7 @@
                 [[_auth getAuthCals] setObject:@"YES" forKey:@"Academics"];
                 NSLog(@"The user can manage Academics events!");
             }
-            else if (_jsonsReceived == 2) {
+            else if (_jsonsSent == 3) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1145,7 +1191,7 @@
                 
                 NSLog(@"The user can manage Activities events!");
             }
-            else if(_jsonsReceived == 3) {
+            else if(_jsonsSent == 4) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1158,7 +1204,7 @@
                 
                 NSLog(@"The user can manage Residences events!");
             }
-            else if(_jsonsReceived == 4) {
+            else if(_jsonsSent == 5) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1171,7 +1217,7 @@
                 
                 NSLog(@"The user can manage Athletics events!");
             }
-            _jsonsReceived += 1;
+            _jsonsSent += 1;
         }
     }
 }
@@ -1202,13 +1248,15 @@
     if ([self getIndexOfSubstringInString:@"403" :errorMessage] != -1
         && [self getIndexOfSubstringInString:@"Forbidden" :errorMessage] != -1)
     {
-        if (_jsonsReceived == 5) {
+        if (_jsonsSent == 6) {
+            _jsonsSent = 0;
+            _authenticating = NO;
             [[_auth getAuthCals] setObject:@"YES" forKey:@"Campus Rec"];
             NSLog(@"The user can manage Campus Rec events!");
             [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
         }
         else {
-            if (_jsonsReceived == 0) {
+            if (_jsonsSent == 1) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1221,7 +1269,7 @@
                 
                 NSLog(@"The user can't manage Entertainment events!");
             }
-            else if(_jsonsReceived == 1) {
+            else if(_jsonsSent == 2) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1234,7 +1282,7 @@
                 
                 NSLog(@"The user can't manage Academics events!");
             }
-            else if (_jsonsReceived == 2) {
+            else if (_jsonsSent == 3) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1247,7 +1295,7 @@
                 
                 NSLog(@"The user can't manage Athletics events!");
             }
-            else if(_jsonsReceived == 3) {
+            else if(_jsonsSent == 4) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1261,7 +1309,7 @@
                 
                 NSLog(@"The user can't manage Residence events!");
             }
-            else if(_jsonsReceived == 4) {
+            else if(_jsonsSent == 5) {
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -1274,7 +1322,7 @@
                 
                 NSLog(@"The user can manage Athletics events!");
             }
-            _jsonsReceived += 1;
+            _jsonsSent += 1;
         }
     }
 }
