@@ -8,10 +8,13 @@
 
 #import "EventDetailTableViewController.h"
 #import "MonthlyEvents.h"
+#import "Authentication.h"
 
 @interface EventDetailTableViewController ()
 {
     MonthlyEvents *events;
+    
+    Authentication *auth;
 }
 
 @end
@@ -36,7 +39,11 @@
     
     [self setDay:[events getSelectedDay]];
     
-    //self.tableView.separatorColor = [UIColor clearColor];
+    auth = [Authentication getSharedInstance];
+    
+    if ([auth getUserCanManageEvents]) {
+        //
+    }
 }
 
 
@@ -86,6 +93,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
+            cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
             cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
@@ -113,6 +121,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
+            cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
             cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
@@ -135,29 +144,30 @@
             UILabel *title = (UILabel *)[cell viewWithTag:5];
             title.text = @"Start";
             
-            /*
-             
-             reformat the string. ex: Mar 18, 2014  1:00PM
-             
-             */
+            
+            
             UILabel *timeLbl = (UILabel *)[cell viewWithTag:6];
             if ([[_eventDict objectForKey:@"start"] objectForKey:@"date"])
             {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-                NSDate *date = [[NSDate alloc] init];
-                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"start"] objectForKey:@"date"]];
-                timeLbl.text = [dateFormatter stringFromDate:date];
-                NSLog(@"\n\n\n dayLbl.text = %@ \n\n\n", timeLbl.text);
+                NSString *eventStart = [[_eventDict objectForKey:@"start"] objectForKey:@"date"];
+                NSRange zeroToTenStart = NSMakeRange(0, 10);
+                timeLbl.text = [eventStart substringWithRange:zeroToTenStart];
             }
             else
             {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-                NSDate *date = [[NSDate alloc] init];
-                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"]];
-                timeLbl.text = [dateFormatter stringFromDate:date];
-                NSLog(@"\n\n\n dayTimeLbl.text = %@ \n\n\n", timeLbl.text);
+                NSString *eventStart1 = [[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"];
+                NSRange zeroToTen = NSMakeRange(0, 10);
+                NSString *datePart = [eventStart1 substringWithRange:zeroToTen];
+                
+                NSString *eventStart2 = [[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"];
+                NSRange elevenToSixteen = NSMakeRange(11, 5);
+                NSString *timePart = [eventStart2 substringWithRange:elevenToSixteen];
+                timePart = [self twentyFourToTwelve:timePart];
+                
+                datePart = [datePart stringByAppendingString:@"  "];
+                datePart = [datePart stringByAppendingString:timePart];
+                
+                timeLbl.text = datePart;
             }
         }
         
@@ -170,23 +180,25 @@
             UILabel *timeLbl = (UILabel *)[cell viewWithTag:6];
             if ([[_eventDict objectForKey:@"end"] objectForKey:@"date"])
             {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-                NSDate *date = [[NSDate alloc] init];
-                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"end"] objectForKey:@"date"]];
-                timeLbl.text = [dateFormatter stringFromDate:date];
-                NSLog(@"\n\n\n dayLbl.text = %@ \n\n\n", timeLbl.text);
+                NSString *eventEnd = [[_eventDict objectForKey:@"end"] objectForKey:@"date"];
+                NSRange zeroToTenEnd = NSMakeRange(0, 10);
+                timeLbl.text = [eventEnd substringWithRange:zeroToTenEnd];
             }
             else
             {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-                NSDate *date = [[NSDate alloc] init];
-                date = [dateFormatter dateFromString:[[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"]];
-                NSLog(@"endPrintOut = %@", [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"]);
-                NSLog(@"nsdatePrintOut = %@", date);
-                timeLbl.text = [dateFormatter stringFromDate:date];
-                NSLog(@"dayTimeLbl.text = %@", timeLbl.text);
+                NSString *eventEnd1 = [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"];
+                NSRange zeroToTen = NSMakeRange(0, 10);
+                NSString *datePart = [eventEnd1 substringWithRange:zeroToTen];
+                
+                NSString *eventEnd2 = [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"];
+                NSRange elevenToSixteen = NSMakeRange(11, 5);
+                NSString *timePart = [eventEnd2 substringWithRange:elevenToSixteen];
+                timePart = [self twentyFourToTwelve:timePart];
+                
+                datePart = [datePart stringByAppendingString:@"  "];
+                datePart = [datePart stringByAppendingString:timePart];
+                
+                timeLbl.text = datePart;
             }
             
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
@@ -197,20 +209,82 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
+            cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
             cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
         if (indexPath.row == 1)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"repeatDisplay" forIndexPath:indexPath];
+            cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
             UILabel *title = (UILabel *)[cell viewWithTag:7];
             title.text = @"Repeat";
             UILabel *repState = (UILabel *)[cell viewWithTag:8];
-            if ([_eventDict objectForKey:@"recurrence"]) {
-                repState.text = @"Yes";
-            } else {
+            
+            if ([_eventDict objectForKey:@"recurrence"])
+            {
+                NSLog(@"Recurrence: %@", [_eventDict objectForKey:@"recurrence"]);
+                
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmss'Z'"];
+                
+                NSString *repeatUntilLbl;
+                NSString *repeatUntilOtherStuff;
+                
+                //Is the ocurrence daily?
+                if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"D"])
+                {
+                    repeatUntilLbl = @"Daily until ";
+                    repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(23, 15)];
+                    NSLog(@"Daily = %@", repeatUntilOtherStuff);
+                    repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
+                    repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
+                    repState.text = repeatUntilLbl;
+                }
+                //Is the ocurrence Weekly?
+                else if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"W"]) {
+                    if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(18, 10)] isEqualToString:@"INTERVAL=2"]) {
+                        repeatUntilLbl = @"Bi-Weekly until ";
+                        repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(35, 15)];
+                        NSLog(@"Bi-weekly = %@", repeatUntilOtherStuff);
+                        repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
+                        repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
+                        repState.text = repeatUntilLbl;
+                    }
+                    else {
+                        repeatUntilLbl = @"Weekly until ";
+                        repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(24, 15)];
+                        NSLog(@"Weekly = %@", repeatUntilOtherStuff);
+                        repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
+                        repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
+                        repState.text = repeatUntilLbl;
+                    }
+                }
+                //Is the ocurrence Monthly?
+                else if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"M"]) {
+                    repeatUntilLbl = @"Monthly until ";
+                    repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(25, 15)];
+                    NSLog(@"Monthly = %@", repeatUntilOtherStuff);
+                    repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
+                    repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
+                    repState.text = repeatUntilLbl;
+                }
+                //Is the ocurrence Monthly?
+                else if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"Y"]) {
+                    repeatUntilLbl = @"Yearly until ";
+                    repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(24, 15)];
+                    NSLog(@"Yearly = %@", repeatUntilOtherStuff);
+                    repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
+                    repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
+                    repState.text = repeatUntilLbl;
+                }
+                
+            }
+            else
+            {
                 repState.text = @"No";
             }
+                
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
         }
     }
@@ -219,6 +293,7 @@
         if (indexPath.row == 0)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"grayCell" forIndexPath:indexPath];
+            cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
             cell.backgroundColor = [UIColor colorWithRed:240.0/256.0 green:240.0/256.0 blue:240.0/256.0 alpha:1.0];
         }
         
@@ -247,13 +322,12 @@
     NSRange stringMinRange = NSMakeRange(2, 3);
     NSString *restOfString = [time substringWithRange:stringMinRange];
     
-    
     if (hourInt == 0)
     {
         time = [NSString stringWithFormat:@"%d%@ AM", 12, restOfString];
     }
     
-    else if(hourInt < 10)
+    else if(hourInt < 12)
     {
         time = [NSString stringWithFormat:@"%d%@ AM", hourInt, restOfString];
     }
@@ -269,6 +343,27 @@
     }
     
     return time;
+}
+
+
+
+//Input: 15 character string
+//  Output: 15 character string augmented with hyphens and spaces (also, removes the T)
+- (NSString *)formatTimeString:(NSString *)time
+{
+    NSString *timeStr = [time substringWithRange:NSMakeRange(0, 4)];
+    timeStr = [timeStr stringByAppendingString:@"-"];
+    timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(4, 2)]];
+    timeStr = [timeStr stringByAppendingString:@"-"];
+    timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(6, 2)]];
+    timeStr = [timeStr stringByAppendingString:@" "];
+    timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(9, 2)]];
+    timeStr = [timeStr stringByAppendingString:@":"];
+    timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(11, 2)]];
+    
+    NSLog(@"timeStr = %@", timeStr);
+    
+    return timeStr;
 }
 
 

@@ -345,6 +345,8 @@
     
     NSDictionary *eventTime = [sortedArray objectAtIndex:indexPath.row];
     
+    NSLog(@"eventTime %@", eventTime);
+    
     if ([[eventTime objectForKey:@"start"] objectForKey:@"dateTime"] == nil)
     {
         UILabel *time = (UILabel *)[cell viewWithTag:20];
@@ -464,7 +466,7 @@
         time = [NSString stringWithFormat:@"%d%@ AM", 12, restOfString];
     }
     
-    else if(hourInt < 10)
+    else if(hourInt < 12)
     {
         time = [NSString stringWithFormat:@"%d%@ AM", hourInt, restOfString];
     }
