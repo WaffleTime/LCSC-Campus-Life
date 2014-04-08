@@ -357,23 +357,15 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" tag="21" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAW-Z7-Fum">
-                                            <rect key="frame" x="103" y="17" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Summary" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="584" translatesAutoresizingMaskIntoConstraints="NO" id="2dO-ui-ABv">
-                                            <rect key="frame" x="141" y="0.0" width="584" height="64"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="22" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Summary" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="594" translatesAutoresizingMaskIntoConstraints="NO" id="2dO-ui-ABv">
+                                            <rect key="frame" x="131" y="0.0" width="594" height="64"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bigAlphaCircle.png" translatesAutoresizingMaskIntoConstraints="NO" id="rx2-eW-rx4">
-                                            <rect key="frame" x="103" y="17" width="30" height="30"/>
+                                        <imageView userInteractionEnabled="NO" tag="21" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dotEntertainment.png" translatesAutoresizingMaskIntoConstraints="NO" id="rx2-eW-rx4">
+                                            <rect key="frame" x="103" y="22" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -1343,7 +1335,6 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="eventDetails" destination="coB-lI-5hN" id="zgR-xk-w1Y"/>
                         <outlet property="updateEvent" destination="Xd0-5n-O22" id="ZK7-fc-coZ"/>
                     </connections>
                 </tableViewController>
@@ -1353,7 +1344,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
         </scene>
     </scenes>
     <resources>
-        <image name="bigAlphaCircle.png" width="30" height="30"/>
+        <image name="dotEntertainment.png" width="20" height="20"/>
         <image name="newAlphaCircle.png" width="13" height="13"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1363,12 +1354,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ibb-91-zEn"/>
-<<<<<<< HEAD
-        <segue reference="XSt-v5-9f6"/>
-        <segue reference="kVc-d4-wYx"/>
-=======
         <segue reference="YI9-nB-lGH"/>
         <segue reference="5hI-mz-GIs"/>
->>>>>>> 2ed4be8c8b13a0cb027c359fb1185290c4639d5c
     </inferredMetricsTieBreakers>
 </document>

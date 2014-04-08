@@ -1,4 +1,4 @@
-//
+/*//
 //  EventDetailViewController.h
 //  LCSC Campus Life
 //
@@ -30,3 +30,4 @@
 - (int)getIndexOfSubstringInString:(NSString *)substring :(NSString *)string;
 
 @end
+*/

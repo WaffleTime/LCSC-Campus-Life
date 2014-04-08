@@ -37,6 +37,8 @@
     
     events = [MonthlyEvents getSharedInstance];
     
+    NSLog(@"\n\n\n Printing eventDict: %@ \n\n\n", _eventDict);
+    
     [self setDay:[events getSelectedDay]];
     
     auth = [Authentication getSharedInstance];
@@ -236,7 +238,6 @@
                 {
                     repeatUntilLbl = @"Daily until ";
                     repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(23, 15)];
-                    NSLog(@"Daily = %@", repeatUntilOtherStuff);
                     repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
                     repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
                     repState.text = repeatUntilLbl;
@@ -246,7 +247,6 @@
                     if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(18, 10)] isEqualToString:@"INTERVAL=2"]) {
                         repeatUntilLbl = @"Bi-Weekly until ";
                         repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(35, 15)];
-                        NSLog(@"Bi-weekly = %@", repeatUntilOtherStuff);
                         repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
                         repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
                         repState.text = repeatUntilLbl;
@@ -254,7 +254,6 @@
                     else {
                         repeatUntilLbl = @"Weekly until ";
                         repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(24, 15)];
-                        NSLog(@"Weekly = %@", repeatUntilOtherStuff);
                         repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
                         repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
                         repState.text = repeatUntilLbl;
@@ -264,7 +263,6 @@
                 else if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"M"]) {
                     repeatUntilLbl = @"Monthly until ";
                     repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(25, 15)];
-                    NSLog(@"Monthly = %@", repeatUntilOtherStuff);
                     repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
                     repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
                     repState.text = repeatUntilLbl;
@@ -273,7 +271,6 @@
                 else if ([[_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(11, 1)] isEqualToString:@"Y"]) {
                     repeatUntilLbl = @"Yearly until ";
                     repeatUntilOtherStuff = [_eventDict[@"recurrence"][0] substringWithRange:NSMakeRange(24, 15)];
-                    NSLog(@"Yearly = %@", repeatUntilOtherStuff);
                     repeatUntilOtherStuff = [self formatTimeString:repeatUntilOtherStuff];
                     repeatUntilLbl = [repeatUntilLbl stringByAppendingString:repeatUntilOtherStuff];
                     repState.text = repeatUntilLbl;
