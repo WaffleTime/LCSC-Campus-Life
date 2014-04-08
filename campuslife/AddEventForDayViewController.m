@@ -76,6 +76,28 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 {
     [super viewDidAppear:animated];
     
+    [self refreshRecurrence];
+}
+
+
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    if (IDIOM != IPAD) {
+        [_scrollView layoutIfNeeded];
+        _scrollView.contentSize = CGSizeMake(320, 1050);
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void) refreshRecurrence
+{
     NSLog(@"RepFreq: %@", super.repeatFreq);
     NSLog(@"RepUntil: %@", super.repeatUntil);
     
@@ -112,26 +134,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
 }
 
-
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    if (IDIOM != IPAD) {
-        [_scrollView layoutIfNeeded];
-        _scrollView.contentSize = CGSizeMake(320, 1050);
-    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 -(IBAction) addEvent {
-    BOOL readyToAddEvent = NO;
+    BOOL readyToAddEvent = YES;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
     if ([_summary.text isEqualToString:@""]) {
@@ -141,28 +145,76 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+        
+        readyToAddEvent = NO;
     }
-    else {
-        if (!_allDayEventSwitch.on) {
-            NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-            [timeFormatter setDateFormat:@"HHmm"];
-            //Check the times to see if they are valid.
-            if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-                < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                                message: @"The end time is less than the start time."
-                                                               delegate: nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-            else
-            {
-                //If all the previous checks are alright, then we can add an event.
-                readyToAddEvent = YES;
-            }
+    
+    if (!_allDayEventSwitch.on) {
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        [timeFormatter setDateFormat:@"HHmm"];
+        //Check the times to see if they are valid.
+        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                            message: @"The end time is less than the start time."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
         }
+    }
+    
+    MonthlyEvents *events = [MonthlyEvents getSharedInstance];
+    
+    NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
+    [monthFormatter setDateFormat:@"MM"];
+    
+    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
+    [dayFormatter setDateFormat:@"dd"];
+    
+    //See if comparing the dates is needed.
+    NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
+    [yearFormatter setDateFormat:@"yyyy"];
+    
+    //We must see if the recurrence will be before or on the start of the event.
+    if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
+        < events.getSelectedYear)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                        message: @"The year is less than to the start year."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
+    }
+    else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
+            < events.getSelectedMonth)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                        message: @"The month is less than to the start month."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
+    }
+    else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
+            <= events.getSelectedDay)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                        message: @"The day is less than or equal to the start day."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
     }
     
     
@@ -186,9 +238,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         calId = [_auth getCampusRecCalId];
     }
     
-    
     if (readyToAddEvent) {
-        MonthlyEvents *events = [MonthlyEvents getSharedInstance];
         NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
         
         //Events have specified time constraints unless they are all day events.
@@ -300,6 +350,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                        postParameterNames:@[]
                       postParameterValues:@[]
                               requestBody:json];
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

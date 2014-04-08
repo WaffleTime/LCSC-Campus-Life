@@ -157,6 +157,26 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 {
     [super viewDidAppear:animated];
     
+    [self refreshRecurrence];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    if (IDIOM != IPAD) {
+        [_scrollView layoutIfNeeded];
+        _scrollView.contentSize = CGSizeMake(320, 1200);
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void) refreshRecurrence
+{
     NSLog(@"RepFreq: %@", super.repeatFreq);
     NSLog(@"RepUntil: %@", super.repeatUntil);
     
@@ -193,24 +213,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    if (IDIOM != IPAD) {
-        [_scrollView layoutIfNeeded];
-        _scrollView.contentSize = CGSizeMake(320, 1200);
-    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 -(IBAction) addEvent {
-    BOOL readyToAddEvent = NO;
+    BOOL readyToAddEvent = YES;
     
     //Check if fields are left blank. Notice the description and where fields aren't required.
     if ([_summary.text isEqualToString:@""])
@@ -221,93 +225,121 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+        
+        readyToAddEvent = NO;
     }
     //We will do some other checking on the start and end times to see if they are valid.
-    else
+    
+    NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
+    [monthFormatter setDateFormat:@"MM"];
+    
+    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
+    [dayFormatter setDateFormat:@"dd"];
+    
+    //See if comparing the dates is needed.
+    NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
+    [yearFormatter setDateFormat:@"yyyy"];
+    
+    //Check if the end year is less than the start year
+    if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
+        < [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
     {
-        //See if comparing the dates is needed.
-        if (_allDayEventSwitch.on)
-        {
-            NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
-            [yearFormatter setDateFormat:@"yyyy"];
-            
-            //Check if the end year is less than the start year
-            if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
-                < [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
-                                                                message: @"The end year is less than the start year."
-                                                               delegate: nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
-            }
-            else if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
-                     == [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
-            {
-                NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
-                [monthFormatter setDateFormat:@"MM"];
-                //Now we check the months.
-                if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
-                    < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
-                {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
-                                                                    message: @"The end month is less than the start month."
-                                                                   delegate: nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }
-                else if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
-                         == [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
-                {
-                    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
-                    [dayFormatter setDateFormat:@"dd"];
-                    //Now we check the days.
-                    if ([[dayFormatter stringFromDate:_endTimePicker.date] intValue]
-                        < [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
-                    {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
-                                                                        message: @"The end day is less than the start day."
-                                                                       delegate: nil
-                                                              cancelButtonTitle:@"OK"
-                                                              otherButtonTitles:nil];
-                        [alert show];
-                    }
-                    else
-                    {
-                        //If all the previous checks are alright, then we can add an event.
-                        readyToAddEvent = YES;
-                    }
-                }
-                else {
-                    readyToAddEvent = YES;
-                }
-            }
-            else {
-                readyToAddEvent = YES;
-            }
-        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                        message: @"The end year is less than the start year."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
         
-        //We compare the times regardless of the type of event (all-day, non all-day.)
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-        [timeFormatter setDateFormat:@"HHmm"];
-        //Now we check the times.
-        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+        readyToAddEvent = NO;
+    }
+    else if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
+             == [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+    {
+        //Now we check the months.
+        if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
+            < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                            message: @"The end time is less than the start time."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                            message: @"The end month is less than the start month."
                                                            delegate: nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
         }
-        else
+        else if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
+                 == [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
         {
-            //If all the previous checks are alright, then we can add an event.
-            readyToAddEvent = YES;
+            //Now we check the days.
+            if ([[dayFormatter stringFromDate:_endTimePicker.date] intValue]
+                < [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                                message: @"The end day is less than the start day."
+                                                               delegate: nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                
+                readyToAddEvent = NO;
+            }
         }
+    }
+    
+    //We compare the times regardless of the type of event (all-day, non all-day.)
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    [timeFormatter setDateFormat:@"HHmm"];
+    
+    //check those times.
+    if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+        < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                        message: @"The end time is less than the start time."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
+    }
+    
+    //We must see if the recurrence will be before or on the start of the event.
+    if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
+        < [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                        message: @"The year is less than to the start year."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
+    }
+    else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
+            < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                        message: @"The month is less than to the start month."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
+    }
+    else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
+            <= [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                        message: @"The day is less than or equal to the start day."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        readyToAddEvent = NO;
     }
     
     NSString *calId = @"";
@@ -438,6 +470,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                        postParameterNames:@[]
                       postParameterValues:@[]
                               requestBody:json];
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -448,7 +482,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
     else {
         _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        _endTimePicker.datePickerMode = UIDatePickerModeTime;
+        _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
     }
 }
 

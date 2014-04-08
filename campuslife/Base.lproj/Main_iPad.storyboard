@@ -41,7 +41,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EWa-JO-Uke">
-                                <rect key="frame" x="3" y="108" width="763" height="762"/>
+                                <rect key="frame" x="3" y="148" width="763" height="762"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="kWe-X2-E3U">
@@ -973,7 +973,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
 </data>
                                 </timeZone>
                             </datePicker>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="JpS-jm-IAC">
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="JpS-jm-IAC">
                                 <rect key="frame" x="406" y="246" width="342" height="216"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <date key="date" timeIntervalSinceReferenceDate="408485770.45451498">
@@ -1363,7 +1363,12 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ibb-91-zEn"/>
+<<<<<<< HEAD
         <segue reference="XSt-v5-9f6"/>
         <segue reference="kVc-d4-wYx"/>
+=======
+        <segue reference="YI9-nB-lGH"/>
+        <segue reference="5hI-mz-GIs"/>
+>>>>>>> 2ed4be8c8b13a0cb027c359fb1185290c4639d5c
     </inferredMetricsTieBreakers>
 </document>
