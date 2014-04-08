@@ -1329,11 +1329,11 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell autoresizesSubviews="NO" contentMode="scaleAspectFit" placeholderIntrinsicWidth="768" placeholderIntrinsicHeight="200" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="description" rowHeight="44" id="3Xn-Nu-7WV">
-                                <rect key="frame" x="0.0" y="262" width="768" height="44"/>
+                            <tableViewCell autoresizesSubviews="NO" contentMode="scaleAspectFit" placeholderIntrinsicWidth="768" placeholderIntrinsicHeight="200" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="description" rowHeight="400" id="3Xn-Nu-7WV">
+                                <rect key="frame" x="0.0" y="262" width="768" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Xn-Nu-7WV" id="GZM-iB-70m">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="399"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="9" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvZ-Hx-0RU">
@@ -1343,10 +1343,9 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textView autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" tag="10" contentMode="scaleAspectFit" fixedFrame="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ9-sl-cSz">
-                                            <rect key="frame" x="178" y="0.0" width="570" height="43"/>
+                                            <rect key="frame" x="179" y="0.0" width="569" height="399"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         </textView>
@@ -1354,7 +1353,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="grayCell" id="a9u-P3-Y7T">
-                                <rect key="frame" x="0.0" y="306" width="768" height="44"/>
+                                <rect key="frame" x="0.0" y="662" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9u-P3-Y7T" id="KHE-h2-HMi">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
@@ -1370,24 +1369,15 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="9Uu-XG-HSA">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="ZWm-wH-0Ar">
-                            <button key="customView" opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xd0-5n-O22">
-                                <rect key="frame" x="582" y="5" width="170" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Update Event">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="updateEvent:" destination="Rgg-pu-7Ac" eventType="touchUpInside" id="j7G-eN-2rT"/>
-                                    <segue destination="aWt-tq-riR" kind="push" id="anC-sW-Piu"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Update Event" id="0fr-ds-16r">
+                            <connections>
+                                <segue destination="aWt-tq-riR" kind="push" identifier="EventDetailToUpdateEvent" id="p9x-SK-8mI"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="eventDetails" destination="coB-lI-5hN" id="zgR-xk-w1Y"/>
-                        <outlet property="updateEvent" destination="Xd0-5n-O22" id="ZK7-fc-coZ"/>
+                        <outlet property="updateEvent" destination="0fr-ds-16r" id="DaG-se-sSB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mXk-cP-Eda" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1406,12 +1396,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ibb-91-zEn"/>
-<<<<<<< HEAD
-        <segue reference="XSt-v5-9f6"/>
-        <segue reference="kVc-d4-wYx"/>
-=======
         <segue reference="YI9-nB-lGH"/>
         <segue reference="5hI-mz-GIs"/>
->>>>>>> 2ed4be8c8b13a0cb027c359fb1185290c4639d5c
     </inferredMetricsTieBreakers>
 </document>

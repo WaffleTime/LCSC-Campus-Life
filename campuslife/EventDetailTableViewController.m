@@ -9,6 +9,11 @@
 #import "EventDetailTableViewController.h"
 #import "MonthlyEvents.h"
 #import "Authentication.h"
+#import "UpdateEventViewController.h"
+
+//This is for checking to see if an ipad is being used.
+#define IDIOM    UI_USER_INTERFACE_IDIOM()
+#define IPAD     UIUserInterfaceIdiomPad
 
 @interface EventDetailTableViewController ()
 {
@@ -288,7 +293,7 @@
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
         }
     }
-    else
+    else if (indexPath.section == 3)
     {
         if (indexPath.row == 0)
         {
@@ -304,11 +309,29 @@
             title.text = @"Description";
             UITextView *descView = (UITextView *)[cell viewWithTag:10];
             descView.text = [_eventDict objectForKey:@"description"];
+            [descView setFont:[UIFont boldSystemFontOfSize:25]];
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
         }
     }
     
     return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 3 && indexPath.row == 1)
+    {
+        return 400;
+    }
+    else if (IPAD == IDIOM)
+    {
+        return 65;
+    }
+    else
+    {
+        return 44;
+    }
 }
 
 
@@ -365,6 +388,16 @@
     
     return timeStr;
 }
+
+
+-(void) prepareForSegue:(UIStoryboardPopoverSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"EventDetailToUpdateEvent"]) {
+        UpdateEventViewController *destViewController = (UpdateEventViewController *)[segue destinationViewController];
+        
+        [destViewController setEventInfo:_eventDict];
+    }
+}
+
 
 
 
