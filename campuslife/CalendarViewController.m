@@ -560,9 +560,8 @@
     if (_jsonsSent != 0) {
         _jsonsToIgnore += 1;
     }
-    else {
-        NSLog(@"jsonsSent before first request: %d", _jsonsSent);
-        
+    else
+    {
         // If user authorization is successful, then make an API call to get the event list for the current month.
         // For more infomation about this API call, visit:
         // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -618,18 +617,19 @@
         NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
-        if (error) {
-            // This is the case that an error occured during converting JSON data to dictionary.
-            // Simply log the error description.
-            NSLog(@"%@", [error localizedDescription]);
-        }
-        else if (_jsonsToIgnore != 0) {
+        
+        if (_jsonsToIgnore != 0) {
             _jsonsToIgnore -= 1;
             NSLog(@"jsonsSent and one being ignored, %d", _jsonsSent);
             _jsonsSent = 0;
             
             [_events refreshArrayOfEvents];
             [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        }
+        else if (error) {
+            // This is the case that an error occured during converting JSON data to dictionary.
+            // Simply log the error description.
+            NSLog(@"%@", [error localizedDescription]);
         }
         else{
             if (!_firstEventsJSONReceived) {
@@ -829,6 +829,8 @@
                             freq = 365;
                         }
                         
+                        
+                        
                         if (freq == 31) {
                             //Count the months between the start day and end day.
                             if (startYear == [_events getSelectedYear]) {
@@ -859,7 +861,7 @@
                         }
                         else if (freq == 365) {
                             if (startYear != [_events getSelectedYear]){
-                                for (int year=startYear; year<[_events getSelectedYear]-1; year++) {
+                                for (int year=startYear; year<[_events getSelectedYear]; year++) {
                                     repeat += 1;
                                 }
                             }
@@ -935,6 +937,17 @@
                                 
                                 //NSLog(@"The repeat number is %d", repeat);
                             }
+                        }
+                        int substringIndx = [self getIndexOfSubstringInString:@"INTERVAL=":currentEventInfo[@"recurrence"][0]];
+                        if (substringIndx != -1)
+                        {
+                            NSString *substring = [currentEventInfo[@"recurrence"][0] substringFromIndex:substringIndx+9];
+                            substringIndx = [self getIndexOfSubstringInString:@";":currentEventInfo[@"recurrence"][0]];
+                            if (substringIndx == -1)
+                            {
+                                substringIndx = [substring length];
+                            }
+                            freq *= [[substring substringWithRange:NSMakeRange(0,substringIndx)] intValue];
                         }
                     }
                 }
@@ -1023,28 +1036,35 @@
                     startDay = startDay + freq;
                     
                     endDay = endDay + freq;
-
                     
-                    //Check if we're moving into a new month.
-                    if (startDay%[_events getDaysOfMonth:startMonth :startYear] < startDay) {
-                        //Then we mod the startDay to get the day of the next month it will be on.
-                        startDay = startDay-[_events getDaysOfMonth:startMonth :startYear];
-                        endDay = endDay-[_events getDaysOfMonth:startMonth :startYear];
-                        startMonth += 1;
-                        
-                        //Check to see if we transitioned to a new year.
-                        if (startMonth > 12) {
-                            startMonth = 1;
-                            startYear += 1;
-                        }
-                    }
+                    BOOL nextDateUpdated = NO;
                     
-                    if (wrappedDays > 0) {
-                        if (startMonth != 1) {
-                            endDay += [_events getDaysOfMonth:startMonth :startYear] - [_events getDaysOfMonth:startMonth-1 :startYear];
+                    while (!nextDateUpdated)
+                    {
+                        //Check if we're moving into a new month.
+                        if (startDay%[_events getDaysOfMonth:startMonth :startYear] < startDay) {
+                            //Then we mod the startDay to get the day of the next month it will be on.
+                            startDay = startDay-[_events getDaysOfMonth:startMonth :startYear];
+                            endDay = endDay-[_events getDaysOfMonth:startMonth :startYear];
+                            startMonth += 1;
+                            
+                            //Check to see if we transitioned to a new year.
+                            if (startMonth > 12) {
+                                startMonth = 1;
+                                startYear += 1;
+                            }
+                            if (wrappedDays > 0) {
+                                if (startMonth != 1) {
+                                    endDay += [_events getDaysOfMonth:startMonth :startYear] - [_events getDaysOfMonth:startMonth-1 :startYear];
+                                }
+                                else {
+                                    endDay += [_events getDaysOfMonth:startMonth :startYear] - [_events getDaysOfMonth:12 :startYear-1];
+                                }
+                            }
                         }
-                        else {
-                            endDay += [_events getDaysOfMonth:startMonth :startYear] - [_events getDaysOfMonth:12 :startYear-1];
+                        else
+                        {
+                            nextDateUpdated = YES;
                         }
                     }
                 }

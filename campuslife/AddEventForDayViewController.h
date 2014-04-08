@@ -34,7 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *repUntilLabel;
 @property (weak, nonatomic) IBOutlet UIButton *repUntilBtn;
 
+-(void) refreshRecurrence;
 -(IBAction) addEvent;
-- (IBAction)allDayEventToggle:(id)sender;
+-(IBAction) allDayEventToggle:(id)sender;
 
 @end
