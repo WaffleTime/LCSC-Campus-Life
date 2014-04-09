@@ -14,6 +14,6 @@
 
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventDict;
 
-@property (weak, nonatomic) IBOutlet UIButton *updateEvent;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *updateEvent;
 
 @end

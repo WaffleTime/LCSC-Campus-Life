@@ -169,52 +169,55 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     MonthlyEvents *events = [MonthlyEvents getSharedInstance];
     
-    NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
-    [monthFormatter setDateFormat:@"MM"];
-    
-    NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
-    [dayFormatter setDateFormat:@"dd"];
-    
-    //See if comparing the dates is needed.
-    NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
-    [yearFormatter setDateFormat:@"yyyy"];
-    
-    //We must see if the recurrence will be before or on the start of the event.
-    if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
-        < events.getSelectedYear)
+    if (super.repeatUntil != NULL)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                        message: @"The year is less than to the start year."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
+        [monthFormatter setDateFormat:@"MM"];
         
-        readyToAddEvent = NO;
-    }
-    else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
-            < events.getSelectedMonth)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                        message: @"The month is less than to the start month."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        NSDateFormatter *dayFormatter = [[NSDateFormatter alloc] init];
+        [dayFormatter setDateFormat:@"dd"];
         
-        readyToAddEvent = NO;
-    }
-    else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
-            <= events.getSelectedDay)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                        message: @"The day is less than or equal to the start day."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        //See if comparing the dates is needed.
+        NSDateFormatter *yearFormatter = [[NSDateFormatter alloc] init];
+        [yearFormatter setDateFormat:@"yyyy"];
         
-        readyToAddEvent = NO;
+        //We must see if the recurrence will be before or on the start of the event.
+        if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
+            < events.getSelectedYear)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                            message: @"The year is less than the start year."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
+        else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
+                < events.getSelectedMonth)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                            message: @"The month is less than the start month."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
+        else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
+                <= events.getSelectedDay)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                            message: @"The day is less than or equal to the start day."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
     }
     
     
@@ -519,7 +522,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    return textView.text.length + (text.length - range.length) <= 120;
+    return textView.text.length + (text.length - range.length) <= 200;
 }
 
 - (void)textViewDidEndEditing:(UITextField *)textField {

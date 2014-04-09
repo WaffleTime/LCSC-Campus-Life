@@ -223,42 +223,45 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         readyToAddEvent = NO;
     }
     
-    //We must see if the recurrence will be before or on the start of the event.
-    if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
-        < [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+    if (super.repeatUntil != NULL)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                        message: @"The year is less than to the start year."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        readyToAddEvent = NO;
-    }
-    else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
-            < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                        message: @"The month is less than to the start month."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        readyToAddEvent = NO;
-    }
-    else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
-            <= [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                        message: @"The day is less than or equal to the start day."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        readyToAddEvent = NO;
+        //We must see if the recurrence will be before or on the start of the event.
+        if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
+            < [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                            message: @"The year is less than the start year."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
+        else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
+                < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                            message: @"The month is less than the start month."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
+        else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
+                <= [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                            message: @"The day is less than or equal to the start day."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
     }
 
     NSString *calId = @"";
@@ -546,7 +549,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    return textView.text.length + (text.length - range.length) <= 120;
+    return textView.text.length + (text.length - range.length) <= 200;
 }
 
 - (void)textViewDidEndEditing:(UITextField *)textField {
