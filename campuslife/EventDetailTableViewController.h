@@ -10,8 +10,6 @@
 
 @interface EventDetailTableViewController : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *eventDetails;
-
 @property (nonatomic, setter = setDay:) NSInteger day;
 
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventDict;

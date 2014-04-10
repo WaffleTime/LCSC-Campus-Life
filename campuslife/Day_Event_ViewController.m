@@ -370,33 +370,33 @@
     
     if ([[eventTime objectForKey:@"category"] isEqualToString:@"Entertainment"])
     {
-        UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:135.0/256.0 green:17.0/256.0 blue:17.0/256.0 alpha:1.0];
+        UIImageView *image = (UIImageView *)[cell viewWithTag:21];
+        [image setImage:[UIImage imageNamed:@"dotEntertainment.png"]];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Academics"])
     {
-        UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:81.0/256.0 green:81.0/256.0 blue:81.0/256.0 alpha:1.0];
+        UIImageView *image = (UIImageView *)[cell viewWithTag:21];
+        [image setImage:[UIImage imageNamed:@"dotAcademics.png"]];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Activities"])
     {
-        UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:238.0/256.0 green:136.0/256.0 blue:0.0/256.0 alpha:1.0];
+        UIImageView *image = (UIImageView *)[cell viewWithTag:21];
+        [image setImage:[UIImage imageNamed:@"dotActivities.png"]];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Residence"])
     {
-        UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:31.0/256.0 green:117.0/256.0 blue:60.0/256.0 alpha:1.0];
+        UIImageView *image = (UIImageView *)[cell viewWithTag:21];
+        [image setImage:[UIImage imageNamed:@"dotResidence.png"]];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Athletics"])
     {
-        UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:51.0/256.0 green:102.0/256.0 blue:153.0/256.0 alpha:1.0];
+        UIImageView *image = (UIImageView *)[cell viewWithTag:21];
+        [image setImage:[UIImage imageNamed:@"dotAthletics.png"]];
     }
     else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Campus Rec"])
     {
-        UIView *color = (UILabel *)[cell viewWithTag:21];
-        color.backgroundColor = [UIColor colorWithRed:116.0/256.0 green:178.0/256.0 blue:188.0/256.0 alpha:1.0];
+        UIImageView *image = (UIImageView *)[cell viewWithTag:21];
+        [image setImage:[UIImage imageNamed:@"dotCampusRec.png"]];
     }
     
     UILabel *summary = (UILabel *)[cell viewWithTag:22];
