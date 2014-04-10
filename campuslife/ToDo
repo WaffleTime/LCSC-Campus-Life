@@ -1,7 +1,17 @@
 Jake needs to...
 
-1. Make sure events cannot repeat until dates before the start day.
+BUGGSSSS
 
-(Done) 2. Make biweekly events compatible.
+1. Add Event View Controller - The start event time and end event time don't need checking if the days are different.
 
-(Done) 3. Make yearly events compatible.
+2. Updating an event should send you all the way back to the calendar.
+
+3. After adding or updating an event the calendar should be refreshed.
+
+4. Lock the selection of days on the calendar if the calendar is loading.
+
+5. Smaller circles on iphone storyboard calendar.
+
+6. Days of the week labels on iphone storyboard calendar.
+
+7. Push notification stuff...
