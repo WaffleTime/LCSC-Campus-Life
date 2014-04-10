@@ -31,6 +31,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *cat5Btn;
 @property (weak, nonatomic) IBOutlet UIButton *cat6Btn;
 
+
+@property (nonatomic, setter=setShouldRefresh:) BOOL shouldRefresh;
+
 - (IBAction)signOutOrSignIn:(id)sender;
 
 

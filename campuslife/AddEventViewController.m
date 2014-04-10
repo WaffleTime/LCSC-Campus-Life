@@ -14,6 +14,7 @@
 #import "AddEventViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
+#import "CalendarViewController.h"
 
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
@@ -202,43 +203,30 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 
                 readyToAddEvent = NO;
             }
+            else if ([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
+                     == [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
+            {
+                //We compare the times regardless of the type of event (all-day, non all-day.)
+                NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+                [timeFormatter setDateFormat:@"HHmm"];
+                
+                //check those times.
+                if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+                    < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+                {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                                    message: @"The end time is less than the start time."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    
+                    readyToAddEvent = NO;
+                }
+            }
         }
     }
-    
-    if([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
-       > [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
-                                                        message: @"The event's start day is greater than the end day."
-                                                       delegate: nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
-        readyToAddEvent = NO;
-    }
-    else if ([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
-             == [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
-    {
-        //We compare the times regardless of the type of event (all-day, non all-day.)
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-        [timeFormatter setDateFormat:@"HHmm"];
-        
-        //check those times.
-        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                            message: @"The end time is less than the start time."
-                                                           delegate: nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            
-            readyToAddEvent = NO;
-        }
-    }
-    
+
     if (super.repeatUntil != NULL)
     {
         //We must see if the recurrence will be before or on the start of the event.
@@ -393,6 +381,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                        postParameterNames:@[]
                       postParameterValues:@[]
                               requestBody:json];
+        
+        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+        [controller setShouldRefresh:YES];
         
         [self.navigationController popToRootViewControllerAnimated:YES];
     }

@@ -40,6 +40,8 @@
 
 @property (nonatomic) NSDate * lastDateOfMonth;
 
+@property (nonatomic) BOOL screenLocked;
+
 @end
 
 @implementation CalendarViewController
@@ -99,6 +101,11 @@
     
     _jsonsToIgnore = 0;
     _jsonsSent = 0;
+    
+    _screenLocked = NO;
+    
+    //We don't need to refresh the calendar since
+    _shouldRefresh = NO;
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -108,10 +115,10 @@
     
     [_auth setDelegate:self];
     
-    if (_signedIn) {
-        //[_activityIndicator startAnimating];
+    if (_shouldRefresh) {
+        [_activityIndicator startAnimating];
         
-        //[self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     }
 }
 
@@ -395,8 +402,11 @@
         NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
         NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
         
+        if (_screenLocked) {
+            canSegue = NO;
+        }
         //Check to see if this cell is for a day of the previous month
-        if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
+        else if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
             //Offset month if a previous month's cell is clicked
             [self backMonthOffset:nil];
             canSegue = NO;
@@ -562,6 +572,9 @@
     }
     else
     {
+        _jsonsSent += 1;
+        _screenLocked = YES;
+        
         // If user authorization is successful, then make an API call to get the event list for the current month.
         // For more infomation about this API call, visit:
         // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
@@ -570,8 +583,6 @@
                        postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                       postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                               requestBody:nil];
-        
-        _jsonsSent += 1;
     }
 }
 
@@ -595,6 +606,8 @@
         self.signInOutButton.title = @"Sign Out";
         
         _authenticating = YES;
+        
+        _screenLocked = YES;
         
         //This is a dummy update that will be to see if the user is able to manage events.
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
@@ -1100,6 +1113,8 @@
                 
                 [_collectionView reloadData];
                 [_activityIndicator stopAnimating];
+                
+                _screenLocked = NO;
             }
             else {
                 

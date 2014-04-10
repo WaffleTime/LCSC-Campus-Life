@@ -14,6 +14,7 @@
 #import "AddEventForDayViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
+#import "CalendarViewController.h"
 
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
@@ -353,6 +354,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                        postParameterNames:@[]
                       postParameterValues:@[]
                               requestBody:json];
+        
+        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+        [controller setShouldRefresh:YES];
         
         [self.navigationController popToRootViewControllerAnimated:YES];
     }

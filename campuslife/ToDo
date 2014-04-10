@@ -6,9 +6,9 @@ BUGGSSSS
 
 2. (done) Updating an event should send you all the way back to the calendar.
 
-3. After adding or updating an event the calendar should be refreshed.
+3. (done) After adding or updating an event the calendar should be refreshed.
 
-4. Lock the selection of days on the calendar if the calendar is loading.
+4. (done) Lock the selection of days on the calendar if the calendar is loading.
 
 5. (done) Smaller circles on iphone storyboard calendar.
 
