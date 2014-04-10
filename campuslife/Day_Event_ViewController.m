@@ -53,7 +53,7 @@
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
     else {
-        NSLog(@"User can't manage events.");
+        ////NSLog(@"User can't manage events.");
     }
     
     events = [MonthlyEvents getSharedInstance];
@@ -103,9 +103,9 @@
     
     if ([[events getEventsForDay:_day] count]>=1)
     {
-        NSLog(@"More than one event. Entered if-loop");
+        ////NSLog(@"More than one event. Entered if-loop");
         
-        NSLog(@"Checking your preferences");
+        ////NSLog(@"Checking your preferences");
         
         Preferences *preferences = [Preferences getSharedInstance];
         
@@ -115,41 +115,41 @@
         {
             if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Entertainment"] && [preferences getPreference:1] == FALSE)
             {
-                NSLog(@"Popping Entertainment event");
+                ////NSLog(@"Popping Entertainment event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Academics"] && [preferences getPreference:2] == FALSE)
             {
-                NSLog(@"Popping Academics event");
+                ////NSLog(@"Popping Academics event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Activities"] && [preferences getPreference:3] == FALSE)
             {
-                NSLog(@"Popping Activities event");
+                ////NSLog(@"Popping Activities event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Residence"] && [preferences getPreference:4] == FALSE)
             {
-                NSLog(@"Popping Residence event");
+                ////NSLog(@"Popping Residence event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Athletics"] && [preferences getPreference:5] == FALSE)
             {
-                NSLog(@"Popping Athletics event");
+                ////NSLog(@"Popping Athletics event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Campus Rec"] && [preferences getPreference:6] == FALSE)
             {
-                NSLog(@"Popping Campus Rec event");
+                ////NSLog(@"Popping Campus Rec event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
@@ -161,13 +161,13 @@
         
         
         
-        NSLog(@"Printing newArray size: %lu\n", (unsigned long)[newArray count]);
+        ////NSLog(@"Printing newArray size: %lu\n", (unsigned long)[newArray count]);
         
         
         
         if ([newArray count] > 1)
         {
-            NSLog(@"sorting array");
+            ////NSLog(@"sorting array");
             
             int currentPos = 0;
             
@@ -175,13 +175,13 @@
             
             while(!finished)
             {
-                NSLog(@"Entered while-loop. currentPos = %d\n\n", currentPos);
+                ////NSLog(@"Entered while-loop. currentPos = %d\n\n", currentPos);
                 
                 int lowestItem = currentPos;
                 
                 for (int i = currentPos + 1; i < [newArray count]; i++)
                 {
-                    NSLog(@"Entered for-loop.\n\n currentPos = %d\n lowestItem = %d\n i = %d\n\n", currentPos, lowestItem, i);
+                    ////NSLog(@"Entered for-loop.\n\n currentPos = %d\n lowestItem = %d\n i = %d\n\n", currentPos, lowestItem, i);
                     
                     NSRange startHr1 = NSMakeRange(11, 2);
                     NSRange startMn1 = NSMakeRange(14, 2);
@@ -189,7 +189,7 @@
                     NSString *startMnStr1 = [[[newArray[lowestItem] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn1];
                     NSString *startTime1 =[startHrStr1 stringByAppendingString:startMnStr1];
                     int start1 = [startTime1 intValue];
-                    NSLog(@"start1 = %d\n\n", start1);
+                    ////NSLog(@"start1 = %d\n\n", start1);
                     
                     NSRange startHr2 = NSMakeRange(11, 2);
                     NSRange startMn2 = NSMakeRange(14, 2);
@@ -197,17 +197,17 @@
                     NSString *startMnStr2 = [[[newArray[i] objectForKey:@"start"] objectForKey:@"dateTime"] substringWithRange:startMn2];
                     NSString *startTime2 =[startHrStr2 stringByAppendingString:startMnStr2];
                     int start2 = [startTime2 intValue];
-                    NSLog(@"start2 = %d\n\n", start2);
+                    ////NSLog(@"start2 = %d\n\n", start2);
                     
                     if (start1 > start2)
                     {
-                        NSLog(@"\n\nApparently %d > %d.\nSetting lowestItem to %d\n\n", start1, start2, i);
+                        ////NSLog(@"\n\nApparently %d > %d.\nSetting lowestItem to %d\n\n", start1, start2, i);
                         
                         lowestItem = i;
                     }
                     else if (start1 == start2)
                     {
-                        NSLog(@"start times fine: checking end times\n\n");
+                        ////NSLog(@"start times fine: checking end times\n\n");
                         
                         NSRange endHr1 = NSMakeRange(11, 2);
                         NSRange endMn1 = NSMakeRange(14, 2);
@@ -215,7 +215,7 @@
                         NSString *endMnStr1 = [[[newArray[lowestItem] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endMn1];
                         NSString *endTime1 =[endHrStr1 stringByAppendingString:endMnStr1];
                         int end1 = [endTime1 intValue];
-                        NSLog(@"end1 = %d\n\n", end1);
+                        ////NSLog(@"end1 = %d\n\n", end1);
                         
                         NSRange endHr2 = NSMakeRange(11, 2);
                         NSRange endMn2 = NSMakeRange(14, 2);
@@ -223,22 +223,22 @@
                         NSString *endMnStr2 = [[[newArray[i] objectForKey:@"end"] objectForKey:@"dateTime"] substringWithRange:endMn2];
                         NSString *endTime2 =[endHrStr2 stringByAppendingString:endMnStr2];
                         int end2 = [endTime2 intValue];
-                        NSLog(@"end2 = %d\n\n", end2);
+                        ////NSLog(@"end2 = %d\n\n", end2);
                         
                         if (end1 > end2)
                         {
-                            NSLog(@"Apparently end time %d > %d.\nSetting lowestItem to %d\n\n", end1, end2, i);
+                            ////NSLog(@"Apparently end time %d > %d.\nSetting lowestItem to %d\n\n", end1, end2, i);
                             
                             lowestItem = i;
                         }
                     }
                     
-                    NSLog(@"End for-loop.\n\n currentPos = %d\n lowestItem = %d\n i = %d\n\n", currentPos, lowestItem, i);
+                    ////NSLog(@"End for-loop.\n\n currentPos = %d\n lowestItem = %d\n i = %d\n\n", currentPos, lowestItem, i);
                 }
                 
                 if (lowestItem != currentPos)
                 {
-                    NSLog(@"Had to swap currentPos[%d] and lowestPos[%d]\n\n", currentPos, lowestItem);
+                    ////NSLog(@"Had to swap currentPos[%d] and lowestPos[%d]\n\n", currentPos, lowestItem);
                     
                     NSDictionary *temp = newArray[currentPos];
                     
@@ -246,7 +246,7 @@
                     
                     newArray[lowestItem] = temp;
                     
-                    NSLog(@"updating currentPos to %d\n\n", currentPos + 1);
+                    ////NSLog(@"updating currentPos to %d\n\n", currentPos + 1);
                     
                     currentPos += 1;
                 }
@@ -259,18 +259,18 @@
                 {
                     finished = TRUE;
                     
-                    for (int j = 0; j < [newArray count]; j++)
+                    /*for (int j = 0; j < [newArray count]; j++)
                     {
-                        NSLog(@"\n\n Index %d:\n Start: %@\n End:  %@\n\n", j, [[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"], [[newArray[j] objectForKey:@"end"] objectForKey:@"dateTime"]);
-                    }
+                        //NSLog(@"\n\n Index %d:\n Start: %@\n End:  %@\n\n", j, [[newArray[j] objectForKey:@"start"] objectForKey:@"dateTime"], [[newArray[j] objectForKey:@"end"] objectForKey:@"dateTime"]);
+                    }*/
                 }
             }
         }
     }
-    else
+    /*else
     {
-        NSLog(@"didn't enter if-loop");
-    }
+        //NSLog(@"didn't enter if-loop");
+    }*/
     
     return newArray;
 }
@@ -345,7 +345,7 @@
     
     NSDictionary *eventTime = [sortedArray objectAtIndex:indexPath.row];
     
-    NSLog(@"eventTime %@", eventTime);
+    ////NSLog(@"eventTime %@", eventTime);
     
     if ([[eventTime objectForKey:@"start"] objectForKey:@"dateTime"] == nil)
     {
@@ -491,7 +491,7 @@
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    NSLog(@"%@", responseJSONAsString);
+    ////NSLog(@"%@", responseJSONAsString);
 }
 
 -(void)accessTokenWasRevoked{
@@ -500,8 +500,8 @@
 
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
     // Just log the error messages.
-    NSLog(@"%@", errorShortDescription);
-    NSLog(@"%@", errorDetails);
+    ////NSLog(@"%@", errorShortDescription);
+    ////NSLog(@"%@", errorDetails);
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
                                                     message: errorDetails
@@ -514,7 +514,7 @@
 
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
-    NSLog(@"%@", errorMessage);
+    ////NSLog(@"%@", errorMessage);
 }
 
 

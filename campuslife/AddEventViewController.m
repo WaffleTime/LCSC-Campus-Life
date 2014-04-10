@@ -96,8 +96,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(void) refreshRecurrence {
-    NSLog(@"RepFreq: %@", super.repeatFreq);
-    NSLog(@"RepUntil: %@", super.repeatUntil);
+    //NSLog(@"RepFreq: %@", super.repeatFreq);
+    //NSLog(@"RepUntil: %@", super.repeatUntil);
     
     if ([super.repeatFreq isEqualToString:@"Never"])
     {
@@ -390,7 +390,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
         _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
     }
-    //NSLog(@"allDaySwitch is on: %d %d", _allDayEventSwitch.on, _endTimePicker.hidden);
+    ////NSLog(@"allDaySwitch is on: %d %d", _allDayEventSwitch.on, _endTimePicker.hidden);
 }
 
 
@@ -578,7 +578,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    NSLog(@"%@", responseJSONAsString);
+    //NSLog(@"%@", responseJSONAsString);
 }
 
 -(void)accessTokenWasRevoked{
@@ -587,8 +587,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
     // Just log the error messages.
-    NSLog(@"%@", errorShortDescription);
-    NSLog(@"%@", errorDetails);
+    //NSLog(@"%@", errorShortDescription);
+    //NSLog(@"%@", errorDetails);
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
                                                     message: errorDetails
@@ -601,7 +601,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
-    NSLog(@"%@", errorMessage);
+    //NSLog(@"%@", errorMessage);
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"There was an error in adding the event!"
                                                     message: errorMessage
