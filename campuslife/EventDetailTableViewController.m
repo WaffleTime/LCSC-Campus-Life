@@ -42,7 +42,7 @@
     
     events = [MonthlyEvents getSharedInstance];
     
-    NSLog(@"\n\n\n Printing eventDict: %@ \n\n\n", _eventDict);
+    //NSLog(@"\n\n\n Printing eventDict: %@ \n\n\n", _eventDict);
     
     [self setDay:[events getSelectedDay]];
     
@@ -230,7 +230,7 @@
             
             if ([_eventDict objectForKey:@"recurrence"])
             {
-                NSLog(@"Recurrence: %@", [_eventDict objectForKey:@"recurrence"]);
+                //NSLog(@"Recurrence: %@", [_eventDict objectForKey:@"recurrence"]);
                 
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmss'Z'"];
@@ -306,7 +306,14 @@
             title.text = @"Description";
             UITextView *descView = (UITextView *)[cell viewWithTag:10];
             descView.text = [_eventDict objectForKey:@"description"];
-            [descView setFont:[UIFont boldSystemFontOfSize:25]];
+            if (IPAD == IDIOM)
+            {
+                [descView setFont:[UIFont systemFontOfSize:18]];
+            }
+            else
+            {
+                [descView setFont:[UIFont systemFontOfSize:12]];
+            }
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
         }
     }
@@ -319,7 +326,7 @@
 {
     if (indexPath.section == 3 && indexPath.row == 1)
     {
-        return 400;
+        return 300;
     }
     else if (IPAD == IDIOM)
     {

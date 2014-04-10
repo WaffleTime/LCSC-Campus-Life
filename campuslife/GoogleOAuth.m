@@ -227,8 +227,8 @@
                                                                      error:&error];
                 
                 //NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                //NSLog(@"URL:%@", urlString);
-                //NSLog(@"Body:%@",jsonString);
+                ////NSLog(@"URL:%@", urlString);
+                ////NSLog(@"Body:%@",jsonString);
                 
                 // Set any other necessary options.
                 [request setHTTPBody:jsonData];
@@ -272,8 +272,8 @@
             
             getParams = [getParams stringByReplacingOccurrencesOfString:@":" withString:@"%3A"];
             
-            //NSLog(@"URL:%@", urlString);
-            //NSLog(@"Body:%@",getParams);
+            ////NSLog(@"URL:%@", urlString);
+            ////NSLog(@"Body:%@",getParams);
             
             request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@&%@", apiURL, accessTokenString, getParams]]];
         }
@@ -621,7 +621,7 @@
     responseJSON = [[NSString alloc] initWithData:(NSData *)_receivedData encoding:NSUTF8StringEncoding];
     
     // Uncomment this to log the JSON response.
-    //NSLog(@"response JSON: %@", responseJSON);
+    ////NSLog(@"response JSON: %@", responseJSON);
     
     
     
@@ -707,7 +707,7 @@
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSLog(@"%d", [httpResponse statusCode]);
+    ////NSLog(@"%d", [httpResponse statusCode]);
 }
 
 @end

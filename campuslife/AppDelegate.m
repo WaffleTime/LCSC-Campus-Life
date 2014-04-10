@@ -76,7 +76,7 @@
 }
 
 - (void)registerDeviceToken:(NSData *)deviceToken {
-    NSLog(@"My token is: %@", deviceToken);
+    //NSLog(@"My token is: %@", deviceToken);
     
     NSMutableString *string = [[NSMutableString alloc]init];
     int length = [deviceToken length];
@@ -84,13 +84,13 @@
     for (int i=0; i< length; i++) {
         [string appendString:[NSString stringWithFormat:@"%02.2hhx",bytes[i]]];
     }
-    NSLog(@"%@",string);
+    //NSLog(@"%@",string);
     //    [self performSelectorInBackground:@selector(connectionWebRegister:) withObject:string];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-	NSLog(@"Failed to get token, error: %@", error);
+	//NSLog(@"Failed to get token, error: %@", error);
 }
 
 @end

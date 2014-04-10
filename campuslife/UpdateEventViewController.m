@@ -82,7 +82,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         if ([_categories[i] isEqualToString:_eventInfo[@"category"]]) {
             [_categoryPicker selectRow:i inComponent:0 animated:NO];
             
-            //NSLog(@"Row Value: %d", i);
+            ////NSLog(@"Row Value: %d", i);
         }
     }
     
@@ -119,7 +119,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
     
     if ([_eventInfo objectForKey:@"recurrence"] != nil) {
-        NSLog(@"Recurrence: %@", [_eventInfo objectForKey:@"recurrence"]);
+        //NSLog(@"Recurrence: %@", [_eventInfo objectForKey:@"recurrence"]);
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmss'Z'"];
@@ -177,8 +177,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void) refreshRecurrence
 {
-    NSLog(@"RepFreq: %@", super.repeatFreq);
-    NSLog(@"RepUntil: %@", super.repeatUntil);
+    //NSLog(@"RepFreq: %@", super.repeatFreq);
+    //NSLog(@"RepUntil: %@", super.repeatUntil);
     
     if ([super.repeatFreq isEqualToString:@"Never"])
     {
@@ -711,7 +711,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    NSLog(@"%@", responseJSONAsString);
+    //NSLog(@"%@", responseJSONAsString);
 }
 
 -(void)accessTokenWasRevoked{
@@ -720,8 +720,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
     // Just log the error messages.
-    NSLog(@"%@", errorShortDescription);
-    NSLog(@"%@", errorDetails);
+    //NSLog(@"%@", errorShortDescription);
+    //NSLog(@"%@", errorDetails);
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
                                                     message: errorDetails
@@ -734,7 +734,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
-    NSLog(@"%@", errorMessage);
+    //NSLog(@"%@", errorMessage);
 }
 
 
