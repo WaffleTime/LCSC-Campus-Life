@@ -407,7 +407,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
         _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
     }
-    ////NSLog(@"allDaySwitch is on: %d %d", _allDayEventSwitch.on, _endTimePicker.hidden);
+    //NSLog(@"allDaySwitch is on: %d %d", _allDayEventSwitch.on, _endTimePicker.hidden);
 }
 
 
