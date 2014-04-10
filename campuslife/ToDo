@@ -4,7 +4,7 @@ BUGGSSSS
 
 1. (done) Add Event View Controller - The start event time and end event time don't need checking if the days are different.
 
-2. Updating an event should send you all the way back to the calendar.
+2. (done) Updating an event should send you all the way back to the calendar.
 
 3. After adding or updating an event the calendar should be refreshed.
 
