@@ -2,7 +2,7 @@ Jake needs to...
 
 BUGGSSSS
 
-1. Add Event View Controller - The start event time and end event time don't need checking if the days are different.
+1. (done) Add Event View Controller - The start event time and end event time don't need checking if the days are different.
 
 2. Updating an event should send you all the way back to the calendar.
 
@@ -10,8 +10,12 @@ BUGGSSSS
 
 4. Lock the selection of days on the calendar if the calendar is loading.
 
-5. Smaller circles on iphone storyboard calendar.
+5. (done) Smaller circles on iphone storyboard calendar.
 
-6. Days of the week labels on iphone storyboard calendar.
+6. (done) Days of the week labels on iphone storyboard calendar.
 
 7. Push notification stuff...
+
+8. (done) Updating an event should actually delete the old event.
+
+9. Reposition the labels for the Days of the week for the ipad storyboard.

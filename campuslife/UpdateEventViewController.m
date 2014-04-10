@@ -286,22 +286,38 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
     
-    //We compare the times regardless of the type of event (all-day, non all-day.)
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    [timeFormatter setDateFormat:@"HHmm"];
-    
-    //check those times.
-    if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-        < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+    if([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
+       > [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                        message: @"The end time is less than the start time."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                        message: @"The event's start day is greater than the end day."
                                                        delegate: nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
         
         readyToAddEvent = NO;
+    }
+    else if ([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
+             == [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
+    {
+        //We compare the times regardless of the type of event (all-day, non all-day.)
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        [timeFormatter setDateFormat:@"HHmm"];
+        
+        //check those times.
+        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                            message: @"The end time is less than the start time."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
     }
     
     if (super.repeatUntil != NULL)
@@ -345,24 +361,44 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
     
-    NSString *calId = @"";
+    NSString *oldCalId = @"";
+    if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
+        oldCalId = [_auth getEntertainmentCalId];
+    }
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Activities"]) {
+        oldCalId = [_auth getActivitiesCalId];
+    }
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Academics"]) {
+        oldCalId = [_auth getAcademicsCalId];
+    }
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Athletics"]) {
+        oldCalId = [_auth getAthleticsCalId];
+    }
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Residence"]) {
+        oldCalId = [_auth getResidenceCalId];
+    }
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Campus Rec"]) {
+        oldCalId = [_auth getCampusRecCalId];
+    }
+    
+    NSString *newCalId = @"";
     if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
-        calId = [_auth getEntertainmentCalId];
+        newCalId = [_auth getEntertainmentCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Activities"]) {
-        calId = [_auth getActivitiesCalId];
+        newCalId = [_auth getActivitiesCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
-        calId = [_auth getAcademicsCalId];
+        newCalId = [_auth getAcademicsCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Athletics"]) {
-        calId = [_auth getAthleticsCalId];
+        newCalId = [_auth getAthleticsCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence"]) {
-        calId = [_auth getResidenceCalId];
+        newCalId = [_auth getResidenceCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {
-        calId = [_auth getCampusRecCalId];
+        newCalId = [_auth getCampusRecCalId];
     }
     
     if (readyToAddEvent) {
@@ -462,19 +498,19 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             [alert show];
         }
         
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventInfo[@"id"]]
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", oldCalId, _eventInfo[@"id"]]
                           withHttpMethod:httpMethod_DELETE
                       postParameterNames:[NSArray arrayWithObjects: nil]
                      postParameterValues:[NSArray arrayWithObjects: nil]
                              requestBody:nil];
         
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", calId]
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", newCalId]
                            withHttpMethod:httpMethod_POST
                        postParameterNames:@[]
                       postParameterValues:@[]
                               requestBody:json];
         
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 
