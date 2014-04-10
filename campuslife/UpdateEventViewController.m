@@ -83,7 +83,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         if ([_categories[i] isEqualToString:_eventInfo[@"category"]]) {
             [_categoryPicker selectRow:i inComponent:0 animated:NO];
             
-            ////NSLog(@"Row Value: %d", i);
+            //NSLog(@"Row Value: %d", i);
         }
     }
     

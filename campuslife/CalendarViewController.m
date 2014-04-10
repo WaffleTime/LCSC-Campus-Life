@@ -150,7 +150,7 @@
         
         [_collectionView reloadData];
         
-        ////NSLog(@"Signed out we did");
+        //NSLog(@"Signed out we did");
     }
     else {
         [self setSignedIn:NO];
@@ -164,7 +164,7 @@
                                                  andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
         
         
-        ////NSLog(@"Signed in we did");
+        //NSLog(@"Signed in we did");
     }
 }
 
@@ -243,7 +243,7 @@
     if (_signedIn) {
         cells = 35;
         
-        ////NSLog(@"The number of cells required:%d", [events getFirstWeekDay] + [events getDaysOfMonth]-1);
+        //NSLog(@"The number of cells required:%d", [events getFirstWeekDay] + [events getDaysOfMonth]-1);
         
         if ([_events getFirstWeekDay] + [_events getDaysOfMonth]-1 >= 35) {
             cells = 42;
@@ -260,9 +260,9 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
     
-    ////NSLog(@"The first weekday is:%d", [events getFirstWeekDay]);
+    //NSLog(@"The first weekday is:%d", [events getFirstWeekDay]);
     
-    ////NSLog(@"Check to see if cell is for next month:%d >= %d", indexPath.row+1 - [events getFirstWeekDay], [events getDaysOfMonth]);
+    //NSLog(@"Check to see if cell is for next month:%d >= %d", indexPath.row+1 - [events getFirstWeekDay], [events getDaysOfMonth]);
     
     //Check to see if this cell is for a day of the previous month
     if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
@@ -323,7 +323,7 @@
         for (int i=0; i<[dayEvents count]; i++) {
             //NSString *category = [[dayEvents objectAtIndex:i] objectForKey:@"category"];
             
-            ////NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
+            //NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
             
             if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
                 if (cat1.hidden) {
@@ -563,7 +563,7 @@
     _firstDateOfMonth = [self returnDateForMonth:month year:year day:1];
     _lastDateOfMonth = [self returnDateForMonth:month+1 year:year day:0];
     
-    ////NSLog(@"Getting events for selected month, month:%@, year:%@", [self toStringFromDateTime:firstDateOfMonth], [self toStringFromDateTime:lastDateOfMonth]);
+    //NSLog(@"Getting events for selected month, month:%@, year:%@", [self toStringFromDateTime:firstDateOfMonth], [self toStringFromDateTime:lastDateOfMonth]);
     
     _start = [NSDate date];
     
@@ -618,16 +618,16 @@
         
         _jsonsSent += 1;
     }
-    ////NSLog(@"Getting the events for the current month");
+    //NSLog(@"Getting the events for the current month");
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
     
-    ////NSLog(@"%@",responseJSONAsString);
+    //NSLog(@"%@",responseJSONAsString);
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
-//        //NSLog(@"%@",responseJSONAsString);
+        //NSLog(@"%@",responseJSONAsString);
         //NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
@@ -655,11 +655,11 @@
             //Get the events as an array
             NSArray *eventsInfo = [eventsInfoDict objectForKey:@"items"];
             
-            ////NSLog(@"Putting the events into _calendarEvents.");
+            //NSLog(@"Putting the events into _calendarEvents.");
             
             NSString *category = @"";
             
-            ////NSLog(@"Jsons previously received: %d", _jsonsReceived);
+            //NSLog(@"Jsons previously received: %d", _jsonsReceived);
             
             if (_jsonsSent == 1) {
                 //Only refresh the events if this is the first json received.
@@ -699,7 +699,7 @@
                 
                 [currentEventInfo setObject:category forKey:@"category"];
                 
-                ////NSLog(@"%@", currentEventInfo);
+                //NSLog(@"%@", currentEventInfo);
                 
                 int startDay = 0;
                 int startMonth = 0;
@@ -812,7 +812,7 @@
                 
                 //If an event is reocurring, then we must account for that.
                 if ([currentEventInfo objectForKey:@"recurrence"] != nil) {
-                    ////NSLog(@"recurrence: %@", currentEventInfo[@"recurrence"][0]);
+                    //NSLog(@"recurrence: %@", currentEventInfo[@"recurrence"][0]);
                     
                     //The beginning of the substring that represents the freq of the recurrence.
                     int freqSubstringIndx = 11;
@@ -949,7 +949,7 @@
                                 
                                 repeat = (daysInEventDuration / freq) + 1;
                                 
-                                ////NSLog(@"The repeat number is %d", repeat);
+                                //NSLog(@"The repeat number is %d", repeat);
                             }
                         }
                         int substringIndx = [self getIndexOfSubstringInString:@"INTERVAL=":currentEventInfo[@"recurrence"][0]];
@@ -1101,13 +1101,13 @@
                 }
                 */
             }
-            ////NSLog(@"These are our calendar events: %@",_calendarEvents);
+            //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
             if (_jsonsSent == 6) {
                 //This is a performance test for how long it took to make the 6 http requests!
                 //NSDate *methodFinish = [NSDate date];
                 //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:_start];
-                ////NSLog(@"%f is the time it took to make the calls.", executionTime);
+                //NSLog(@"%f is the time it took to make the calls.", executionTime);
                 
                 _jsonsSent = 0;
                 

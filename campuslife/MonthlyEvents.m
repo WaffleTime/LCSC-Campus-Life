@@ -47,7 +47,7 @@ static MonthlyEvents *sharedInstance;
         [sharedInstance setYear:(int)year];
         [sharedInstance setMonth:(int)month];
         
-        ////NSLog(@"This month is: %d", month);
+        //NSLog(@"This month is: %d", month);
         
         //account for leap year.
         if (year % 4 == 0) {
@@ -59,7 +59,7 @@ static MonthlyEvents *sharedInstance;
         
         [sharedInstance setKnownOffsetForJan2013:2];
         
-        ////NSLog(@"The current year and month is:%ld %ld",year, month);
+        //NSLog(@"The current year and month is:%ld %ld",year, month);
     }
     return sharedInstance;
 }
@@ -144,13 +144,13 @@ static MonthlyEvents *sharedInstance;
         [_daysInMonth replaceObjectAtIndex:1 withObject:@28];
     }
     
-    ////NSLog(@"The array of daysInMonth is %@", _daysInMonth);
+    //NSLog(@"The array of daysInMonth is %@", _daysInMonth);
     
-    ////NSLog(@"The first weekday index is %d", _firstWeekDay);
+    //NSLog(@"The first weekday index is %d", _firstWeekDay);
     
-    ////NSLog(@"The selectedMonth is %d", _selectedMonth);
+    //NSLog(@"The selectedMonth is %d", _selectedMonth);
     
-    ////NSLog(@"The number of days for the given month is:%ld", [[_daysInMonth objectAtIndex:_selectedMonth-1] integerValue]);
+    //NSLog(@"The number of days for the given month is:%ld", [[_daysInMonth objectAtIndex:_selectedMonth-1] integerValue]);
     
     //This should loop through the amounts of days in the given month.
     //  So change this to work with the month/year that the user has selected.
@@ -286,7 +286,7 @@ static MonthlyEvents *sharedInstance;
         [self setMonth:_selectedMonth+offset];
     }
     
-    ////NSLog(@"The new year is %d and the new month is %d", _selectedYear, _selectedMonth);
+    //NSLog(@"The new year is %d and the new month is %d", _selectedYear, _selectedMonth);
     
     [self refreshArrayOfEvents];
 }
