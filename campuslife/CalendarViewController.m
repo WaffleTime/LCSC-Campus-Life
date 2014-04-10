@@ -615,6 +615,7 @@
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
 //        //NSLog(@"%@",responseJSONAsString);
+        //NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         

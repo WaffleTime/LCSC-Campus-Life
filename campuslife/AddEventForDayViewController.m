@@ -354,7 +354,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                       postParameterValues:@[]
                               requestBody:json];
         
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

@@ -205,22 +205,38 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
     
-    //We compare the times regardless of the type of event (all-day, non all-day.)
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
-    [timeFormatter setDateFormat:@"HHmm"];
-
-    //check those times.
-    if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
-        < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+    if([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
+       > [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
-                                                        message: @"The end time is less than the start time."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Date"
+                                                        message: @"The event's start day is greater than the end day."
                                                        delegate: nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
         
         readyToAddEvent = NO;
+    }
+    else if ([[dayFormatter stringFromDate:_startTimePicker.date] intValue]
+             == [[dayFormatter stringFromDate:_endTimePicker.date] intValue])
+    {
+        //We compare the times regardless of the type of event (all-day, non all-day.)
+        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        [timeFormatter setDateFormat:@"HHmm"];
+        
+        //check those times.
+        if ([[timeFormatter stringFromDate:_endTimePicker.date] intValue]
+            < [[timeFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Time"
+                                                            message: @"The end time is less than the start time."
+                                                           delegate: nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            
+            readyToAddEvent = NO;
+        }
     }
     
     if (super.repeatUntil != NULL)
@@ -377,7 +393,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                        postParameterNames:@[]
                       postParameterValues:@[]
                               requestBody:json];
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 
