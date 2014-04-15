@@ -196,7 +196,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9Gf-er-7KO">
-                                <rect key="frame" x="374" y="951" width="20" height="20"/>
+                                <rect key="frame" x="374" y="512" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEa-h2-qGF">
@@ -245,7 +245,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUU-M4-7hD">
-                                <rect key="frame" x="278" y="964" width="236" height="50"/>
+                                <rect key="frame" x="266" y="964" width="236" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1387,7 +1387,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="ibb-91-zEn"/>
-        <segue reference="XSt-v5-9f6"/>
-        <segue reference="kVc-d4-wYx"/>
+        <segue reference="sRu-KI-h70"/>
+        <segue reference="ZsC-pj-uSH"/>
     </inferredMetricsTieBreakers>
 </document>

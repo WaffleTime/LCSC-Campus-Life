@@ -63,11 +63,6 @@
     // Set self as the delegate.
     [googleOAuth setGOAuthDelegate:self];
     
-    [googleOAuth authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                          andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                            andParentView:self.view
-                                andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-    
     //Stores the authenticator so that it can be used
     [_auth setAuthenticator:googleOAuth];
     
@@ -162,8 +157,6 @@
                                            andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
                                              andParentView:self.view
                                                  andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-        
-        
         //NSLog(@"Signed in we did");
     }
 }
@@ -398,15 +391,15 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     BOOL canSegue = YES;
     
-    if ([identifier isEqualToString:@"CalendarToDayEvents"]) {
+    if (_screenLocked) {
+        canSegue = NO;
+    }
+    else if ([identifier isEqualToString:@"CalendarToDayEvents"]) {
         NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
         NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
         
-        if (_screenLocked) {
-            canSegue = NO;
-        }
         //Check to see if this cell is for a day of the previous month
-        else if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
+        if (indexPath.row+1 - [_events getFirstWeekDay] <= 0) {
             //Offset month if a previous month's cell is clicked
             [self backMonthOffset:nil];
             canSegue = NO;
