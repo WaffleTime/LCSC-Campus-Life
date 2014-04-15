@@ -59,7 +59,6 @@
 		C1E66E20183C333B00851B89 /* campuslifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E1F183C333B00851B89 /* campuslifeTests.m */; };
 		C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E3E183C33D000851B89 /* CalendarViewController.m */; };
 		C1E66E48183C33D000851B89 /* Day_Event_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */; };
-		C1E66E49183C33D000851B89 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E42183C33D000851B89 /* EventDetailViewController.m */; };
 		C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E44183C33D000851B89 /* MonthlyEvents.m */; };
 		C1E66E4B183C33D000851B89 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E46183C33D000851B89 /* Preferences.m */; };
 		C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */; };
@@ -143,8 +142,6 @@
 		C1E66E3E183C33D000851B89 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		C1E66E3F183C33D000851B89 /* Day_Event_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Day_Event_ViewController.h; sourceTree = "<group>"; };
 		C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Day_Event_ViewController.m; sourceTree = "<group>"; };
-		C1E66E41183C33D000851B89 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
-		C1E66E42183C33D000851B89 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		C1E66E43183C33D000851B89 /* MonthlyEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthlyEvents.h; sourceTree = "<group>"; };
 		C1E66E44183C33D000851B89 /* MonthlyEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthlyEvents.m; sourceTree = "<group>"; };
 		C1E66E45183C33D000851B89 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
@@ -226,8 +223,6 @@
 				C1E66E3E183C33D000851B89 /* CalendarViewController.m */,
 				C1E66E3F183C33D000851B89 /* Day_Event_ViewController.h */,
 				C1E66E40183C33D000851B89 /* Day_Event_ViewController.m */,
-				C1E66E41183C33D000851B89 /* EventDetailViewController.h */,
-				C1E66E42183C33D000851B89 /* EventDetailViewController.m */,
 				C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */,
 				C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */,
 				C1F8CF2D184D25BC0003E2A1 /* AddEventViewController.h */,
@@ -446,7 +441,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1E66E02183C333A00851B89 /* AppDelegate.m in Sources */,
-				C1E66E49183C33D000851B89 /* EventDetailViewController.m in Sources */,
 				C1F3207D1855623000811DDA /* UpdateEventViewController.m in Sources */,
 				C1E66E47183C33D000851B89 /* CalendarViewController.m in Sources */,
 				C1E66E4B183C33D000851B89 /* Preferences.m in Sources */,
