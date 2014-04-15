@@ -146,6 +146,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                               otherButtonTitles:nil];
         [alert show];
         
+        [self refreshRecurrence];
+        
         readyToAddEvent = NO;
     }
     //We will do some other checking on the start and end times to see if they are valid.
@@ -171,6 +173,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                               otherButtonTitles:nil];
         [alert show];
         
+        [self refreshRecurrence];
+        
         readyToAddEvent = NO;
     }
     else if ([[yearFormatter stringFromDate:_endTimePicker.date] intValue]
@@ -186,6 +190,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
+            
+            [self refreshRecurrence];
         }
         else if ([[monthFormatter stringFromDate:_endTimePicker.date] intValue]
                  == [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
@@ -200,6 +206,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
                 [alert show];
+                
+                [self refreshRecurrence];
                 
                 readyToAddEvent = NO;
             }
@@ -221,6 +229,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                           otherButtonTitles:nil];
                     [alert show];
                     
+                    [self refreshRecurrence];
+                    
                     readyToAddEvent = NO;
                 }
             }
@@ -240,31 +250,45 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   otherButtonTitles:nil];
             [alert show];
             
+            [self refreshRecurrence];
+            
             readyToAddEvent = NO;
         }
-        else if([[monthFormatter stringFromDate:super.repeatUntil] intValue]
+        else if ([[yearFormatter stringFromDate:super.repeatUntil] intValue]
+                 == [[yearFormatter stringFromDate:_startTimePicker.date] intValue])
+        {
+            if ([[monthFormatter stringFromDate:super.repeatUntil] intValue]
                 < [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                            message: @"The month is less than the start month."
-                                                           delegate: nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            
-            readyToAddEvent = NO;
-        }
-        else if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
-                <= [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
-                                                            message: @"The day is less than or equal to the start day."
-                                                           delegate: nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            
-            readyToAddEvent = NO;
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                                message: @"The month is less than the start month."
+                                                               delegate: nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                
+                [self refreshRecurrence];
+                
+                readyToAddEvent = NO;
+            }
+            else if ([[monthFormatter stringFromDate:super.repeatUntil] intValue]
+                     == [[monthFormatter stringFromDate:_startTimePicker.date] intValue])
+            {
+                if([[dayFormatter stringFromDate:super.repeatUntil] intValue]
+                   <= [[dayFormatter stringFromDate:_startTimePicker.date] intValue])
+                {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Invalid Repeat Until"
+                                                                    message: @"The day is less than or equal to the start day."
+                                                                   delegate: nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    
+                    [self refreshRecurrence];
+                    
+                    readyToAddEvent = NO;
+                }
+            }
         }
     }
 
@@ -295,7 +319,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         if (!_allDayEventSwitch.on) {
             [json setObject:_summary.text forKey:@"summary"];
             [json setObject:_description.text forKey:@"description"];
-            [json setObject:_where.text forKey:@"where"];
+            [json setObject:_where.text forKey:@"location"];
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
@@ -333,6 +357,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
+            
+            [self refreshRecurrence];
             
         }
         else {
@@ -374,6 +400,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
+            
+            [self refreshRecurrence];
         }
         
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/", calId]
@@ -604,6 +632,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+    
+    [self refreshRecurrence];
 }
 
 
@@ -617,6 +647,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+    
+    [self refreshRecurrence];
 }
 
 

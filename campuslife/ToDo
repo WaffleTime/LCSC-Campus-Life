@@ -19,3 +19,28 @@ BUGGSSSS
 8. (done) Updating an event should actually delete the old event.
 
 9. Reposition the labels for the Days of the week for the ipad storyboard.
+
+10. The repeat and repeat until buttons will disappear after a warning alert shows up.
+
+11. (done) The location isn't being saved when events are being added/updated.
+
+12. (done) The repeat until is invalid when the day is less than the start day no matter the month/year.
+
+13. (done) The activity indicator needs repositioned.
+
+14. Add Event button is showing up on the day event view controller for regular user.
+
+15. (apart of #14) Nevena got authorized for two calendars (athletics, campus rec.)
+
+16. Update Event won't delete old events.
+
+17. The delete event method isn't intuitive. Put a button at the bottom of the event detail page.
+
+18. Upon signing in you should have the filters reset and be looking at the current month. (The filters shouldn't be reset, nvm.)
+
+
+NEW FEATURES!
+
+* 1. Load three months into memory at a time.
+
+2. Allow the event on a day area to go to other days.
