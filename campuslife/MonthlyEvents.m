@@ -20,9 +20,6 @@ static MonthlyEvents *sharedInstance;
 
 @property (nonatomic, setter=setFirstWeekDay:) int firstWeekDay;
 
-@property (nonatomic, setter=setYear:) int selectedYear;
-@property (nonatomic, setter=setMonth:) int selectedMonth;
-
 @property (nonatomic, setter=setDaysInMonth:) NSMutableArray *daysInMonth;
 
 @property (nonatomic, setter=setKnownOffsetForJan2013:) int knownOffsetForJan2013;

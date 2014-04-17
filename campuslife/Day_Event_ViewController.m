@@ -43,6 +43,11 @@
  */
 - (void)viewDidLoad
 {
+    //NSLog(@"viewDidLoad");
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidAppear:)name:UIApplicationWillEnterForegroundNotification object:nil];
+    //NSLog(@" --> Just set the observer");
+    
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
@@ -63,7 +68,12 @@
     
     [self.tableView reloadData];
 }
-
+/*
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@" --> Just deallocated the observer");
+}
+*/
 
 
 
@@ -74,8 +84,39 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [[self navigationController] setNavigationBarHidden:NO animated:NO];
+    
+    //NSLog(@"viewDidAppear");
 }
 
+
+
+/*
+//http://stackoverflow.com/questions/15864364/viewdidappear-is-not-called-when-opening-app-from-background
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    NSLog(@"app will enter foreground");
+    
+    [super viewDidLoad];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    NSLog(@"app did become active");
+}
+
+- (void)appDidBecomeActive:(NSNotification *)notification {
+    NSLog(@"did become active notification");
+}
+
+- (void)appDidEnterForeground:(NSNotification *)notification {
+    NSLog(@"did enter foreground notification");
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"view will appear");
+}
+*/
 
 
 

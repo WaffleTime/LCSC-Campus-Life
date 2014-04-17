@@ -1232,6 +1232,14 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h39-wo-rwK">
+                            <rect key="frame" x="0.0" y="579" width="768" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Delete Event">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
                         <prototypes>
                             <tableViewCell autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="standardInformationDisplay" id="Rfh-YU-8ao">
                                 <rect key="frame" x="0.0" y="86" width="768" height="44"/>
@@ -1320,11 +1328,11 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell autoresizesSubviews="NO" contentMode="scaleAspectFit" placeholderIntrinsicWidth="768" placeholderIntrinsicHeight="200" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="description" rowHeight="400" id="3Xn-Nu-7WV">
-                                <rect key="frame" x="0.0" y="262" width="768" height="400"/>
+                            <tableViewCell autoresizesSubviews="NO" contentMode="scaleAspectFit" placeholderIntrinsicWidth="768" placeholderIntrinsicHeight="200" selectionStyle="default" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="description" rowHeight="273" id="3Xn-Nu-7WV">
+                                <rect key="frame" x="0.0" y="262" width="768" height="273"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Xn-Nu-7WV" id="GZM-iB-70m">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="399"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="272"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="9" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvZ-Hx-0RU">
@@ -1344,7 +1352,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="grayCell" id="a9u-P3-Y7T">
-                                <rect key="frame" x="0.0" y="662" width="768" height="44"/>
+                                <rect key="frame" x="0.0" y="535" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9u-P3-Y7T" id="KHE-h2-HMi">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>

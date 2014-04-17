@@ -101,6 +101,10 @@
     
     //We don't need to refresh the calendar since
     _shouldRefresh = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    NSLog(@"viewDidLoad was called");
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -115,12 +119,53 @@
         
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     }
+    
+    NSLog(@"viewDidAppear was called");
 }
+
+
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    NSLog(@"app will enter foreground");
+    
+    [super viewDidAppear:YES];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+- (void)returnToCalendar
+{
+    if (_signedIn)
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        NSDate *date = [NSDate date];
+        NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:date];
+        NSInteger year = [dateComponents year];
+        NSInteger month = [dateComponents month];
+        
+        [_events setYear:(int)year];
+        [_events setMonth:(int)month];
+        
+        [_events refreshArrayOfEvents];
+        
+        [_activityIndicator startAnimating];
+        
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        
+        NSLog(@"returnToCalendar just ran");
+    }
+    else
+        NSLog(@"returnToCalendar didn't run");
 }
 
 - (IBAction)signOutOrSignIn:(id)sender {
@@ -601,6 +646,16 @@
         _authenticating = YES;
         
         _screenLocked = YES;
+        
+        NSDate *date = [NSDate date];
+        NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:date];
+        NSInteger year = [dateComponents year];
+        NSInteger month = [dateComponents month];
+        
+        [_events setYear:(int)year];
+        [_events setMonth:(int)month];
+        
+        [_events refreshArrayOfEvents];
         
         //This is a dummy update that will be to see if the user is able to manage events.
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
