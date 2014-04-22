@@ -29,12 +29,6 @@
 
 @implementation EventDetailTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    return self;
-}
-
 
 
 - (void)viewDidLoad
