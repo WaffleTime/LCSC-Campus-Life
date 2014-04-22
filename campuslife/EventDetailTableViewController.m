@@ -29,8 +29,6 @@
 
 @implementation EventDetailTableViewController
 
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -45,6 +43,11 @@
     {
         self.navigationItem.rightBarButtonItem.title = @"Update Event";
         self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    
+    if (![[[auth getAuthCals] objectForKey:_eventDict[@"category"]] isEqualToString:@"YES"]) {
+        _deleteBtn.titleLabel.text = @" ";
+        _deleteBtn.enabled = NO;
     }
 }
 
@@ -423,38 +426,36 @@
 
 - (IBAction)deleteEvent:(id)sender
 {
-    if ([[[auth getAuthCals] objectForKey:_eventDict[@"category"]] isEqualToString:@"YES"]) {
-        NSString *calId = @"";
-        if ([_eventDict[@"category"] isEqualToString:@"Entertainment"]) {
-            calId = [auth getEntertainmentCalId];
-        }
-        else if ([_eventDict[@"category"] isEqualToString:@"Academics"]) {
-            calId = [auth getAcademicsCalId];
-        }
-        else if ([_eventDict[@"category"] isEqualToString:@"Student Activities"]) {
-            calId = [auth getActivitiesCalId];
-        }
-        else if ([_eventDict[@"category"] isEqualToString:@"Residence Life"]) {
-            calId = [auth getResidenceCalId];
-        }
-        else if ([_eventDict[@"category"] isEqualToString:@"Warrior Athletics"]) {
-            calId = [auth getAthleticsCalId];
-        }
-        else if ([_eventDict[@"category"] isEqualToString:@"Campus Rec"]) {
-            calId = [auth getCampusRecCalId];
-        }
-        
-        [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventDict[@"id"]]
-                          withHttpMethod:httpMethod_DELETE
-                      postParameterNames:[NSArray arrayWithObjects: nil]
-                     postParameterValues:[NSArray arrayWithObjects: nil]
-                             requestBody:nil];
-        
-        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
-        [controller setShouldRefresh:YES];
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
+    NSString *calId = @"";
+    if ([_eventDict[@"category"] isEqualToString:@"Entertainment"]) {
+        calId = [auth getEntertainmentCalId];
     }
+    else if ([_eventDict[@"category"] isEqualToString:@"Academics"]) {
+        calId = [auth getAcademicsCalId];
+    }
+    else if ([_eventDict[@"category"] isEqualToString:@"Student Activities"]) {
+        calId = [auth getActivitiesCalId];
+    }
+    else if ([_eventDict[@"category"] isEqualToString:@"Residence Life"]) {
+        calId = [auth getResidenceCalId];
+    }
+    else if ([_eventDict[@"category"] isEqualToString:@"Warrior Athletics"]) {
+        calId = [auth getAthleticsCalId];
+    }
+    else if ([_eventDict[@"category"] isEqualToString:@"Campus Rec"]) {
+        calId = [auth getCampusRecCalId];
+    }
+    
+    [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventDict[@"id"]]
+                      withHttpMethod:httpMethod_DELETE
+                  postParameterNames:[NSArray arrayWithObjects: nil]
+                 postParameterValues:[NSArray arrayWithObjects: nil]
+                         requestBody:nil];
+    
+    CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+    [controller setShouldRefresh:YES];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

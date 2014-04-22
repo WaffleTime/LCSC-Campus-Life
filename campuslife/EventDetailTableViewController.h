@@ -29,10 +29,7 @@
  */
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateEvent;
 
-/**
- Displays the information for the selected event
- */
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 
 - (IBAction)deleteEvent:(id)sender;
 
