@@ -10,6 +10,7 @@
 #import "MonthlyEvents.h"
 #import "Authentication.h"
 #import "UpdateEventViewController.h"
+#import "CalendarViewController.h"
 
 //This is for checking to see if an ipad is being used.
 #define IDIOM    UI_USER_INTERFACE_IDIOM()
@@ -81,7 +82,11 @@
     {
         rows = 4;
     }
-    else
+    else if (section == 2)
+    {
+        rows = 2;
+    }
+    else if (section == 3)
     {
         rows = 2;
     }
@@ -316,6 +321,17 @@
             }
             cell.separatorInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
         }
+        if (indexPath.row == 2)
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"DeleteButtonCell" forIndexPath:indexPath];
+            [cell.contentView setUserInteractionEnabled: YES];
+            
+            UIButton *button = (UIButton *)[cell viewWithTag:11];
+            
+            cell.editingAccessoryView = button;
+            
+            //[cell.editingAccessoryView setHidden:YES];
+        }
     }
     
     return cell;
@@ -324,17 +340,27 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 3 && indexPath.row == 1)
+    if (IPAD == IDIOM)
     {
-        return 250;
-    }
-    else if (IPAD == IDIOM)
-    {
-        return 65;
+        if (indexPath.section == 3 && indexPath.row == 1)
+        {
+            return 300;
+        }
+        else
+        {
+            return 65;
+        }
     }
     else
     {
-        return 44;
+        if (indexPath.section == 3 && indexPath.row == 1)
+        {
+            return 200;
+        }
+        else
+        {
+            return 44;
+        }
     }
 }
 
@@ -403,7 +429,38 @@
 
 - (IBAction)deleteEvent:(id)sender
 {
-    
+    if ([[[auth getAuthCals] objectForKey:_eventDict[@"category"]] isEqualToString:@"YES"]) {
+        NSString *calId = @"";
+        if ([_eventDict[@"category"] isEqualToString:@"Entertainment"]) {
+            calId = [auth getEntertainmentCalId];
+        }
+        else if ([_eventDict[@"category"] isEqualToString:@"Academics"]) {
+            calId = [auth getAcademicsCalId];
+        }
+        else if ([_eventDict[@"category"] isEqualToString:@"Student Activities"]) {
+            calId = [auth getActivitiesCalId];
+        }
+        else if ([_eventDict[@"category"] isEqualToString:@"Residence Life"]) {
+            calId = [auth getResidenceCalId];
+        }
+        else if ([_eventDict[@"category"] isEqualToString:@"Warrior Athletics"]) {
+            calId = [auth getAthleticsCalId];
+        }
+        else if ([_eventDict[@"category"] isEqualToString:@"Campus Rec"]) {
+            calId = [auth getCampusRecCalId];
+        }
+        
+        [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventDict[@"id"]]
+                          withHttpMethod:httpMethod_DELETE
+                      postParameterNames:[NSArray arrayWithObjects: nil]
+                     postParameterValues:[NSArray arrayWithObjects: nil]
+                             requestBody:nil];
+        
+        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+        [controller setShouldRefresh:YES];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 

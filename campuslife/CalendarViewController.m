@@ -119,9 +119,13 @@
     if (_shouldRefresh) {
         [_activityIndicator startAnimating];
         
+        [_events resetEvents];
+        
         _curArrayId = 1;
         
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        
+        _shouldRefresh = NO;
     }
     
     NSLog(@"viewDidAppear was called");
@@ -160,16 +164,14 @@
         [_events setYear:(int)year];
         [_events setMonth:(int)month];
         
-        [_events refreshArrayOfEvents];
+        [_events resetEvents];
+        
+        _curArrayId = 1;
         
         [_activityIndicator startAnimating];
         
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-        
-        NSLog(@"returnToCalendar just ran");
     }
-    else
-        NSLog(@"returnToCalendar didn't run");
 }
 
 - (IBAction)signOutOrSignIn:(id)sender {
@@ -745,7 +747,7 @@
         [_events setYear:(int)year];
         [_events setMonth:(int)month];
         
-        [_events refreshArrayOfEvents];
+        [_events resetEvents];
         
         //This is a dummy update that will be to see if the user is able to manage events.
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
@@ -775,9 +777,9 @@
             _jsonsToIgnore -= 1;
             //NSLog(@"jsonsSent and one being ignored, %d", _jsonsSent);
             _jsonsSent = 0;
-            [_events refreshArrayOfEvents:0];
-            [_events refreshArrayOfEvents:1];
-            [_events refreshArrayOfEvents:2];
+            
+            [_events resetEvents];
+            
             if (_jsonsToIgnore == 0)
             {
                 _curArrayId = 1;
@@ -1438,9 +1440,7 @@
 }
 
 -(void)accessTokenWasRevoked{
-    [_events refreshArrayOfEvents:0];
-    [_events refreshArrayOfEvents:1];
-    [_events refreshArrayOfEvents:2];
+    [_events resetEvents];
 }
 
 

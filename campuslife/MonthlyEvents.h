@@ -13,7 +13,7 @@
 
 +(MonthlyEvents *)getSharedInstance;
 
-
+-(void)resetEvents;
 -(void)refreshArrayOfEvents:(int)arrayId;
 -(void)AppendEvent:(NSInteger)day :(NSDictionary *)eventDict :(int)arrayId;
 -(NSArray *)getEventsForDay:(NSInteger)day;

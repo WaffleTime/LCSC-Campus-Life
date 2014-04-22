@@ -11,6 +11,7 @@
 #import "MonthlyEvents.h"
 #import "Preferences.h"
 #import "EventDetailTableViewController.h"
+#import "CalendarViewController.h"
 
 
 
@@ -476,6 +477,9 @@
                            postParameterNames:[NSArray arrayWithObjects: nil]
                          postParameterValues:[NSArray arrayWithObjects: nil]
                                  requestBody:nil];
+            
+            CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+            [controller setShouldRefresh:YES];
             
             [sortedArray removeObjectAtIndex:indexPath.row];
             

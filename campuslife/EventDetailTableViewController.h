@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GoogleOAuth.h"
 
-@interface EventDetailTableViewController : UITableViewController<GoogleOAuthDelegate>
+@interface EventDetailTableViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, GoogleOAuthDelegate>
 
 @property (nonatomic, setter = setDay:) NSInteger day;
 

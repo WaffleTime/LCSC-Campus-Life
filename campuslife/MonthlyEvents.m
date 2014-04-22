@@ -64,6 +64,12 @@ static MonthlyEvents *sharedInstance;
     return sharedInstance;
 }
 
+
+-(void)resetEvents {
+    _calendarEvents[0] = [NSNull null];
+    _calendarEvents[1] = [NSNull null];
+    _calendarEvents[2] = [NSNull null];
+}
 - (void) refreshArrayOfEvents:(int)arrayId {
     if (![_calendarEvents[arrayId] isEqual:[NSNull null]]) {
         [_calendarEvents[arrayId] removeAllObjects];
