@@ -102,6 +102,9 @@
     
     //We don't need to refresh the calendar since
     _shouldRefresh = NO;
+    
+    [self signOutOrSignIn:NULL];
+    
     [self signOutOrSignIn:NULL];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -122,6 +125,8 @@
         [_events resetEvents];
         
         _curArrayId = 1;
+        _jsonsToIgnore = 0;
+        _jsonsSent = 0;
         
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
         
@@ -167,10 +172,17 @@
         [_events resetEvents];
         
         _curArrayId = 1;
+        _jsonsToIgnore = 0;
+        _jsonsSent = 0;
         
         [_activityIndicator startAnimating];
         
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+    }
+    else
+    {
+        [self signOutOrSignIn:NULL];
+        NSLog(@"returnToCalendar didn't run");
     }
 }
 
@@ -199,11 +211,11 @@
         //Just setting the default.
         [_auth setUserCanManageEvents:NO];
         
-        [_auth setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Student Activities", @"NO", @"Warrior Athletics", @"NO", @"Entertainment", @"NO", @"Residence Life", @"NO", @"Campus Rec", nil]];
+        [_auth setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Activities", @"NO", @"Athletics", @"NO", @"Entertainment", @"NO", @"Residence", @"NO", @"Campus Rec", nil]];
         
         //NSLog(@"Signed out we did");
     }
-    
+
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
     
@@ -749,6 +761,9 @@
         
         [_events resetEvents];
         
+        _jsonsToIgnore = 0;
+        _jsonsSent = 0;
+        
         //This is a dummy update that will be to see if the user is able to manage events.
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
                            withHttpMethod:httpMethod_POST
@@ -779,12 +794,9 @@
             _jsonsSent = 0;
             
             [_events resetEvents];
-            
-            if (_jsonsToIgnore == 0)
-            {
-                _curArrayId = 1;
-                [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-            }
+
+            _curArrayId = 1;
+            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
         }
         else if (error) {
             // This is the case that an error occured during converting JSON data to dictionary.
@@ -1441,6 +1453,8 @@
 
 -(void)accessTokenWasRevoked{
     [_events resetEvents];
+    _jsonsToIgnore = 0;
+    _jsonsSent = 0;
 }
 
 

@@ -362,7 +362,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
         oldCalId = [_auth getEntertainmentCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"StudentActivities"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Student Activities"]) {
         oldCalId = [_auth getActivitiesCalId];
     }
     else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Academics"]) {
@@ -396,6 +396,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {
         newCalId = [_auth getCampusRecCalId];
+    }
+    if (newCalId == nil || oldCalId == nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Problem"
+                                                        message: @"Will not update that event!"
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
     }
     
     if (readyToAddEvent) {
