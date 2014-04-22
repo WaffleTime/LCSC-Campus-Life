@@ -96,7 +96,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Dispose of any resources that can be recreated.
 }
 
--(void) refreshRecurrence {
+-(void) refreshRecurrence
+{
     //NSLog(@"RepFreq: %@", super.repeatFreq);
     //NSLog(@"RepUntil: %@", super.repeatUntil);
     
@@ -104,10 +105,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     {
         _repFreqBtn.titleLabel.text = @"Never";
         
-        _repUntilBtn.titleLabel.text = @"         ";
         _repUntilBtn.enabled = NO;
-        
-        _repUntilLabel.text = @"       ";
+        _repUntilBtn.titleLabel.text = @"mm/dd/yyyy";
+        _repUntilBtn.titleLabel.textColor = [UIColor grayColor];
+        [_repUntilBtn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         
         super.repeatUntil = NULL;
     }
@@ -115,8 +116,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     {
         _repFreqBtn.titleLabel.text = super.repeatFreq;
         _repUntilBtn.enabled = YES;
-        
-        _repUntilLabel.text = @"End Repeat";
+        _repUntilBtn.titleLabel.textColor = [UIColor colorWithRed:36/255.0 green:71/255.0 blue:113/255.0 alpha:1.0];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
@@ -132,7 +132,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
 }
-
 -(IBAction) addEvent {
     BOOL readyToAddEvent = YES;
     
