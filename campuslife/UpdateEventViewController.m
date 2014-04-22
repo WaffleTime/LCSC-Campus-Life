@@ -525,43 +525,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
 }
 
-- (IBAction)deleteEvent:(id)sender
-{
-    if ([[[_auth getAuthCals] objectForKey:_eventInfo[@"category"]] isEqualToString:@"YES"]) {
-        NSString *calId = @"";
-        if ([_eventInfo[@"category"] isEqualToString:@"Entertainment"]) {
-            calId = [_auth getEntertainmentCalId];
-        }
-        else if ([_eventInfo[@"category"] isEqualToString:@"Academics"]) {
-            calId = [_auth getAcademicsCalId];
-        }
-        else if ([_eventInfo[@"category"] isEqualToString:@"Student Activities"]) {
-            calId = [_auth getActivitiesCalId];
-        }
-        else if ([_eventInfo[@"category"] isEqualToString:@"Residence Life"]) {
-            calId = [_auth getResidenceCalId];
-        }
-        else if ([_eventInfo[@"category"] isEqualToString:@"Warrior Athletics"]) {
-            calId = [_auth getAthleticsCalId];
-        }
-        else if ([_eventInfo[@"category"] isEqualToString:@"Campus Rec"]) {
-            calId = [_auth getCampusRecCalId];
-        }
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventInfo[@"id"]]
-                          withHttpMethod:httpMethod_DELETE
-                      postParameterNames:[NSArray arrayWithObjects: nil]
-                     postParameterValues:[NSArray arrayWithObjects: nil]
-                             requestBody:nil];
-        
-        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
-        [controller setShouldRefresh:YES];
-        
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-}
-
-
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     //One column
