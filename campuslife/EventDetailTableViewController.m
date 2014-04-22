@@ -326,7 +326,7 @@
 {
     if (indexPath.section == 3 && indexPath.row == 1)
     {
-        return 300;
+        return 250;
     }
     else if (IPAD == IDIOM)
     {

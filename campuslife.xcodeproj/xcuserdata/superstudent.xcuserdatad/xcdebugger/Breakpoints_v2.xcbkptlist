@@ -123,7 +123,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "627"
             endingLineNumber = "627"
-            landmarkName = "-getEventsForMonth::"
+            landmarkName = "-returnDateForMonth:year:day:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -155,23 +155,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "280"
             endingLineNumber = "280"
-            landmarkName = "-collectionView:numberOfItemsInSection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.m"
-            timestampString = "419652936.464649"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "-viewDidLoad"
+            landmarkName = "-backMonthOffset:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -233,7 +217,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "-signOutOrSignIn:"
+            landmarkName = "-returnToCalendar"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -249,7 +233,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1413"
             endingLineNumber = "1413"
-            landmarkName = "-errorInResponseWithBody:"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -281,7 +265,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "601"
             endingLineNumber = "601"
-            landmarkName = "-getEventsForMonth::"
+            landmarkName = "-parseSummaryForKey:::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -297,7 +281,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "606"
             endingLineNumber = "606"
-            landmarkName = "-getEventsForMonth::"
+            landmarkName = "-parseSummaryForKey:::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -313,7 +297,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "611"
             endingLineNumber = "611"
-            landmarkName = "-getEventsForMonth::"
+            landmarkName = "-parseSummaryForKey:::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -329,7 +313,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "717"
             endingLineNumber = "717"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkName = "-getEventsForMonth::"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -361,8 +345,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1385"
             endingLineNumber = "1385"
-            landmarkName = "@implementation CalendarViewController"
-            landmarkType = "3">
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -377,7 +361,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "727"
             endingLineNumber = "727"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkName = "-authorizationWasSuccessful"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -393,7 +377,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "624"
             endingLineNumber = "624"
-            landmarkName = "-getEventsForMonth::"
+            landmarkName = "-returnDateForMonth:year:day:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -409,8 +393,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "-getEventsForDay:"
-            landmarkType = "5">
+            landmarkName = "@implementation MonthlyEvents"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -505,7 +489,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "748"
             endingLineNumber = "748"
-            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkName = "-authorizationWasSuccessful"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -601,7 +585,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "284"
             endingLineNumber = "284"
-            landmarkName = "-collectionView:numberOfItemsInSection:"
+            landmarkName = "-backMonthOffset:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -617,7 +601,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "285"
             endingLineNumber = "285"
-            landmarkName = "-collectionView:numberOfItemsInSection:"
+            landmarkName = "-backMonthOffset:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -649,7 +633,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "237"
             endingLineNumber = "237"
-            landmarkName = "-backMonthOffset:"
+            landmarkName = "-radioSelected:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -665,7 +649,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "268"
             endingLineNumber = "268"
-            landmarkName = "-forwardMonthOffset:"
+            landmarkName = "-backMonthOffset:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -681,7 +665,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "263"
             endingLineNumber = "263"
-            landmarkName = "-forwardMonthOffset:"
+            landmarkName = "-backMonthOffset:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

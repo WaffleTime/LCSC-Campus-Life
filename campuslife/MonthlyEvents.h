@@ -32,4 +32,7 @@
 
 -(BOOL)doesMonthNeedLoaded:(int)arrayId;
 
+@property (nonatomic, setter=setYear:) int selectedYear;
+@property (nonatomic, setter=setMonth:) int selectedMonth;
+
 @end
