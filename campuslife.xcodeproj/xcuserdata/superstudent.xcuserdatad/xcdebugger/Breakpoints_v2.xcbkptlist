@@ -9,90 +9,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "campuslife/EventDetailTableViewController.h"
-            timestampString = "419890588.957859"
+            filePath = "campuslife/CalendarViewController.m"
+            timestampString = "419890934.656802"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "updateEvent"
-            landmarkType = "19">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[EventDetailTableViewController updateEvent]"
-                  moduleName = "campuslife"
-                  urlString = "file:///Volumes/Thawspace/LCSC-Campus-Life/campuslife/EventDetailTableViewController.h"
-                  timestampString = "418855329.347257"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[EventDetailTableViewController setUpdateEvent:]"
-                  moduleName = "campuslife"
-                  urlString = "file:///Volumes/Thawspace/LCSC-Campus-Life/campuslife/EventDetailTableViewController.h"
-                  timestampString = "418855329.347689"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "31">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/CalendarViewController.h"
-            timestampString = "419113100.489765"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "cat6Btn"
-            landmarkType = "19">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CalendarViewController cat6Btn]"
-                  moduleName = "campuslife"
-                  urlString = "file:///Volumes/Thawspace/LCSC-Campus-Life/campuslife/CalendarViewController.h"
-                  timestampString = "419113100.508332"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[CalendarViewController setCat6Btn:]"
-                  moduleName = "campuslife"
-                  urlString = "file:///Volumes/Thawspace/LCSC-Campus-Life/campuslife/CalendarViewController.h"
-                  timestampString = "419113100.508723"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "31">
-               </Location>
-            </Locations>
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

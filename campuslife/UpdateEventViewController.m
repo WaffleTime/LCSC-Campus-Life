@@ -152,6 +152,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             super.repeatUntil = [dateFormatter dateFromString:[_eventInfo[@"recurrence"][0] substringWithRange:NSMakeRange(24, 16)]];
         }
     }
+    [self refreshRecurrence];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -185,10 +186,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     {
         _repFreqBtn.titleLabel.text = @"Never";
         
-        _repUntilBtn.titleLabel.text = @"         ";
+        _repUntilBtn.titleLabel.text = @"mm/dd/yyyy";
         _repUntilBtn.enabled = NO;
-        
-        _repUntilLabel.text = @"       ";
         
         super.repeatUntil = NULL;
     }
@@ -197,7 +196,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         _repFreqBtn.titleLabel.text = super.repeatFreq;
         _repUntilBtn.enabled = YES;
         
-        _repUntilLabel.text = @"End Repeat";
+        //_repUntilLabel.text = @"End Repeat";
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
@@ -363,16 +362,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
         oldCalId = [_auth getEntertainmentCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Activities"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"StudentActivities"]) {
         oldCalId = [_auth getActivitiesCalId];
     }
     else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Academics"]) {
         oldCalId = [_auth getAcademicsCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Athletics"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Warrior Athletics"]) {
         oldCalId = [_auth getAthleticsCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Residence"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Residence Life"]) {
         oldCalId = [_auth getResidenceCalId];
     }
     else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Campus Rec"]) {
@@ -383,16 +382,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
         newCalId = [_auth getEntertainmentCalId];
     }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Activities"]) {
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Student Activities"]) {
         newCalId = [_auth getActivitiesCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
         newCalId = [_auth getAcademicsCalId];
     }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Athletics"]) {
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Warrior Athletics"]) {
         newCalId = [_auth getAthleticsCalId];
     }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence"]) {
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence Life"]) {
         newCalId = [_auth getResidenceCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {
@@ -523,6 +522,42 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     else {
         _startTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
         _endTimePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    }
+}
+
+- (IBAction)deleteEvent:(id)sender
+{
+    if ([[[_auth getAuthCals] objectForKey:_eventInfo[@"category"]] isEqualToString:@"YES"]) {
+        NSString *calId = @"";
+        if ([_eventInfo[@"category"] isEqualToString:@"Entertainment"]) {
+            calId = [_auth getEntertainmentCalId];
+        }
+        else if ([_eventInfo[@"category"] isEqualToString:@"Academics"]) {
+            calId = [_auth getAcademicsCalId];
+        }
+        else if ([_eventInfo[@"category"] isEqualToString:@"Student Activities"]) {
+            calId = [_auth getActivitiesCalId];
+        }
+        else if ([_eventInfo[@"category"] isEqualToString:@"Residence Life"]) {
+            calId = [_auth getResidenceCalId];
+        }
+        else if ([_eventInfo[@"category"] isEqualToString:@"Warrior Athletics"]) {
+            calId = [_auth getAthleticsCalId];
+        }
+        else if ([_eventInfo[@"category"] isEqualToString:@"Campus Rec"]) {
+            calId = [_auth getCampusRecCalId];
+        }
+        
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventInfo[@"id"]]
+                          withHttpMethod:httpMethod_DELETE
+                      postParameterNames:[NSArray arrayWithObjects: nil]
+                     postParameterValues:[NSArray arrayWithObjects: nil]
+                             requestBody:nil];
+        
+        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+        [controller setShouldRefresh:YES];
+        
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

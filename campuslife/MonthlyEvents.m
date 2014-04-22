@@ -14,11 +14,12 @@ static MonthlyEvents *sharedInstance;
 
 @interface MonthlyEvents ()
 
-//A 2d array that holds the events for the calendar of the current month.
-//  Each element corresponds with the day.
+//This is a 3d array that holds three different 2d arrays. The 2d arrays hold events for each day in that month.
 @property (nonatomic, strong, setter=setCalendarEvents:) NSMutableArray *calendarEvents;
 
-@property (nonatomic, setter=setFirstWeekDay:) int firstWeekDay;
+@property (nonatomic, setter=setFirstWeekDay0:) int firstWeekDay0;
+@property (nonatomic, setter=setFirstWeekDay1:) int firstWeekDay1;
+@property (nonatomic, setter=setFirstWeekDay2:) int firstWeekDay2;
 
 @property (nonatomic, setter=setDaysInMonth:) NSMutableArray *daysInMonth;
 
@@ -56,25 +57,47 @@ static MonthlyEvents *sharedInstance;
         
         [sharedInstance setKnownOffsetForJan2013:2];
         
+        [sharedInstance setCalendarEvents:[[NSMutableArray alloc]initWithArray:@[[NSNull null], [NSNull null], [NSNull null]]]];
+        
         //NSLog(@"The current year and month is:%ld %ld",year, month);
     }
     return sharedInstance;
 }
 
-- (void) refreshArrayOfEvents {
-    if (_calendarEvents != nil) {
-        [_calendarEvents removeAllObjects];
+
+-(void)resetEvents {
+    _calendarEvents[0] = [NSNull null];
+    _calendarEvents[1] = [NSNull null];
+    _calendarEvents[2] = [NSNull null];
+}
+- (void) refreshArrayOfEvents:(int)arrayId {
+    if (![_calendarEvents[arrayId] isEqual:[NSNull null]]) {
+        [_calendarEvents[arrayId] removeAllObjects];
     }
     else {
-        [self setCalendarEvents:[[NSMutableArray alloc]init]];
+        _calendarEvents[arrayId] = [[NSMutableArray alloc]init];
+    }
+    
+    int monthOffset = arrayId-1;
+    int yearOffset = 0;
+    
+    if (monthOffset+_selectedMonth == 0)
+    {
+        yearOffset = -1;
+        monthOffset = 11;
+    }
+    else if (monthOffset+_selectedMonth == 13)
+    {
+        yearOffset = 1;
+        monthOffset = -11;
     }
     
     int firstWeekday = 0;
     
-    if (_selectedYear >= 2013) {
+    if (_selectedYear+yearOffset >= 2013) {
         firstWeekday = _knownOffsetForJan2013;
         
-        for (int i = 2013; i <= _selectedYear; i++) {
+        for (int i = 2013; i <= _selectedYear+yearOffset; i++) {
             
             //account for leap year
             if (i%4 == 0
@@ -85,8 +108,8 @@ static MonthlyEvents *sharedInstance;
                 [_daysInMonth replaceObjectAtIndex:1 withObject:@28];
             }
             
-            if (i == _selectedYear) {
-                for (int j = 0; j < _selectedMonth-1; j++) {
+            if (i == _selectedYear+yearOffset) {
+                for (int j = 0; j < _selectedMonth+monthOffset-1; j++) {
                     firstWeekday += [[_daysInMonth objectAtIndex:j] integerValue] % 7;
                 }
             }
@@ -103,7 +126,7 @@ static MonthlyEvents *sharedInstance;
     else {
         firstWeekday = _knownOffsetForJan2013;
         
-        for (int i = 2013-1; i >= _selectedYear; i--) {
+        for (int i = 2013-1; i >= _selectedYear+yearOffset; i--) {
             
             //account for leap year
             if (i%4 == 0
@@ -114,8 +137,8 @@ static MonthlyEvents *sharedInstance;
                 [_daysInMonth replaceObjectAtIndex:1 withObject:@28];
             }
             
-            if (i == _selectedYear) {
-                for (int j = 11; j >= _selectedMonth-1; j--) {
+            if (i == _selectedYear+yearOffset) {
+                for (int j = 11; j >= _selectedMonth+monthOffset-1; j--) {
                     firstWeekday -= [[_daysInMonth objectAtIndex:j] integerValue] % 7;
                 }
             }
@@ -130,10 +153,21 @@ static MonthlyEvents *sharedInstance;
         }
     }
     
-    [self setFirstWeekDay:firstWeekday];
+    if (arrayId == 0)
+    {
+        [self setFirstWeekDay0:firstWeekday];
+    }
+    else if (arrayId == 1)
+    {
+        [self setFirstWeekDay1:firstWeekday];
+    }
+    else if (arrayId == 2)
+    {
+        [self setFirstWeekDay2:firstWeekday];
+    }
     
     //Set the leap year stuff back up since we could have changed it beforehand.
-    if (_selectedYear%4 == 0
+    if ((_selectedYear+yearOffset)%4 == 0
         && (int)[_daysInMonth objectAtIndex:1] != 29) {
         [_daysInMonth replaceObjectAtIndex:1 withObject:@29];
     }
@@ -151,25 +185,38 @@ static MonthlyEvents *sharedInstance;
     
     //This should loop through the amounts of days in the given month.
     //  So change this to work with the month/year that the user has selected.
-    for (int i=0; i < [[_daysInMonth objectAtIndex:_selectedMonth-1] integerValue]; i++) {
-        [_calendarEvents addObject:[[NSMutableArray alloc] init]];
+    for (int i=0; i < [[_daysInMonth objectAtIndex:_selectedMonth+monthOffset-1] integerValue]; i++) {
+        [_calendarEvents[arrayId] addObject:[[NSMutableArray alloc] init]];
     }
 }
 
 //Takes in events from the json retrieved from the Google Calendar API.
 //@param day Day the event is on, 1-31.
--(void)AppendEvent:(NSInteger)day :(NSDictionary *)eventDict {
-    [[_calendarEvents objectAtIndex:day-1] addObject:eventDict];
+-(void)AppendEvent:(NSInteger)day :(NSDictionary *)eventDict :(int)arrayId {
+    [[_calendarEvents[arrayId] objectAtIndex:day-1] addObject:eventDict];
 }
 
 //@param day Day the events are on, 1-31.
 -(NSArray *)getEventsForDay:(NSInteger)day {
-    return [_calendarEvents objectAtIndex:day-1];
+    return [_calendarEvents[1] objectAtIndex:day-1];
 }
 
 //@return An integer in [0,6] that represents a day of the week.
--(int)getFirstWeekDay {
-    return _firstWeekDay;
+-(int)getFirstWeekDay:(int)arrayId {
+    int firstWeekDay = -1;
+    if (arrayId == 0)
+    {
+        firstWeekDay = _firstWeekDay0;
+    }
+    else if (arrayId == 1)
+    {
+        firstWeekDay = _firstWeekDay1;
+    }
+    else if (arrayId == 2)
+    {
+        firstWeekDay = _firstWeekDay2;
+    }
+    return firstWeekDay;
 }
 
 //Gets a string that represents the current month.
@@ -285,7 +332,28 @@ static MonthlyEvents *sharedInstance;
     
     //NSLog(@"The new year is %d and the new month is %d", _selectedYear, _selectedMonth);
     
-    [self refreshArrayOfEvents];
+    if (offset == 1)
+    {
+        _calendarEvents[0] = _calendarEvents[1];
+        _firstWeekDay0 = _firstWeekDay1;
+        _calendarEvents[1] = _calendarEvents[2];
+        _firstWeekDay1 = _firstWeekDay2;
+        _calendarEvents[2] = [NSNull null];
+    }
+    else if (offset == -1)
+    {
+        _calendarEvents[2] = _calendarEvents[1];
+        _firstWeekDay2 = _firstWeekDay1;
+        _calendarEvents[1] = _calendarEvents[0];
+        _firstWeekDay1 = _firstWeekDay0;
+        _calendarEvents[0] = [NSNull null];
+    }
+    else if (offset > 1 || offset < -1)
+    {
+        _calendarEvents[0] = [NSNull null];
+        _calendarEvents[1] = [NSNull null];
+        _calendarEvents[2] = [NSNull null];
+    }
 }
 
 
@@ -309,6 +377,17 @@ static MonthlyEvents *sharedInstance;
 //@return The exact year, no off by one here.
 -(int)getSelectedYear {
     return _selectedYear;
+}
+
+-(BOOL)doesMonthNeedLoaded:(int) arrayId
+{
+    BOOL shouldLoad = NO;
+    //Check if the month is in memory and if the has been there for less than 5 minutes.
+    if ([_calendarEvents[arrayId] isEqual:[NSNull null]])
+    {
+        shouldLoad = YES;
+    }
+    return shouldLoad;
 }
 
 @end

@@ -37,4 +37,6 @@
 -(IBAction) addEvent;
 -(IBAction) allDayEventToggle:(id)sender;
 
+- (IBAction)deleteEvent:(id)sender;
+
 @end

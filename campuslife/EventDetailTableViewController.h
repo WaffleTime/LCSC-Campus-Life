@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoogleOAuth.h"
 
 /**
  An interface for the EventDetailTableViewController class
  */
-@interface EventDetailTableViewController : UITableViewController
+@interface EventDetailTableViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, GoogleOAuthDelegate>
 
 /**
  Contains the selected day
@@ -27,5 +28,7 @@
  Handles the update event button
  */
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateEvent;
+
+- (IBAction)deleteEvent:(id)sender;
 
 @end
