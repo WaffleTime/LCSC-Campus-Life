@@ -8,12 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ An interface for the EventDetailTableViewController class
+ */
 @interface EventDetailTableViewController : UITableViewController
 
+/**
+ Contains the selected day
+ */
 @property (nonatomic, setter = setDay:) NSInteger day;
 
+/**
+ Stores the dictionary of events for the selected day
+ */
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventDict;
 
+/**
+ Handles the update event button
+ */
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateEvent;
 
 @end

@@ -360,17 +360,39 @@
     
     
     
-    //Adding a toolbar! Pray for us... O.o
+    //Added a toolbar to GoogleOAuth sign-in page
+    //  Contains back button
     UIToolbar *toolbar = [[UIToolbar alloc] init];
     toolbar.frame = CGRectMake(0, self.frame.size.height - 60, self.frame.size.width, 60.0f);
     NSMutableArray *items = [[NSMutableArray alloc] init];
-    CGRect frame = CGRectMake(0, 0, 100.0f, 60.0f);
-    UIButton *backButton = [[UIButton alloc] initWithFrame:frame];
-    [backButton setTitle:@"Home" forState:UIControlStateNormal & UIControlStateHighlighted];
-    [backButton setTitleColor:[UIColor colorWithRed:106.0/255.0 green:126.0/255.0 blue:255.0/255.0 alpha:1.0] forState:UIControlStateNormal & UIControlStateHighlighted];
+    
+    //  Back button for toolbar
+    UIImage *backArrow = [UIImage imageNamed:@"GoogleOAuth_BackArrow.png"];
+    CGRect frameBack = CGRectMake(0, 0, backArrow.size.width/2.5, backArrow.size.height/2.5);
+    UIButton *backButton = [[UIButton alloc] initWithFrame:frameBack];
+    [backButton setImage:backArrow forState:normal];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [backButton setShowsTouchWhenHighlighted:YES];
     UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [items addObject:back];
+    
+    //  Flexible spacer for buttons
+    UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedItem.width = 50.0f; // or whatever you want
+    
+    //  Forward button for toolbar
+    UIImage *forwardArrow = [UIImage imageNamed:@"GoogleOAuth_ForwardArrow.png"];
+    CGRect frameForward = CGRectMake(0, 0, forwardArrow.size.width/2.5, forwardArrow.size.height/2.5);
+    UIButton *forwardButton = [[UIButton alloc] initWithFrame:frameForward];
+    [forwardButton setImage:forwardArrow forState:normal];
+    [forwardButton addTarget:self action:@selector(forwardButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [forwardButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithCustomView:forwardButton];
+    
+    //  Adding buttons to toolbar
+    [items addObject:fixedItem]; //added a fixed space to separate buttons
+    [items addObject:back]; //added back button
+    [items addObject:fixedItem]; //added a fixed space to separate buttons
+    [items addObject:forward]; //added forward button
     [toolbar setItems:items animated:NO];
     [self addSubview:toolbar];
     
@@ -387,6 +409,12 @@
 - (void)backButtonPressed:(id)sender
 {
     [self goBack];
+}
+
+
+- (void)forwardButtonPressed:(id)sender
+{
+    [self goForward];
 }
 
 

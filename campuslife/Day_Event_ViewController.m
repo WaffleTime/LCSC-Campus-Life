@@ -90,36 +90,6 @@
 
 
 
-/*
-//http://stackoverflow.com/questions/15864364/viewdidappear-is-not-called-when-opening-app-from-background
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    NSLog(@"app will enter foreground");
-    
-    [super viewDidLoad];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    NSLog(@"app did become active");
-}
-
-- (void)appDidBecomeActive:(NSNotification *)notification {
-    NSLog(@"did become active notification");
-}
-
-- (void)appDidEnterForeground:(NSNotification *)notification {
-    NSLog(@"did enter foreground notification");
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    NSLog(@"view will appear");
-}
-*/
-
-
-
 
 /*
  *  Possibly useless?

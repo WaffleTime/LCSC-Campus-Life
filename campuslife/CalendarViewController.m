@@ -102,6 +102,8 @@
     //We don't need to refresh the calendar since
     _shouldRefresh = NO;
     
+    [self signOutOrSignIn:NULL];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
     
     NSLog(@"viewDidLoad was called");
@@ -165,7 +167,10 @@
         NSLog(@"returnToCalendar just ran");
     }
     else
+    {
+        [self signOutOrSignIn:NULL];
         NSLog(@"returnToCalendar didn't run");
+    }
 }
 
 - (IBAction)signOutOrSignIn:(id)sender {
@@ -190,20 +195,24 @@
         
         [_collectionView reloadData];
         
+        //Just setting the default.
+        [_auth setUserCanManageEvents:NO];
+        
+        [_auth setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Activities", @"NO", @"Athletics", @"NO", @"Entertainment", @"NO", @"Residence", @"NO", @"Campus Rec", nil]];
+        
         //NSLog(@"Signed out we did");
     }
-    else {
-        [self setSignedIn:NO];
-        self.signInOutButton.title = @"Sign In";
-        
-        [_activityIndicator startAnimating];
-        
-        [[_auth getAuthenticator] authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                                           andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
-                                             andParentView:self.view
-                                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-        //NSLog(@"Signed in we did");
-    }
+
+    [self setSignedIn:NO];
+    self.signInOutButton.title = @"Sign In";
+    
+    [_activityIndicator startAnimating];
+    
+    [[_auth getAuthenticator] authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
+                                       andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
+                                         andParentView:self.view
+                                             andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+    //NSLog(@"Signed in we did");
 }
 
 - (IBAction)radioSelected:(UIButton *)sender {
