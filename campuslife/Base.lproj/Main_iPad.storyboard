@@ -1360,7 +1360,7 @@ QABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABAA
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="9Uu-XG-HSA">
-                        <barButtonItem key="rightBarButtonItem" title="Update Event" id="0fr-ds-16r">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" id="0fr-ds-16r">
                             <connections>
                                 <segue destination="aWt-tq-riR" kind="push" identifier="EventDetailToUpdateEvent" id="p9x-SK-8mI"/>
                             </connections>

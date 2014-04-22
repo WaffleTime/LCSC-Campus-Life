@@ -9,7 +9,6 @@
 #import "Day_Event_ViewController.h"
 #import "Authentication.h"
 #import "MonthlyEvents.h"
-#import "Authentication.h"
 #import "Preferences.h"
 #import "EventDetailTableViewController.h"
 
@@ -124,21 +123,21 @@
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Activities"] && [preferences getPreference:3] == FALSE)
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Student Activities"] && [preferences getPreference:3] == FALSE)
             {
                 //NSLog(@"Popping Activities event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Residence"] && [preferences getPreference:4] == FALSE)
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Residence Life"] && [preferences getPreference:4] == FALSE)
             {
                 //NSLog(@"Popping Residence event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Athletics"] && [preferences getPreference:5] == FALSE)
+            else if ([[newArray[currentPos] objectForKey:@"category"] isEqualToString:@"Warrior Athletics"] && [preferences getPreference:5] == FALSE)
             {
                 //NSLog(@"Popping Athletics event");
                 
@@ -375,17 +374,17 @@
         UIImageView *image = (UIImageView *)[cell viewWithTag:21];
         [image setImage:[UIImage imageNamed:@"dotAcademics.png"]];
     }
-    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Activities"])
+    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Student Activities"])
     {
         UIImageView *image = (UIImageView *)[cell viewWithTag:21];
         [image setImage:[UIImage imageNamed:@"dotActivities.png"]];
     }
-    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Residence"])
+    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Residence Life"])
     {
         UIImageView *image = (UIImageView *)[cell viewWithTag:21];
         [image setImage:[UIImage imageNamed:@"dotResidence.png"]];
     }
-    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Athletics"])
+    else if ([[eventTime objectForKey:@"category"] isEqualToString:@"Warrior Athletics"])
     {
         UIImageView *image = (UIImageView *)[cell viewWithTag:21];
         [image setImage:[UIImage imageNamed:@"dotAthletics.png"]];
@@ -417,13 +416,13 @@
             else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Academics"]) {
                 calId = [auth getAcademicsCalId];
             }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Activities"]) {
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Student Activities"]) {
                 calId = [auth getActivitiesCalId];
             }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Residence"]) {
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Residence Life"]) {
                 calId = [auth getResidenceCalId];
             }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Athletics"]) {
+            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Warrior Athletics"]) {
                 calId = [auth getAthleticsCalId];
             }
             else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Campus Rec"]) {

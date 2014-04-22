@@ -14,10 +14,10 @@
 +(MonthlyEvents *)getSharedInstance;
 
 
--(void)refreshArrayOfEvents;
--(void)AppendEvent:(NSInteger)day :(NSDictionary *)eventDict;
+-(void)refreshArrayOfEvents:(int)arrayId;
+-(void)AppendEvent:(NSInteger)day :(NSDictionary *)eventDict :(int)arrayId;
 -(NSArray *)getEventsForDay:(NSInteger)day;
--(int)getFirstWeekDay;
+-(int)getFirstWeekDay:(int)arrayId ;
 -(NSString *)getMonthBarDate;
 -(int)getDaysOfMonth;
 -(int)getDaysOfMonth:(int)month :(int)year;
@@ -29,5 +29,7 @@
 
 -(int)getSelectedMonth;
 -(int)getSelectedYear;
+
+-(BOOL)doesMonthNeedLoaded:(int)arrayId;
 
 @end

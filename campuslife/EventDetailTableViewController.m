@@ -46,10 +46,10 @@
     
     [self setDay:[events getSelectedDay]];
     
-    auth = [Authentication getSharedInstance];
-    
-    if ([auth getUserCanManageEvents]) {
-        //
+    if ([[Authentication getSharedInstance] getUserCanManageEvents])
+    {
+        self.navigationItem.rightBarButtonItem.title = @"Update Event";
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
 }
 
@@ -400,6 +400,47 @@
     }
 }
 
+
+- (IBAction)deleteEvent:(id)sender
+{
+    
+}
+
+
+
+
+
+#pragma mark - GoogleOAuth class delegate method implementation
+
+-(void)authorizationWasSuccessful {
+}
+
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+    //NSLog(@"%@", responseJSONAsString);
+}
+
+-(void)accessTokenWasRevoked{
+}
+
+
+-(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
+    // Just log the error messages.
+    //NSLog(@"%@", errorShortDescription);
+    //NSLog(@"%@", errorDetails);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
+                                                    message: errorDetails
+                                                   delegate: nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+
+-(void)errorInResponseWithBody:(NSString *)errorMessage{
+    // Just log the error message.
+    //NSLog(@"%@", errorMessage);
+}
 
 
 

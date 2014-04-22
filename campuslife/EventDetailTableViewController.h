@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoogleOAuth.h"
 
-@interface EventDetailTableViewController : UITableViewController
+@interface EventDetailTableViewController : UITableViewController<GoogleOAuthDelegate>
 
 @property (nonatomic, setter = setDay:) NSInteger day;
 
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventDict;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateEvent;
+
+- (IBAction)deleteEvent:(id)sender;
 
 @end

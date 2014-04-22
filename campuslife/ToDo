@@ -36,10 +36,6 @@ BUGGSSSS
 
 17. The delete event method isn't intuitive. Put a button at the bottom of the event detail page.
 
-18. Upon signing in you should have the filters reset and be looking at the current month. (The filters shouldn't be reset, nvm.)
-
-19. Keyboard offsets the page incorrectly.
-
 
 NEW FEATURES!
 

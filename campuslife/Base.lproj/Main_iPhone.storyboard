@@ -822,7 +822,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="3fg-Ix-2xe">
-                        <barButtonItem key="rightBarButtonItem" title="Update Event" id="tVv-zw-NBM">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" id="tVv-zw-NBM">
                             <connections>
                                 <segue destination="AlA-OM-RDG" kind="push" id="Kjd-sx-cq2"/>
                             </connections>

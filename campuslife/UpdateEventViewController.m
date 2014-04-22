@@ -366,13 +366,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Activities"]) {
         oldCalId = [_auth getActivitiesCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Academics"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Student Academics"]) {
         oldCalId = [_auth getAcademicsCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Athletics"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Warrior Athletics"]) {
         oldCalId = [_auth getAthleticsCalId];
     }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Residence"]) {
+    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Residence Life"]) {
         oldCalId = [_auth getResidenceCalId];
     }
     else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Campus Rec"]) {
@@ -383,16 +383,16 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
         newCalId = [_auth getEntertainmentCalId];
     }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Activities"]) {
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Student Activities"]) {
         newCalId = [_auth getActivitiesCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
         newCalId = [_auth getAcademicsCalId];
     }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Athletics"]) {
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Warrior Athletics"]) {
         newCalId = [_auth getAthleticsCalId];
     }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence"]) {
+    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence Life"]) {
         newCalId = [_auth getResidenceCalId];
     }
     else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {

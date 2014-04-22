@@ -117,6 +117,8 @@
     {
         _repFreq = @"Yearly";
     }
+    
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 @end
