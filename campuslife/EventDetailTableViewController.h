@@ -24,11 +24,6 @@
  */
 @property (copy, nonatomic,setter = setEvent:) NSDictionary *eventDict;
 
-/**
- Handles the update event button
- */
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *updateEvent;
-
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
 
 - (IBAction)deleteEvent:(id)sender;

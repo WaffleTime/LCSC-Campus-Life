@@ -46,8 +46,8 @@
         self.navigationItem.rightBarButtonItem.title = @"Update Event";
         self.navigationItem.rightBarButtonItem.enabled = YES;
         
-        _deleteBtn.titleLabel.text = @"Delete Event";
         [_deleteBtn setEnabled:YES];
+        [_deleteBtn setTitle:@"Delete Event" forState:UIControlStateNormal];
     }
 }
 
