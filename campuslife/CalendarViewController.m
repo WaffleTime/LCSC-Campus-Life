@@ -67,12 +67,12 @@
     //Stores the authenticator so that it can be used
     [_auth setAuthenticator:googleOAuth];
     
-    [_auth setActivitiesCalId:@"lcmail.lcsc.edu_2eqs4lb1sec1bcqvalhfu0ane8@group.calendar.google.com"];
-    [_auth setEntertainmentCalId:@"lcmail.lcsc.edu_7lf922s27p569sq3ndlig44g94@group.calendar.google.com"];
-    [_auth setResidenceCalId:@"lcmail.lcsc.edu_2k1inscpp932dkmf8q30bdo8rk@group.calendar.google.com"];
-    [_auth setAthleticsCalId:@"lcmail.lcsc.edu_3u5gguv87sa68i3pqklufctj3c@group.calendar.google.com"];
-    [_auth setAcademicsCalId:@"lcmail.lcsc.edu_kmcvmjd97mk1be8pdush8lpc8s@group.calendar.google.com"];
-    [_auth setCampusRecCalId:@"lcmail.lcsc.edu_u1tqmcehmtauiv3t4cm18fugto@group.calendar.google.com"];
+    [_auth setActivitiesCalId:@"l9qpkh5gb7dhjqv8nm0mn098fk@group.calendar.google.com"];
+    [_auth setEntertainmentCalId:@"m6h2d5afcjfnmaj8qr7o96q89c@group.calendar.google.com"];
+    [_auth setResidenceCalId:@"gqv0n6j15pppdh0t8adgc1n1ts@group.calendar.google.com"];
+    [_auth setAthleticsCalId:@"d6jbgjhudph2mpef1cguhn4g9g@group.calendar.google.com"];
+    [_auth setAcademicsCalId:@"0rn5mgclnhc7htmh0ht0cc5pgk@group.calendar.google.com"];
+    [_auth setCampusRecCalId:@"h4j413d3q0uftb2crk0t92jjlc@group.calendar.google.com"];
 
     
     [self setSignedIn:NO];
@@ -221,8 +221,8 @@
     
     [_activityIndicator startAnimating];
     
-    [[_auth getAuthenticator] authorizeUserWithClienID:@"408837038497.apps.googleusercontent.com"
-                                       andClientSecret:@"boEOJa_DKR9c06vLWbBdmC92"
+    [[_auth getAuthenticator] authorizeUserWithClienID:@"836202105226-07ulfvopjkp1qpr2f08i8df1rv5ebphs.apps.googleusercontent.com"
+                                       andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
                                          andParentView:self.view
                                              andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
     //NSLog(@"Signed in we did");
@@ -765,7 +765,7 @@
         _jsonsSent = 0;
         
         //This is a dummy update that will be to see if the user is able to manage events.
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/14fuhp6sleemg5580pvb4bmd14/move", [_auth getEntertainmentCalId]]
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
                            withHttpMethod:httpMethod_POST
                        postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                       postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
@@ -779,7 +779,7 @@
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
     
-    //NSLog(@"%@",responseJSONAsString);
+    NSLog(@"%@",responseJSONAsString);
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
         //NSLog(@"%@",responseJSONAsString);
@@ -926,7 +926,7 @@
                         }
                     }
                 }
-                else {
+                else if ([[currentEventInfo objectForKey:@"start"] objectForKey:@"date"] != nil) {
                     startDay = (int)[[[[currentEventInfo objectForKey:@"start"]
                                   objectForKey:@"date"]
                                  substringWithRange:NSMakeRange(8, 2)]
@@ -974,6 +974,14 @@
                             }
                         }
                     }
+                }
+                else if ([[currentEventInfo objectForKey:@"status"] isEqualToString:@"cancelled"])
+                {
+                    continue;
+                }
+                else
+                {
+                    continue;
                 }
                 
                 float freq = 1.0;
@@ -1385,7 +1393,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/t5kqf70qrqft0fadc89t6i2vlk/move", [_auth getAcademicsCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/2krf6iakqog30751k9skgrsj6c/move", [_auth getAcademicsCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAcademicsCalId]], nil]
@@ -1399,7 +1407,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/lcr2f93ciuu73jca61gjt57c4g/move", [_auth getActivitiesCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/6fhomj6btb4eueb4rl0t1mqsdg/move", [_auth getActivitiesCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getActivitiesCalId]], nil]
@@ -1411,7 +1419,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/s812dv7rj3lasfb149nkgoegk0/move", [_auth getResidenceCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/mg2obo46a6nqb32v33otufivq8/move", [_auth getResidenceCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getResidenceCalId]], nil]
@@ -1424,7 +1432,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/jucggn6i17ecs40cc5oug0dglg/move", [_auth getAthleticsCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/m2vg4ncj8bu7oechv50ltk84j4/move", [_auth getAthleticsCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAthleticsCalId]], nil]
@@ -1437,7 +1445,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/9jaa8fgfgt8a9stc9cejtn5tps/move", [_auth getCampusRecCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/650gme9itnmk2ofvo2crjrm2io/move", [_auth getCampusRecCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCampusRecCalId]], nil]
@@ -1493,7 +1501,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/t5kqf70qrqft0fadc89t6i2vlk/move", [_auth getAcademicsCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/2krf6iakqog30751k9skgrsj6c/move", [_auth getAcademicsCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAcademicsCalId]], nil]
@@ -1506,7 +1514,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/lcr2f93ciuu73jca61gjt57c4g/move", [_auth getActivitiesCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/6fhomj6btb4eueb4rl0t1mqsdg/move", [_auth getActivitiesCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getActivitiesCalId]], nil]
@@ -1519,7 +1527,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/s812dv7rj3lasfb149nkgoegk0/move", [_auth getResidenceCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/mg2obo46a6nqb32v33otufivq8/move", [_auth getResidenceCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getResidenceCalId]], nil]
@@ -1532,7 +1540,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/jucggn6i17ecs40cc5oug0dglg/move", [_auth getAthleticsCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/m2vg4ncj8bu7oechv50ltk84j4/move", [_auth getAthleticsCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAthleticsCalId]], nil]
@@ -1546,7 +1554,7 @@
                 // If user authorization is successful, then make an API call to get the event list for the current month.
                 // For more infomation about this API call, visit:
                 // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/9jaa8fgfgt8a9stc9cejtn5tps/move", [_auth getCampusRecCalId]]
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/650gme9itnmk2ofvo2crjrm2io/move", [_auth getCampusRecCalId]]
                                    withHttpMethod:httpMethod_POST
                                postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                               postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCampusRecCalId]], nil]

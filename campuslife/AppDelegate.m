@@ -68,7 +68,7 @@
         [alert show];
     }
 }
-
+/*
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)devToken
 {
@@ -91,6 +91,6 @@
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
 	//NSLog(@"Failed to get token, error: %@", error);
-}
+}*/
 
 @end

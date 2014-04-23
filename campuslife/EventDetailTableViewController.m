@@ -41,15 +41,13 @@
     
     auth = [Authentication getSharedInstance];
     
-    if ([auth getUserCanManageEvents])
+    if ([auth getUserCanManageEvents] && [[[auth getAuthCals] objectForKey:_eventDict[@"category"]] isEqualToString:@"YES"])
     {
         self.navigationItem.rightBarButtonItem.title = @"Update Event";
         self.navigationItem.rightBarButtonItem.enabled = YES;
-    }
-    
-    if ([[[auth getAuthCals] objectForKey:_eventDict[@"category"]] isEqualToString:@"NO"]) {
-        _deleteBtn.titleLabel.text = @" ";
-        _deleteBtn.enabled = NO;
+        
+        _deleteBtn.titleLabel.text = @"Delete Event";
+        [_deleteBtn setEnabled:YES];
     }
 }
 
@@ -161,14 +159,30 @@
             if ([[_eventDict objectForKey:@"start"] objectForKey:@"date"])
             {
                 NSString *eventStart = [[_eventDict objectForKey:@"start"] objectForKey:@"date"];
-                NSRange zeroToTenStart = NSMakeRange(0, 10);
-                timeLbl.text = [eventStart substringWithRange:zeroToTenStart];
+                NSRange fiveToTen = NSMakeRange(5, 5);
+                NSString *datePart = [eventStart substringWithRange:fiveToTen];
+                
+                datePart = [datePart stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+                
+                NSRange zeroToFour = NSMakeRange(0, 4);
+                
+                datePart = [datePart stringByAppendingString:@"/"];
+                datePart = [datePart stringByAppendingString:[eventStart substringWithRange:zeroToFour]];
+                
+                timeLbl.text = datePart;
             }
             else
             {
-                NSString *eventStart1 = [[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"];
-                NSRange zeroToTen = NSMakeRange(0, 10);
-                NSString *datePart = [eventStart1 substringWithRange:zeroToTen];
+                NSString *eventStart = [[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"];
+                NSRange fiveToTen = NSMakeRange(5, 5);
+                NSString *datePart = [eventStart substringWithRange:fiveToTen];
+                
+                datePart = [datePart stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+                
+                NSRange zeroToFour = NSMakeRange(0, 4);
+                
+                datePart = [datePart stringByAppendingString:@"/"];
+                datePart = [datePart stringByAppendingString:[eventStart substringWithRange:zeroToFour]];
                 
                 NSString *eventStart2 = [[_eventDict objectForKey:@"start"] objectForKey:@"dateTime"];
                 NSRange elevenToSixteen = NSMakeRange(11, 5);
@@ -192,14 +206,30 @@
             if ([[_eventDict objectForKey:@"end"] objectForKey:@"date"])
             {
                 NSString *eventEnd = [[_eventDict objectForKey:@"end"] objectForKey:@"date"];
-                NSRange zeroToTenEnd = NSMakeRange(0, 10);
-                timeLbl.text = [eventEnd substringWithRange:zeroToTenEnd];
+                NSRange fiveToTen = NSMakeRange(5, 5);
+                NSString *datePart = [eventEnd substringWithRange:fiveToTen];
+                
+                datePart = [datePart stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+                
+                NSRange zeroToFour = NSMakeRange(0, 4);
+                
+                datePart = [datePart stringByAppendingString:@"/"];
+                datePart = [datePart stringByAppendingString:[eventEnd substringWithRange:zeroToFour]];
+                
+                timeLbl.text = datePart;
             }
             else
             {
-                NSString *eventEnd1 = [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"];
-                NSRange zeroToTen = NSMakeRange(0, 10);
-                NSString *datePart = [eventEnd1 substringWithRange:zeroToTen];
+                NSString *eventEnd = [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"];
+                NSRange fiveToTen = NSMakeRange(5, 5);
+                NSString *datePart = [eventEnd substringWithRange:fiveToTen];
+                
+                datePart = [datePart stringByReplacingOccurrencesOfString:@"-" withString:@"/"];
+                
+                NSRange zeroToFour = NSMakeRange(0, 4);
+                
+                datePart = [datePart stringByAppendingString:@"/"];
+                datePart = [datePart stringByAppendingString:[eventEnd substringWithRange:zeroToFour]];
                 
                 NSString *eventEnd2 = [[_eventDict objectForKey:@"end"] objectForKey:@"dateTime"];
                 NSRange elevenToSixteen = NSMakeRange(11, 5);
@@ -235,9 +265,6 @@
             if ([_eventDict objectForKey:@"recurrence"])
             {
                 //NSLog(@"Recurrence: %@", [_eventDict objectForKey:@"recurrence"]);
-                
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmss'Z'"];
                 
                 NSString *repeatUntilLbl;
                 NSString *repeatUntilOtherStuff;
@@ -403,11 +430,11 @@
 //Output: 8 chars from original string including 2 hyphens returns a 10 char NSString
 - (NSString *)formatTimeString:(NSString *)time
 {
-    NSString *timeStr = [time substringWithRange:NSMakeRange(0, 4)];
-    timeStr = [timeStr stringByAppendingString:@"-"];
-    timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(4, 2)]];
-    timeStr = [timeStr stringByAppendingString:@"-"];
+    NSString *timeStr = [time substringWithRange:NSMakeRange(4, 2)];
+    timeStr = [timeStr stringByAppendingString:@"/"];
     timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(6, 2)]];
+    timeStr = [timeStr stringByAppendingString:@"/"];
+    timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(0, 4)]];
     /*timeStr = [timeStr stringByAppendingString:@" "];
     timeStr = [timeStr stringByAppendingString:[time substringWithRange:NSMakeRange(9, 2)]];
     timeStr = [timeStr stringByAppendingString:@":"];
