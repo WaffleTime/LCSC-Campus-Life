@@ -1283,6 +1283,9 @@
             }
             //NSLog(@"These are our calendar events: %@",_calendarEvents);
             
+            //if (_jsonsSent == 4 || _jsonsSent == 5) {_jsonsSent += 1;}
+            //if (_jsonsSent == 4 || _jsonsSent == 5) {_jsonsSent += 1;}
+            
             if (_jsonsSent == 6) {
                 //This is a performance test for how long it took to make the 6 http requests!
                 //NSDate *methodFinish = [NSDate date];
