@@ -111,6 +111,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         eventDate = [dateFormatter dateFromString:_eventInfo[@"end"][@"date"]];
         
+        eventDate = [eventDate dateByAddingTimeInterval:-86400];
+        
         [_endTimePicker setDate:eventDate animated:NO];
         
         [_allDayEventSwitch setOn:YES];
@@ -466,14 +468,17 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd"];
             
+            NSDate *endDate = _endTimePicker.date;
+            endDate = [endDate dateByAddingTimeInterval:86400];
+            
             if (super.repeatFreq == NULL) {
                 [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date", nil] forKey:@"start"];
-                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date", nil] forKey:@"end"];
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:endDate], @"date", nil] forKey:@"end"];
             }
             else {
                 [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date",
                                  [[NSTimeZone localTimeZone] name], @"timeZone",nil] forKey:@"start"];
-                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date",
+                [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:endDate], @"date",
                                  [[NSTimeZone localTimeZone] name], @"timeZone", nil] forKey:@"end"];
             }
             

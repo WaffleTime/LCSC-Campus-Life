@@ -367,8 +367,6 @@ static MonthlyEvents *sharedInstance;
     return _selectedDay;
 }
 
-
-
 //@return Returns an integer in [1,12]
 -(int)getSelectedMonth {
     return _selectedMonth;

@@ -216,7 +216,13 @@
                 datePart = [datePart stringByAppendingString:@"/"];
                 datePart = [datePart stringByAppendingString:[eventEnd substringWithRange:zeroToFour]];
                 
-                timeLbl.text = datePart;
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"MM/dd/yyyy"];
+                
+                NSDate *endDate = [dateFormatter dateFromString:datePart];
+                endDate = [endDate dateByAddingTimeInterval:-86400];
+                
+                timeLbl.text = [dateFormatter stringFromDate:endDate];;
             }
             else
             {

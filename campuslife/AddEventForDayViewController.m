@@ -317,19 +317,21 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                    events.getSelectedMonth,
                                    events.getSelectedDay];
             
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            
             NSString *endDate = [NSString stringWithFormat:@"%d-%d-%d", events.getSelectedYear,
                                  events.getSelectedMonth,
                                  events.getSelectedDay];
             
+            NSDate *eDate = [dateFormatter dateFromString:endDate];
+            eDate = [eDate dateByAddingTimeInterval:86400];
+            
 
             [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:startDate, @"date",
                              [[NSTimeZone localTimeZone] name], @"timeZone",nil] forKey:@"start"];
-            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:endDate, @"date",
+            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:eDate], @"date",
                              [[NSTimeZone localTimeZone] name], @"timeZone", nil] forKey:@"end"];
-
-            
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyyMMdd"];
             
             //Weekly Repeat
             if ([super.repeatFreq isEqualToString:@"Weekly"]) {

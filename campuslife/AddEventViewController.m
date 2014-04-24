@@ -368,10 +368,12 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd"];
             
+            NSDate *endDate = _endTimePicker.date;
+            endDate = [endDate dateByAddingTimeInterval:86400];
 
             [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_startTimePicker.date], @"date",
                              [[NSTimeZone localTimeZone] name], @"timeZone",nil] forKey:@"start"];
-            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:_endTimePicker.date], @"date",
+            [json setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[dateFormatter stringFromDate:endDate], @"date",
                              [[NSTimeZone localTimeZone] name], @"timeZone", nil] forKey:@"end"];
             
             [dateFormatter setDateFormat:@"yyyyMMdd"];

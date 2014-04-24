@@ -677,7 +677,8 @@
     if (_jsonsSent != 0) {
         _jsonsToIgnore += 1;
     }
-    else if ([_events doesMonthNeedLoaded:_curArrayId])
+    
+    if ([_events doesMonthNeedLoaded:_curArrayId])
     {
         _jsonsSent += 1;
         if (_curArrayId == 1)
@@ -974,6 +975,8 @@
                             }
                         }
                     }
+                    //This makes the end day exclusive! As per the google calendar's standard.
+                    endDay -= 1;
                 }
                 else if ([[currentEventInfo objectForKey:@"status"] isEqualToString:@"cancelled"])
                 {
