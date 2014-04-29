@@ -17,6 +17,9 @@ static MonthlyEvents *sharedInstance;
 //This is a 3d array that holds three different 2d arrays. The 2d arrays hold events for each day in that month.
 @property (nonatomic, strong, setter=setCalendarEvents:) NSMutableArray *calendarEvents;
 
+//This holds three dictionaries that have a boolean for each calendar that represents whether the json has been received or not.
+@property (nonatomic, strong, setter=setJsonReceivedDicts:) NSArray *jsonReceivedDicts;
+
 @property (nonatomic, setter=setFirstWeekDay0:) int firstWeekDay0;
 @property (nonatomic, setter=setFirstWeekDay1:) int firstWeekDay1;
 @property (nonatomic, setter=setFirstWeekDay2:) int firstWeekDay2;
@@ -59,6 +62,8 @@ static MonthlyEvents *sharedInstance;
         
         [sharedInstance setCalendarEvents:[[NSMutableArray alloc]initWithArray:@[[NSNull null], [NSNull null], [NSNull null]]]];
         
+        [sharedInstance setJsonReceivedDicts:@[[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Entertainment", @0, @"Activities", @0, @"Student Activities", @0, @"Residence Life", @0, @"Warrior Athletics", @0, @"Campus Rec", @0, nil], [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Entertainment", @0, @"Activities", @0, @"Student Activities", @0, @"Residence Life", @0, @"Warrior Athletics", @0, @"Campus Rec", @0, nil], [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Entertainment", @0, @"Activities", @0, @"Student Activities", @0, @"Residence Life", @0, @"Warrior Athletics", @0, @"Campus Rec", @0, nil]]];
+        
         //NSLog(@"The current year and month is:%ld %ld",year, month);
     }
     return sharedInstance;
@@ -69,6 +74,13 @@ static MonthlyEvents *sharedInstance;
     _calendarEvents[0] = [NSNull null];
     _calendarEvents[1] = [NSNull null];
     _calendarEvents[2] = [NSNull null];
+    
+    for (int i=0; i<3; i++)
+    {
+        for(id key in _jsonReceivedDicts[i]) {
+            _jsonReceivedDicts[i][key] = @0;
+        }
+    }
 }
 - (void) refreshArrayOfEvents:(int)arrayId {
     if (![_calendarEvents[arrayId] isEqual:[NSNull null]]) {
@@ -386,6 +398,11 @@ static MonthlyEvents *sharedInstance;
         shouldLoad = YES;
     }
     return shouldLoad;
+}
+
+-(void)setCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar
+{
+    _jsonReceivedDicts[arrayId][calendar] = @1;
 }
 
 @end

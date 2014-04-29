@@ -487,13 +487,6 @@
     if (error) {
         [self.gOAuthDelegate errorOccuredWithShortDescription:@"An error occured while saving access token info into a NSDictionary."
                                                 andErrorDetails:[error localizedDescription]];
-        
-        _accessTokenInfoDictionary = [NSJSONSerialization JSONObjectWithData:_receivedData options:NSJSONReadingMutableContainers error:&error];
-        
-        if (error) {
-            [self.gOAuthDelegate errorOccuredWithShortDescription:@"An error occured again while saving access token info into a NSDictionary."
-                                                  andErrorDetails:[error localizedDescription]];
-        }
     }
     
     // Save the dictionary to a file.
