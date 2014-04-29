@@ -28,13 +28,13 @@ BUGGSSSS
 
 13. (done) The activity indicator needs repositioned.
 
-14. Add Event button is showing up on the day event view controller for regular user.
+14. (done) Add Event button is showing up on the day event view controller for regular user.
 
-15. (apart of #14) Nevena got authorized for two calendars (athletics, campus rec.)
+15. (done) (apart of #14) Nevena got authorized for two calendars (athletics, campus rec.)
 
-16. Update Event won't delete old events.
+16. (done) Update Event won't delete old events.
 
-17. The delete event method isn't intuitive. Put a button at the bottom of the event detail page.
+17. (done) The delete event method isn't intuitive. Put a button at the bottom of the event detail page.
 
 
 NEW FEATURES!
