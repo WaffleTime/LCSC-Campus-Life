@@ -124,12 +124,12 @@
                                            selector: @selector(onTick:)
                                            userInfo: nil
                                             repeats: YES];
-    
+
     _monthNeedsLoaded = NO;
     
     _timeLastMonthSwitch = 0;
     _timeLastReqSent = 0;
-    
+
     _delayTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05
                                               target: self
                                             selector: @selector(onTickForDelay:)
@@ -166,7 +166,7 @@
     //Check a bunch of conditions that altogether mean that the json that we're expecting
     //  hasn't been heard from for over 3 seconds. This hopefully means it won't be coming back.
     if (_signedIn && _reqsSent != 0
-        && _timeLastReqSent + 5 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + 60 < [[NSDate date] timeIntervalSince1970])
     {
         //Reset variables
         _jsonsToIgnore = 0;
@@ -180,6 +180,7 @@
         if (_authenticating)
         {
             _reqsSent += 1;
+            
             
             //This is a dummy update that will be to see if the user is able to manage events.
             [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
@@ -214,10 +215,18 @@
             [_activityIndicator stopAnimating];
             _screenLocked = NO;
             
-            _curArrayId = 0;
+            _curArrayId = 2;
             if ([_events doesMonthNeedLoaded:_curArrayId])
             {
                 [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+            }
+            else
+            {
+                _curArrayId = 0;
+                if ([_events doesMonthNeedLoaded:_curArrayId])
+                {
+                    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+                }
             }
         }
         
@@ -732,7 +741,8 @@
     //_start = [NSDate date];
     
     if (_reqsSent != 0) {
-        _jsonsToIgnore += 1;
+        _jsonsToIgnore = 1;
+        NSLog(@"ignore next json");
     }
     else if ([_events doesMonthNeedLoaded:_curArrayId])
     {
@@ -838,6 +848,7 @@
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
     
+    NSLog(@"json Incoming");
     //NSLog(@"%@",responseJSONAsString);
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
@@ -846,18 +857,7 @@
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
-
-        if (_jsonsToIgnore != 0) {
-            _jsonsToIgnore -= 1;
-            //NSLog(@"reqsSent and one being ignored, %d", _reqsSent);
-            _reqsSent = 0;
-            
-            [_events resetEvents];
-
-            _curArrayId = 1;
-            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-        }
-        else if (error) {
+        if (error) {
             // This is the case that an error occured during converting JSON data to dictionary.
             // Simply log the error description.
             //NSLog(@"%@", [error localizedDescription]);
@@ -874,56 +874,26 @@
             
             BOOL expectedJsonReceived = YES;
             
-            if (_reqsSent == 1) {
-                if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
-                    //Only refresh the events if this is the first json received.
-                    [_events refreshArrayOfEvents:_curArrayId];
-                    category = @"Entertainment";
-                    //NSLog(@"Refresh events");
-                }
-                else {
-                    expectedJsonReceived = NO;
-                }
+            if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
+                //Only refresh the events if this is the first json received.
+                [_events refreshArrayOfEvents:_curArrayId];
+                category = @"Entertainment";
+                //NSLog(@"Refresh events");
             }
-            else if (_reqsSent == 2) {
-                if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
-                    category = @"Academics";
-                }
-                else {
-                    expectedJsonReceived = NO;
-                }
+            else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Academics";
             }
-            else if (_reqsSent == 3) {
-                if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
-                    category = @"Student Activities";
-                }
-                else {
-                    expectedJsonReceived = NO;
-                }
+            else if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Student Activities";
             }
-            else if (_reqsSent == 4) {
-                if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
-                    category = @"Residence Life";
-                }
-                else {
-                    expectedJsonReceived = NO;
-                }
+            else if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Residence Life";
             }
-            else if (_reqsSent == 5) {
-                if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
-                    category = @"Warrior Athletics";
-                }
-                else {
-                    expectedJsonReceived = NO;
-                }
+            else if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Warrior Athletics";
             }
-            else if (_reqsSent == 6) {
-                if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
-                    category = @"Campus Rec";
-                }
-                else {
-                    expectedJsonReceived = NO;
-                }
+            else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Campus Rec";
             }
             
             if (expectedJsonReceived)
