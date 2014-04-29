@@ -24,16 +24,12 @@
 
 @property (nonatomic) BOOL authenticating;
 
-@property (nonatomic) int jsonsToIgnore;
-
 //This variable correlates with the one from MonthlyEvents.h/m
 @property (nonatomic) int curArrayId;
 
 @property (nonatomic) MonthlyEvents *events;
 
 @property (nonatomic) Authentication *auth;
-
-@property (nonatomic) int reqsSent;
 
 @property (nonatomic) NSDate *start;
 
@@ -54,6 +50,8 @@
 @property (nonatomic) NSTimer *timer;
 
 @property (nonatomic) NSTimeInterval timeLastReqSent;
+
+@property (nonatomic) BOOL loadCompleted;
 
 @end
 
@@ -105,9 +103,6 @@
     _leftArrow.enabled = NO;
     _rightArrow.enabled = NO;
     
-    _jsonsToIgnore = 0;
-    _reqsSent = 0;
-
     _curArrayId = 1;
     
     _screenLocked = NO;
@@ -116,6 +111,8 @@
     _shouldRefresh = NO;
     
     [self signOutOrSignIn:NULL];
+    
+    _loadCompleted = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
     
@@ -165,13 +162,9 @@
 {
     //Check a bunch of conditions that altogether mean that the json that we're expecting
     //  hasn't been heard from for over 3 seconds. This hopefully means it won't be coming back.
-    if (_signedIn && _reqsSent != 0
-        && _timeLastReqSent + 60 < [[NSDate date] timeIntervalSince1970])
+    if (_signedIn && !_loadCompleted
+        && _timeLastReqSent + 5 < [[NSDate date] timeIntervalSince1970])
     {
-        //Reset variables
-        _jsonsToIgnore = 0;
-        _reqsSent = 0;
-        
         [_events resetEvents];
         
         _curArrayId = 1;
@@ -179,9 +172,6 @@
         //Resend the requests that failed.
         if (_authenticating)
         {
-            _reqsSent += 1;
-            
-            
             //This is a dummy update that will be to see if the user is able to manage events.
             [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
                                withHttpMethod:httpMethod_POST
