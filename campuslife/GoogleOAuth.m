@@ -697,6 +697,12 @@
         [self.gOAuthDelegate authorizationWasSuccessful];
         
         isAPIResponse = NO;
+        
+        _loggedIn = YES;
+    }
+    else
+    {
+        _loggedIn = NO;
     }
     
     

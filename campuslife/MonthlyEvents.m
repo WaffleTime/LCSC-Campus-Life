@@ -351,6 +351,10 @@ static MonthlyEvents *sharedInstance;
         _calendarEvents[1] = _calendarEvents[2];
         _firstWeekDay1 = _firstWeekDay2;
         _calendarEvents[2] = [NSNull null];
+        
+        for(id key in _jsonReceivedDicts[2]) {
+            _jsonReceivedDicts[2][key] = @0;
+        }
     }
     else if (offset == -1)
     {
@@ -359,12 +363,14 @@ static MonthlyEvents *sharedInstance;
         _calendarEvents[1] = _calendarEvents[0];
         _firstWeekDay1 = _firstWeekDay0;
         _calendarEvents[0] = [NSNull null];
+        
+        for(id key in _jsonReceivedDicts[0]) {
+            _jsonReceivedDicts[0][key] = @0;
+        }
     }
     else if (offset > 1 || offset < -1)
     {
-        _calendarEvents[0] = [NSNull null];
-        _calendarEvents[1] = [NSNull null];
-        _calendarEvents[2] = [NSNull null];
+        [self resetEvents];
     }
 }
 
@@ -398,6 +404,20 @@ static MonthlyEvents *sharedInstance;
         shouldLoad = YES;
     }
     return shouldLoad;
+}
+
+-(BOOL)isMonthDoneLoading:(int)arrayId
+{
+    BOOL doneLoading = YES;
+    for (id key in _jsonReceivedDicts[arrayId])
+    {
+        if (!_jsonReceivedDicts[arrayId][key])
+        {
+            doneLoading = NO;
+            break;
+        }
+    }
+    return doneLoading;
 }
 
 -(void)setCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar

@@ -36,5 +36,5 @@
 
 -(void) setDelegate:(UIViewController<GoogleOAuthDelegate> *)delegate;
 
-
+-(void) resetPriviledges;
 @end

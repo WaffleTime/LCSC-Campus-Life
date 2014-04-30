@@ -39,5 +39,10 @@ static Authentication *_sharedInstance;
     [_googleOAuth setGOAuthDelegate:delegate];
 }
 
+-(void) resetPriviledges
+{
+    [_sharedInstance setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Student Activities", @"NO", @"Warrior Athletics", @"NO", @"Entertainment", @"NO", @"Residence Life", @"NO", @"Campus Rec", nil]];
+}
+
 
 @end

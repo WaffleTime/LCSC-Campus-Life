@@ -53,6 +53,8 @@
 
 @property (nonatomic) BOOL loadCompleted;
 
+@property (nonatomic) int reqsSent;
+
 @end
 
 @implementation CalendarViewController
@@ -113,6 +115,9 @@
     [self signOutOrSignIn:NULL];
     
     _loadCompleted = YES;
+    
+    
+    _reqsSent = 0;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
     
@@ -172,14 +177,7 @@
         //Resend the requests that failed.
         if (_authenticating)
         {
-            //This is a dummy update that will be to see if the user is able to manage events.
-            [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
-                               withHttpMethod:httpMethod_POST
-                           postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                          postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
-                                  requestBody:nil];
-            
-            _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
+            [self authenticate];
         }
         else
         {
@@ -297,7 +295,7 @@
         //Just setting the default.
         [_auth setUserCanManageEvents:NO];
         
-        [_auth setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Activities", @"NO", @"Athletics", @"NO", @"Entertainment", @"NO", @"Residence", @"NO", @"Campus Rec", nil]];
+        [_auth resetPriviledges];
         
         //NSLog(@"Signed out we did");
     }
@@ -311,7 +309,14 @@
                                        andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
                                          andParentView:self.view
                                              andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-    //NSLog(@"Signed in we did");
+    
+    while(![[_auth getAuthenticator] isLoggedIn])
+    {
+        [[_auth getAuthenticator] authorizeUserWithClienID:@"836202105226-07ulfvopjkp1qpr2f08i8df1rv5ebphs.apps.googleusercontent.com"
+                                           andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
+                                             andParentView:self.view
+                                                 andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
+    }
 }
 
 - (IBAction)radioSelected:(UIButton *)sender {
@@ -709,6 +714,18 @@
     return sDateTime;
 }
 
+- (void) authenticate
+{
+    //This is a dummy update that will be to see if the user is able to manage events.
+    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
+                       withHttpMethod:httpMethod_POST
+                   postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                  postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
+                          requestBody:nil];
+    
+    _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
+}
+
 - (void) getEventsForMonth:(NSInteger) month :(NSInteger) year {
     if (month+(_curArrayId-1) == 0)
     {
@@ -730,11 +747,7 @@
     
     //_start = [NSDate date];
     
-    if (_reqsSent != 0) {
-        _jsonsToIgnore = 1;
-        NSLog(@"ignore next json");
-    }
-    else if ([_events doesMonthNeedLoaded:_curArrayId])
+    if ([_events doesMonthNeedLoaded:_curArrayId])
     {
         if (_curArrayId == 1)
         {
@@ -744,19 +757,47 @@
         // If user authorization is successful, then make an API call to get the event list for the current month.
         // For more infomation about this API call, visit:
         // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
+        
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getActivitiesCalId]]
+                           withHttpMethod:httpMethod_GET
+                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                              requestBody:nil];
+        
         [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getEntertainmentCalId]]
                            withHttpMethod:httpMethod_GET
                        postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
                       postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
                               requestBody:nil];
         
-        _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getResidenceCalId]]
+                           withHttpMethod:httpMethod_GET
+                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                              requestBody:nil];
         
-        _reqsSent += 1;
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getAthleticsCalId]]
+                           withHttpMethod:httpMethod_GET
+                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                              requestBody:nil];
+        
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getAcademicsCalId]]
+                           withHttpMethod:httpMethod_GET
+                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                              requestBody:nil];
+        
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getCampusRecCalId]]
+                           withHttpMethod:httpMethod_GET
+                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                              requestBody:nil];
+        
+        _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
     }
     else
     {
-        _reqsSent = 0;
         if (_curArrayId == 1)
         {
             [_collectionView reloadData];
@@ -820,17 +861,6 @@
         [_events setMonth:(int)month];
         
         [_events resetEvents];
-        
-        _reqsSent += 1;
-        
-        //This is a dummy update that will be to see if the user is able to manage events.
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
-                           withHttpMethod:httpMethod_POST
-                       postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
-                              requestBody:nil];
-
-        _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
     }
     //NSLog(@"Getting the events for the current month");
 }
@@ -838,56 +868,60 @@
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
     
-    NSLog(@"json Incoming");
+    NSLog(@"json incoming");
     //NSLog(@"%@",responseJSONAsString);
     
-    if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound) {
+    if (_signedIn)
+    {
+        NSLog(@"json Incoming");
         //NSLog(@"%@",responseJSONAsString);
-        //NSLog(@"%@",responseJSONAsString);
-        // Get the JSON data as a dictionary.
-        NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
-        if (error) {
-            // This is the case that an error occured during converting JSON data to dictionary.
-            // Simply log the error description.
-            //NSLog(@"%@", [error localizedDescription]);
-        }
-        else{
-            //Get the events as an array
-            NSArray *eventsInfo = [eventsInfoDict objectForKey:@"items"];
+        if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound)
+        {
+            //NSLog(@"%@",responseJSONAsString);
+            //NSLog(@"%@",responseJSONAsString);
+            // Get the JSON data as a dictionary.
+            NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
             
-            //NSLog(@"Putting the events into _calendarEvents.");
-            
-            NSString *category = @"";
-            
-            //NSLog(@"Jsons previously received: %d", _jsonsReceived);
-            
-            BOOL expectedJsonReceived = YES;
-            
-            if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
-                //Only refresh the events if this is the first json received.
-                [_events refreshArrayOfEvents:_curArrayId];
-                category = @"Entertainment";
-                //NSLog(@"Refresh events");
+            if (error) {
+                // This is the case that an error occured during converting JSON data to dictionary.
+                // Simply log the error description.
+                //NSLog(@"%@", [error localizedDescription]);
             }
-            else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Academics";
-            }
-            else if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Student Activities";
-            }
-            else if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Residence Life";
-            }
-            else if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Warrior Athletics";
-            }
-            else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Campus Rec";
-            }
-            
-            if (expectedJsonReceived)
-            {
+            else{
+                //Get the events as an array
+                NSArray *eventsInfo = [eventsInfoDict objectForKey:@"items"];
+                
+                //NSLog(@"Putting the events into _calendarEvents.");
+                
+                NSString *category = @"";
+                
+                //NSLog(@"Jsons previously received: %d", _jsonsReceived);
+                
+                if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
+                    //Only refresh the events if this is the first json received.
+                    [_events refreshArrayOfEvents:_curArrayId];
+                    category = @"Entertainment";
+                    //NSLog(@"Refresh events");
+                }
+                else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
+                    category = @"Academics";
+                }
+                else if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
+                    category = @"Student Activities";
+                }
+                else if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
+                    category = @"Residence Life";
+                }
+                else if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
+                    category = @"Warrior Athletics";
+                }
+                else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
+                    category = @"Campus Rec";
+                }
+                
+                [_events setCalendarJsonReceivedForMonth:_curArrayId :category];
+
                 if (_curArrayId == 1)
                 {
                     _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
@@ -1311,49 +1345,30 @@
                             }
                         }
                     }
-                    /*
-                    //Alternative method for adding monthly events to the calendar.
-                    else if ([otherRepeatType isEqualToString:@"MONTHLY"]) {
-                        int untilSubstringIndx = [self getIndexOfSubstringInString:@"UNTIL=":currentEventInfo[@"recurrence"][0]] + 6;
-                        NSString *untilString = [currentEventInfo[@"recurrence"][0] substringFromIndex:untilSubstringIndx];
-                        
-                        if ([_events getSelectedMonth] > [[untilString substringWithRange:NSMakeRange(4,2)] intValue]) {
-                            for (int day=startDay; day<endDay+1; day++) {
-                                //This then uses that day as an index and inserts the currentEvent into that indice's array.
-                                [_events AppendEvent:day :currentEventInfo];
+
+                    if ([_events isMonthDoneLoading:_curArrayId])
+                    {
+                        if (_curArrayId == 1)
+                        {
+                            [_collectionView reloadData];
+                            [_activityIndicator stopAnimating];
+                            _screenLocked = NO;
+                            
+                            _curArrayId = 2;
+                            if ([_events doesMonthNeedLoaded:_curArrayId])
+                            {
+                                [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+                            }
+                            else
+                            {
+                                _curArrayId = 0;
+                                if ([_events doesMonthNeedLoaded:_curArrayId])
+                                {
+                                    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+                                }
                             }
                         }
-                    }
-                    //Alternative method for adding yearly events to the calendar.
-                    else if ([otherRepeatType isEqualToString:@"YEARLY"]) {
-                        
-                    }
-                    */
-                }
-                //NSLog(@"These are our calendar events: %@",_calendarEvents);
-                
-                //if (_reqsSent == 4 || _reqsSent == 5) {_reqsSent += 1;}
-                //if (_reqsSent == 4 || _reqsSent == 5) {_reqsSent += 1;}
-                
-                if (_reqsSent == 6) {
-                    //This is a performance test for how long it took to make the 6 http requests!
-                    //NSDate *methodFinish = [NSDate date];
-                    //NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:_start];
-                    //NSLog(@"%f is the time it took to make the calls.", executionTime);
-                    
-                    _reqsSent = 0;
-                    if (_curArrayId == 1)
-                    {
-                        [_collectionView reloadData];
-                        [_activityIndicator stopAnimating];
-                        _screenLocked = NO;
-                        
-                        _curArrayId = 2;
-                        if ([_events doesMonthNeedLoaded:_curArrayId])
-                        {
-                            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-                        }
-                        else
+                        else if (_curArrayId == 2)
                         {
                             _curArrayId = 0;
                             if ([_events doesMonthNeedLoaded:_curArrayId])
@@ -1362,177 +1377,51 @@
                             }
                         }
                     }
-                    else if (_curArrayId == 2)
-                    {
-                        _curArrayId = 0;
-                        if ([_events doesMonthNeedLoaded:_curArrayId])
-                        {
-                            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-                        }
-                    }
                 }
-                else {
-                    
-                    
-                    if (_reqsSent == 1) {
-                        // If user authorization is successful, then make an API call to get the event list for the current month.
-                        // For more infomation about this API call, visit:
-                        // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getAcademicsCalId]]
-                                           withHttpMethod:httpMethod_GET
-                                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                                              requestBody:nil];
-                    }
-                    else if(_reqsSent == 2) {
-                        // If user authorization is successful, then make an API call to get the event list for the current month.
-                        // For more infomation about this API call, visit:
-                        // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getActivitiesCalId]]
-                                           withHttpMethod:httpMethod_GET
-                                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                                              requestBody:nil];
-                    }
-                    else if (_reqsSent == 3) {
-                        // If user authorization is successful, then make an API call to get the event list for the current month.
-                        // For more infomation about this API call, visit:
-                        // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getResidenceCalId]]
-                                           withHttpMethod:httpMethod_GET
-                                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                                              requestBody:nil];
-                    }
-                    else if(_reqsSent == 4) {
-                        // If user authorization is successful, then make an API call to get the event list for the current month.
-                        // For more infomation about this API call, visit:
-                        // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getAthleticsCalId]]
-                                           withHttpMethod:httpMethod_GET
-                                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                                              requestBody:nil];
-                    }
-                    else if(_reqsSent == 5) {
-                        // If user authorization is successful, then make an API call to get the event list for the current month.
-                        // For more infomation about this API call, visit:
-                        // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getCampusRecCalId]]
-                                           withHttpMethod:httpMethod_GET
-                                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                                              requestBody:nil];
-                    }
-                    _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
-                    _reqsSent += 1;
-                }
-            }
-            else
-            {
-                //Reset variables
-                _jsonsToIgnore = 0;
-                _reqsSent = 0;
-                
-                [_events resetEvents];
-                
-                _curArrayId = 1;
-                
-                [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
             }
         }
-    }
-    //This type of json is retrieved if an update was made to an event (currently only for authenticating.)
-    else if ([responseJSONAsString rangeOfString:@"calendar#event"].location != NSNotFound) {
-        [_auth setUserCanManageEvents:YES];
+        //This type of json is retrieved if an update was made to an event (currently only for authenticating.)
+        else if ([responseJSONAsString rangeOfString:@"calendar#event"].location != NSNotFound) {
+            [_auth setUserCanManageEvents:YES];
 
-        _addEventButton.title = @"Add Event";
-        _addEventButton.enabled = YES;
-        
-        if (_reqsSent == 6) {
-            _reqsSent = 0;
-            _authenticating = NO;
-            [[_auth getAuthCals] setObject:@"YES" forKey:@"Campus Rec"];
-            _curArrayId = 1;
-            //NSLog(@"The user can manage Campus Rec events!");
-            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-        }
-        else {
-            if (_reqsSent == 1) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/2krf6iakqog30751k9skgrsj6c/move", [_auth getAcademicsCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAcademicsCalId]], nil]
-                                      requestBody:nil];
-                
-                [[_auth getAuthCals] setObject:@"YES" forKey:@"Entertainment"];
-                
-                //NSLog(@"The user can manage Entertainment events!");
+            _addEventButton.title = @"Add Event";
+            _addEventButton.enabled = YES;
+            
+            NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
+            
+            NSString *category = @"";
+            
+            if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
+                //Only refresh the events if this is the first json received.
+                [_events refreshArrayOfEvents:_curArrayId];
+                category = @"Entertainment";
+                //NSLog(@"Refresh events");
             }
-            else if(_reqsSent == 2) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/6fhomj6btb4eueb4rl0t1mqsdg/move", [_auth getActivitiesCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getActivitiesCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"YES" forKey:@"Academics"];
-                //NSLog(@"The user can manage Academics events!");
+            else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Academics";
             }
-            else if (_reqsSent == 3) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/mg2obo46a6nqb32v33otufivq8/move", [_auth getResidenceCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getResidenceCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"YES" forKey:@"Student Activities"];
-                
-                //NSLog(@"The user can manage Activities events!");
+            else if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Student Activities";
             }
-            else if(_reqsSent == 4) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/m2vg4ncj8bu7oechv50ltk84j4/move", [_auth getAthleticsCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAthleticsCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"YES" forKey:@"Residence Life"];
-                
-                //NSLog(@"The user can manage Residences events!");
+            else if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Residence Life";
             }
-            else if(_reqsSent == 5) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/650gme9itnmk2ofvo2crjrm2io/move", [_auth getCampusRecCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCampusRecCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"YES" forKey:@"Warrior Athletics"];
-                
-                //NSLog(@"The user can manage Athletics events!");
+            else if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Warrior Athletics";
             }
-            _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
-            _reqsSent += 1;
+            else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
+                category = @"Campus Rec";
+            }
+            
+                _authenticating = NO;
+            [[_auth getAuthCals] setObject:@"YES" forKey:category];
         }
     }
 }
 
 -(void)accessTokenWasRevoked{
     [_events resetEvents];
-    _jsonsToIgnore = 0;
-    _reqsSent = 0;
+    _loadCompleted = YES;
 }
 
 
@@ -1553,90 +1442,6 @@
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
     //NSLog(@"Error:%@", errorMessage);
-    
-    if ([self getIndexOfSubstringInString:@"403" :errorMessage] != -1
-        && [self getIndexOfSubstringInString:@"Forbidden" :errorMessage] != -1)
-    {
-        if (_reqsSent == 6) {
-            _reqsSent = 0;
-            _authenticating = NO;
-            [[_auth getAuthCals] setObject:@"YES" forKey:@"Campus Rec"];
-            
-            _curArrayId = 1;
-            //NSLog(@"The user can manage Campus Rec events!");
-            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-        }
-        else {
-            if (_reqsSent == 1) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/2krf6iakqog30751k9skgrsj6c/move", [_auth getAcademicsCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAcademicsCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"NO" forKey:@"Entertainment"];
-                
-                //NSLog(@"The user can't manage Entertainment events!");
-            }
-            else if(_reqsSent == 2) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/6fhomj6btb4eueb4rl0t1mqsdg/move", [_auth getActivitiesCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getActivitiesCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"NO" forKey:@"Academics"];
-                
-                //NSLog(@"The user can't manage Academics events!");
-            }
-            else if (_reqsSent == 3) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/mg2obo46a6nqb32v33otufivq8/move", [_auth getResidenceCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getResidenceCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"NO" forKey:@"Student Activities"];
-                
-                //NSLog(@"The user can't manage Athletics events!");
-            }
-            else if(_reqsSent == 4) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/m2vg4ncj8bu7oechv50ltk84j4/move", [_auth getAthleticsCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getAthleticsCalId]], nil]
-                                      requestBody:nil];
-                
-                [[_auth getAuthCals] setObject:@"NO" forKey:@"Residence Life"];
-                
-                //NSLog(@"The user can't manage Residence events!");
-            }
-            else if(_reqsSent == 5) {
-                // If user authorization is successful, then make an API call to get the event list for the current month.
-                // For more infomation about this API call, visit:
-                // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/650gme9itnmk2ofvo2crjrm2io/move", [_auth getCampusRecCalId]]
-                                   withHttpMethod:httpMethod_POST
-                               postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                              postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCampusRecCalId]], nil]
-                                      requestBody:nil];
-                [[_auth getAuthCals] setObject:@"YES" forKey:@"Warrior Athletics"];
-                
-                //NSLog(@"The user can manage Athletics events!");
-            }
-            _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
-            _reqsSent += 1;
-        }
-    }
 }
 
 @end

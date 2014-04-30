@@ -31,6 +31,7 @@
 -(int)getSelectedYear;
 
 -(BOOL)doesMonthNeedLoaded:(int)arrayId;
+-(BOOL)isMonthDoneLoading:(int)arrayId;
 
 -(void)setCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar;
 
