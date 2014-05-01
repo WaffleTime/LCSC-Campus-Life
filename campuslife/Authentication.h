@@ -27,6 +27,7 @@
 
 @property (nonatomic, strong, setter=setAuthCals:, getter=getAuthCals) NSMutableDictionary *authorizedCalendars;
 
+@property (nonatomic, strong, setter=setCategoryNames:, getter=getCategoryNames) NSArray *categoryNames;
 
 +(Authentication *) getSharedInstance;
 
