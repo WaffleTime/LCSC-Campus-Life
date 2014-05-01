@@ -7,7 +7,7 @@
 //
 
 #import "MonthlyEvents.h"
-
+#import "Authentication.h"
 
 static MonthlyEvents *sharedInstance;
 
@@ -62,7 +62,21 @@ static MonthlyEvents *sharedInstance;
         
         [sharedInstance setCalendarEvents:[[NSMutableArray alloc]initWithArray:@[[NSNull null], [NSNull null], [NSNull null]]]];
         
-        [sharedInstance setJsonReceivedDicts:@[[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Entertainment", @0, @"Activities", @0, @"Student Activities", @0, @"Residence Life", @0, @"Warrior Athletics", @0, @"Campus Rec", @0, nil], [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Entertainment", @0, @"Activities", @0, @"Student Activities", @0, @"Residence Life", @0, @"Warrior Athletics", @0, @"Campus Rec", @0, nil], [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Entertainment", @0, @"Activities", @0, @"Student Activities", @0, @"Residence Life", @0, @"Warrior Athletics", @0, @"Campus Rec", @0, nil]]];
+        NSMutableArray *jsonsReceived = [[NSMutableArray alloc] init];
+        
+        Authentication *auth = [Authentication getSharedInstance];
+        
+        for (int i=0; i<3; i++)
+        {
+            NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
+            for (int j=0; j<[[auth getCategoryNames] count]; j++)
+            {
+                [jsonDict setValue:0 forKey:[auth getCategoryNames][j]];
+            }
+            [jsonsReceived addObject:jsonDict];
+        }
+        
+        [sharedInstance setJsonReceivedDicts:jsonsReceived];
         
         //NSLog(@"The current year and month is:%ld %ld",year, month);
     }

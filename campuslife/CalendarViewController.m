@@ -22,8 +22,6 @@
 
 @property (nonatomic, setter=setSignedIn:) BOOL signedIn;
 
-@property (nonatomic) BOOL authenticating;
-
 //This variable correlates with the one from MonthlyEvents.h/m
 @property (nonatomic) int curArrayId;
 
@@ -115,9 +113,6 @@
     [self signOutOrSignIn:NULL];
     
     _loadCompleted = YES;
-    
-    
-    _reqsSent = 0;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
     
@@ -175,14 +170,8 @@
         _curArrayId = 1;
         
         //Resend the requests that failed.
-        if (_authenticating)
-        {
-            [self authenticate];
-        }
-        else
-        {
-            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-        }
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+        
         _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
     }
 }
@@ -309,14 +298,14 @@
                                        andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
                                          andParentView:self.view
                                              andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-    
+    /*
     while(![[_auth getAuthenticator] isLoggedIn])
     {
         [[_auth getAuthenticator] authorizeUserWithClienID:@"836202105226-07ulfvopjkp1qpr2f08i8df1rv5ebphs.apps.googleusercontent.com"
                                            andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
                                              andParentView:self.view
                                                  andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
-    }
+    }*/
 }
 
 - (IBAction)radioSelected:(UIButton *)sender {
@@ -359,35 +348,31 @@
 }
 
 - (IBAction)backMonthOffset:(id)sender {
-    if (_authenticating != YES) {
-        //NSLog(@"went to previous month, jsons received: %d", _reqsSent);
-        _screenLocked = YES;
-        
-        [_activityIndicator startAnimating];
-        
-        [_events offsetMonth:-1];
-        
-        _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
-        
-        _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
-        _monthNeedsLoaded = YES;
-    }
+    //NSLog(@"went to previous month, jsons received: %d", _reqsSent);
+    _screenLocked = YES;
+    
+    [_activityIndicator startAnimating];
+    
+    [_events offsetMonth:-1];
+    
+    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
+    
+    _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
+    _monthNeedsLoaded = YES;
 }
 
 - (IBAction)forwardMonthOffset:(id)sender {
-    if (_authenticating != YES) {
-        //NSLog(@"went to next month, jsons received: %d", _reqsSent);
-        _screenLocked = YES;
-        
-        [_activityIndicator startAnimating];
-        
-        [_events offsetMonth:1];
-        
-        _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
-        
-        _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
-        _monthNeedsLoaded = YES;
-    }
+    //NSLog(@"went to next month, jsons received: %d", _reqsSent);
+    _screenLocked = YES;
+    
+    [_activityIndicator startAnimating];
+    
+    [_events offsetMonth:1];
+    
+    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
+    
+    _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
+    _monthNeedsLoaded = YES;
 }
 
 
@@ -848,8 +833,6 @@
         
         self.signInOutButton.title = @"Sign Out";
         
-        _authenticating = YES;
-        
         _screenLocked = YES;
         
         NSDate *date = [NSDate date];
@@ -861,15 +844,14 @@
         [_events setMonth:(int)month];
         
         [_events resetEvents];
+        
+        [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     }
     //NSLog(@"Getting the events for the current month");
 }
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
-    
-    NSLog(@"json incoming");
-    //NSLog(@"%@",responseJSONAsString);
     
     if (_signedIn)
     {
@@ -886,7 +868,7 @@
             if (error) {
                 // This is the case that an error occured during converting JSON data to dictionary.
                 // Simply log the error description.
-                //NSLog(@"%@", [error localizedDescription]);
+                NSLog(@"%@", [error localizedDescription]);
             }
             else{
                 //Get the events as an array
@@ -898,9 +880,13 @@
                 
                 //NSLog(@"Jsons previously received: %d", _jsonsReceived);
                 
+                if ([_events doesMonthNeedLoaded:_curArrayId])
+                {
+                    [_events refreshArrayOfEvents:_curArrayId];
+                }
+                
                 if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
                     //Only refresh the events if this is the first json received.
-                    [_events refreshArrayOfEvents:_curArrayId];
                     category = @"Entertainment";
                     //NSLog(@"Refresh events");
                 }
@@ -1345,36 +1331,36 @@
                             }
                         }
                     }
+                }
 
-                    if ([_events isMonthDoneLoading:_curArrayId])
+                if ([_events isMonthDoneLoading:_curArrayId])
+                {
+                    if (_curArrayId == 1)
                     {
-                        if (_curArrayId == 1)
+                        [_collectionView reloadData];
+                        [_activityIndicator stopAnimating];
+                        _screenLocked = NO;
+                        
+                        _curArrayId = 2;
+                        if ([_events doesMonthNeedLoaded:_curArrayId])
                         {
-                            [_collectionView reloadData];
-                            [_activityIndicator stopAnimating];
-                            _screenLocked = NO;
-                            
-                            _curArrayId = 2;
-                            if ([_events doesMonthNeedLoaded:_curArrayId])
-                            {
-                                [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-                            }
-                            else
-                            {
-                                _curArrayId = 0;
-                                if ([_events doesMonthNeedLoaded:_curArrayId])
-                                {
-                                    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-                                }
-                            }
+                            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
                         }
-                        else if (_curArrayId == 2)
+                        else
                         {
                             _curArrayId = 0;
                             if ([_events doesMonthNeedLoaded:_curArrayId])
                             {
                                 [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
                             }
+                        }
+                    }
+                    else if (_curArrayId == 2)
+                    {
+                        _curArrayId = 0;
+                        if ([_events doesMonthNeedLoaded:_curArrayId])
+                        {
+                            [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
                         }
                     }
                 }
@@ -1412,8 +1398,6 @@
             else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
                 category = @"Campus Rec";
             }
-            
-                _authenticating = NO;
             [[_auth getAuthCals] setObject:@"YES" forKey:category];
         }
     }
