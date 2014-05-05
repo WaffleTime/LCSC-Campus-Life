@@ -36,6 +36,8 @@ BUGGSSSS
 
 17. (done) The delete event method isn't intuitive. Put a button at the bottom of the event detail page.
 
+18. After moving multiple months at a time. The jsonReceivedDicts array will have all of its dictionaries be updated simultaneously (even though a specific index is given.)
+    No ideas for why it would do that, it makes no sense...
 
 NEW FEATURES!
 

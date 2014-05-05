@@ -438,25 +438,8 @@
         [auth setDelegate:self];
         
         if ([[[auth getAuthCals] objectForKey:sortedArray[indexPath.row][@"category"]] isEqualToString:@"YES"]) {
-            NSString *calId = @"";
-            if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Entertainment"]) {
-                calId = [auth getEntertainmentCalId];
-            }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Academics"]) {
-                calId = [auth getAcademicsCalId];
-            }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Student Activities"]) {
-                calId = [auth getActivitiesCalId];
-            }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Residence Life"]) {
-                calId = [auth getResidenceCalId];
-            }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Warrior Athletics"]) {
-                calId = [auth getAthleticsCalId];
-            }
-            else if ([sortedArray[indexPath.row][@"category"] isEqualToString:@"Campus Rec"]) {
-                calId = [auth getCampusRecCalId];
-            }
+            NSString *calId = [[Authentication getSharedInstance] getCalIds][sortedArray[indexPath.row][@"category"]];
+
             
             
             [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, sortedArray[indexPath.row][@"id"]]

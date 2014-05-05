@@ -77,14 +77,6 @@
     //Stores the authenticator so that it can be used
     [_auth setAuthenticator:googleOAuth];
     
-    [_auth setActivitiesCalId:@"l9qpkh5gb7dhjqv8nm0mn098fk@group.calendar.google.com"];
-    [_auth setEntertainmentCalId:@"m6h2d5afcjfnmaj8qr7o96q89c@group.calendar.google.com"];
-    [_auth setResidenceCalId:@"gqv0n6j15pppdh0t8adgc1n1ts@group.calendar.google.com"];
-    [_auth setAthleticsCalId:@"d6jbgjhudph2mpef1cguhn4g9g@group.calendar.google.com"];
-    [_auth setAcademicsCalId:@"0rn5mgclnhc7htmh0ht0cc5pgk@group.calendar.google.com"];
-    [_auth setCampusRecCalId:@"h4j413d3q0uftb2crk0t92jjlc@group.calendar.google.com"];
-
-    
     [self setSignedIn:NO];
     self.signInOutButton.title = @"Sign In";
     
@@ -116,18 +108,19 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(returnToCalendar)name:UIApplicationWillEnterForegroundNotification object:nil];
     
+    /*
     _timer = [NSTimer scheduledTimerWithTimeInterval: 1
                                              target: self
                                            selector: @selector(onTick:)
                                            userInfo: nil
                                             repeats: YES];
-
+     */
     _monthNeedsLoaded = NO;
     
     _timeLastMonthSwitch = 0;
     _timeLastReqSent = 0;
 
-    _delayTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05
+    _delayTimer = [NSTimer scheduledTimerWithTimeInterval: 0.1
                                               target: self
                                             selector: @selector(onTickForDelay:)
                                             userInfo: nil
@@ -179,8 +172,10 @@
 - (void)onTickForDelay:(NSTimer*)timer
 {
     if (_signedIn && _monthNeedsLoaded
-        && _timeLastMonthSwitch + 0.1 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastMonthSwitch + 0.2 < [[NSDate date] timeIntervalSince1970])
     {
+        _screenLocked = YES;
+        
         _curArrayId = 1;
         if ([_events doesMonthNeedLoaded:_curArrayId])
         {
@@ -190,7 +185,7 @@
         {
             [_collectionView reloadData];
             [_activityIndicator stopAnimating];
-            _screenLocked = NO;
+            NSLog(@"Collection view reloaded!");
             
             _curArrayId = 2;
             if ([_events doesMonthNeedLoaded:_curArrayId])
@@ -203,6 +198,11 @@
                 if ([_events doesMonthNeedLoaded:_curArrayId])
                 {
                     [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+                }
+                else
+                {
+                    NSLog(@"Screen is no longer locked!");
+                    _screenLocked = NO;
                 }
             }
         }
@@ -279,6 +279,8 @@
         
         _monthLabel.text = @" ";
         
+        _monthNeedsLoaded = NO;
+        
         [_collectionView reloadData];
         
         //Just setting the default.
@@ -348,31 +350,35 @@
 }
 
 - (IBAction)backMonthOffset:(id)sender {
-    //NSLog(@"went to previous month, jsons received: %d", _reqsSent);
-    _screenLocked = YES;
-    
-    [_activityIndicator startAnimating];
-    
-    [_events offsetMonth:-1];
-    
-    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
-    
-    _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
-    _monthNeedsLoaded = YES;
+    if (!_screenLocked)
+    {
+        //NSLog(@"went to previous month, jsons received: %d", _reqsSent);
+        
+        [_activityIndicator startAnimating];
+        
+        [_events offsetMonth:-1];
+        
+        _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
+        
+        _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
+        _monthNeedsLoaded = YES;
+    }
 }
 
 - (IBAction)forwardMonthOffset:(id)sender {
-    //NSLog(@"went to next month, jsons received: %d", _reqsSent);
-    _screenLocked = YES;
-    
-    [_activityIndicator startAnimating];
-    
-    [_events offsetMonth:1];
-    
-    _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
-    
-    _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
-    _monthNeedsLoaded = YES;
+    if (!_screenLocked)
+    {
+        //NSLog(@"went to next month, jsons received: %d", _reqsSent);
+
+        [_activityIndicator startAnimating];
+        
+        [_events offsetMonth:1];
+        
+        _monthLabel.text = [NSString stringWithFormat:@"%@ %d", [_events getMonthBarDate], [_events getSelectedYear]];
+        
+        _timeLastMonthSwitch = [[NSDate date] timeIntervalSince1970];
+        _monthNeedsLoaded = YES;
+    }
 }
 
 
@@ -538,26 +544,36 @@
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     BOOL canSegue = YES;
     
-    if (_screenLocked) {
-        canSegue = NO;
-    }
-    else if ([identifier isEqualToString:@"CalendarToDayEvents"]) {
+    if ([identifier isEqualToString:@"CalendarToDayEvents"]) {
         NSArray *indexPaths = [_collectionView indexPathsForSelectedItems];
         NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
         
         //Check to see if this cell is for a day of the previous month
         if (indexPath.row+1 - [_events getFirstWeekDay:1] <= 0) {
-            //Offset month if a previous month's cell is clicked
-            [self backMonthOffset:nil];
+            if (!_screenLocked) {
+                //Offset month if a previous month's cell is clicked
+                [self backMonthOffset:nil];
+            }
+            else
+            {
+                NSLog(@"No segue for you!");
+            }
             canSegue = NO;
         }
         //Check to see if this cell is for a day of the next month
         else if (indexPath.row+1 - [_events getFirstWeekDay:1] > [_events getDaysOfMonth]) {
-            //Offset month if a future month's cell is clicked
-            [self forwardMonthOffset:nil];
+            if (!_screenLocked) {
+                //Offset month if a future month's cell is clicked
+                [self forwardMonthOffset:nil];
+            }
+            else
+            {
+                NSLog(@"No segue for you!");
+            }
             canSegue = NO;
         }
     }
+    
     return canSegue;
 }
 
@@ -701,12 +717,15 @@
 
 - (void) authenticate
 {
-    //This is a dummy update that will be to see if the user is able to manage events.
-    [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getEntertainmentCalId]]
-                       withHttpMethod:httpMethod_POST
-                   postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                  postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getEntertainmentCalId]], nil]
-                          requestBody:nil];
+    for (NSString *name in [_auth getCategoryNames])
+    {
+        //This is a dummy update that will be to see if the user is able to manage events.
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getCalIds][name]]
+                           withHttpMethod:httpMethod_POST
+                       postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                      postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCalIds][name]], nil]
+                              requestBody:nil];
+    }
     
     _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
 }
@@ -739,46 +758,26 @@
             _screenLocked = YES;
         }
         
+        NSLog(@"Sending requests");
+        
         // If user authorization is successful, then make an API call to get the event list for the current month.
         // For more infomation about this API call, visit:
         // https://developers.google.com/google-apps/calendar/v3/reference/calendarList/list
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getActivitiesCalId]]
-                           withHttpMethod:httpMethod_GET
-                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                              requestBody:nil];
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getEntertainmentCalId]]
-                           withHttpMethod:httpMethod_GET
-                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                              requestBody:nil];
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getResidenceCalId]]
-                           withHttpMethod:httpMethod_GET
-                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                              requestBody:nil];
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getAthleticsCalId]]
-                           withHttpMethod:httpMethod_GET
-                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                              requestBody:nil];
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getAcademicsCalId]]
-                           withHttpMethod:httpMethod_GET
-                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                              requestBody:nil];
-        
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getCampusRecCalId]]
-                           withHttpMethod:httpMethod_GET
-                       postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
-                              requestBody:nil];
-        
+        for (NSString *name in [_auth getCategoryNames])
+        {
+            if (![_events getCalendarJsonReceivedForMonth:_curArrayId :name])
+            {
+                [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events", [_auth getCalIds][name]]
+                                   withHttpMethod:httpMethod_GET
+                               postParameterNames:[NSArray arrayWithObjects:@"timeMax", @"timeMin", nil]
+                              postParameterValues:[NSArray arrayWithObjects:[self toStringFromDateTime:_lastDateOfMonth], [self toStringFromDateTime:_firstDateOfMonth], nil]
+                                      requestBody:nil];
+            }
+            else
+            {
+                NSLog(@"%@ calendar has already been loaded for month %d", name, _curArrayId);
+            }
+        }
         _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
     }
     else
@@ -845,6 +844,9 @@
         
         [_events resetEvents];
         
+        [self authenticate];
+        
+        _curArrayId = 1;
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     }
     //NSLog(@"Getting the events for the current month");
@@ -860,7 +862,6 @@
         
         if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound)
         {
-            //NSLog(@"%@",responseJSONAsString);
             //NSLog(@"%@",responseJSONAsString);
             // Get the JSON data as a dictionary.
             NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
@@ -883,6 +884,7 @@
                 if ([_events doesMonthNeedLoaded:_curArrayId])
                 {
                     [_events refreshArrayOfEvents:_curArrayId];
+                    NSLog(@"Refreshing current month");
                 }
                 
                 if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
@@ -1335,11 +1337,12 @@
 
                 if ([_events isMonthDoneLoading:_curArrayId])
                 {
+                    //NSLog(@"Monthid=%d is done loading.", _curArrayId);
                     if (_curArrayId == 1)
                     {
                         [_collectionView reloadData];
                         [_activityIndicator stopAnimating];
-                        _screenLocked = NO;
+                        NSLog(@"Collection view reloaded!");
                         
                         _curArrayId = 2;
                         if ([_events doesMonthNeedLoaded:_curArrayId])
@@ -1353,6 +1356,11 @@
                             {
                                 [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
                             }
+                            else
+                            {
+                                NSLog(@"Screen is no longer locked!");
+                                _screenLocked = NO;
+                            }
                         }
                     }
                     else if (_curArrayId == 2)
@@ -1362,6 +1370,16 @@
                         {
                             [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
                         }
+                        else
+                        {
+                            NSLog(@"Screen is no longer locked!");
+                            _screenLocked = NO;
+                        }
+                    }
+                    else
+                    {
+                        NSLog(@"Screen is no longer locked!");
+                        _screenLocked = NO;
                     }
                 }
             }
@@ -1378,10 +1396,7 @@
             NSString *category = @"";
             
             if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
-                //Only refresh the events if this is the first json received.
-                [_events refreshArrayOfEvents:_curArrayId];
                 category = @"Entertainment";
-                //NSLog(@"Refresh events");
             }
             else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
                 category = @"Academics";
@@ -1399,6 +1414,8 @@
                 category = @"Campus Rec";
             }
             [[_auth getAuthCals] setObject:@"YES" forKey:category];
+            
+            NSLog(@"Authenticated Calendar: %@", category);
         }
     }
 }

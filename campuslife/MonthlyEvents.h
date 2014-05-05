@@ -34,6 +34,7 @@
 -(BOOL)isMonthDoneLoading:(int)arrayId;
 
 -(void)setCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar;
+-(BOOL)getCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar;
 
 @property (nonatomic, setter=setYear:) int selectedYear;
 @property (nonatomic, setter=setMonth:) int selectedMonth;

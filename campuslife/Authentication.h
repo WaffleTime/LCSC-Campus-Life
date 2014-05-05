@@ -18,12 +18,7 @@
 //Is for determining if the user can manage events.
 @property (nonatomic, getter=getUserCanManageEvents, setter=setUserCanManageEvents:) BOOL userCanManageEvents;
 
-@property (nonatomic, strong, setter=setActivitiesCalId:, getter=getActivitiesCalId) NSString *activitiesCalId;
-@property (nonatomic, strong, setter=setEntertainmentCalId:, getter=getEntertainmentCalId) NSString *entertainmentCalId;
-@property (nonatomic, strong, setter=setResidenceCalId:, getter=getResidenceCalId) NSString *residenceCalId;
-@property (nonatomic, strong, setter=setAthleticsCalId:, getter=getAthleticsCalId) NSString *athleticsCalId;
-@property (nonatomic, strong, setter=setAcademicsCalId:, getter=getAcademicsCalId) NSString *academicsCalId;
-@property (nonatomic, strong, setter=setCampusRecCalId:, getter=getCampusRecCalId) NSString *campusRecCalId;
+@property (nonatomic, strong, setter=setCalIds:, getter=getCalIds) NSMutableDictionary *calendarIds;
 
 @property (nonatomic, strong, setter=setAuthCals:, getter=getAuthCals) NSMutableDictionary *authorizedCalendars;
 

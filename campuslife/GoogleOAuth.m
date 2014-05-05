@@ -634,6 +634,7 @@
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     // Append any new data to the _receivedData object.
     [_receivedData appendData:data];
+    //[_receivedData setData:data];
 }
 
 
@@ -730,6 +731,8 @@
     if (isAPIResponse) {
         [self.gOAuthDelegate responseFromServiceWasReceived:responseJSON andResponseJSONAsData:_receivedData];
     }
+    
+    [_receivedData setLength:0];
 }
 
 

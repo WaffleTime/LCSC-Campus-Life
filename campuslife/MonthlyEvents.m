@@ -18,7 +18,7 @@ static MonthlyEvents *sharedInstance;
 @property (nonatomic, strong, setter=setCalendarEvents:) NSMutableArray *calendarEvents;
 
 //This holds three dictionaries that have a boolean for each calendar that represents whether the json has been received or not.
-@property (nonatomic, strong, setter=setJsonReceivedDicts:) NSArray *jsonReceivedDicts;
+@property (nonatomic, strong, setter=setJsonReceivedDicts:) NSMutableArray *jsonReceivedDicts;
 
 @property (nonatomic, setter=setFirstWeekDay0:) int firstWeekDay0;
 @property (nonatomic, setter=setFirstWeekDay1:) int firstWeekDay1;
@@ -71,7 +71,7 @@ static MonthlyEvents *sharedInstance;
             NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
             for (int j=0; j<[[auth getCategoryNames] count]; j++)
             {
-                [jsonDict setValue:0 forKey:[auth getCategoryNames][j]];
+                [jsonDict setObject:@0 forKey:[auth getCategoryNames][j]];
             }
             [jsonsReceived addObject:jsonDict];
         }
@@ -91,8 +91,8 @@ static MonthlyEvents *sharedInstance;
     
     for (int i=0; i<3; i++)
     {
-        for(id key in _jsonReceivedDicts[i]) {
-            _jsonReceivedDicts[i][key] = @0;
+        for (NSString *name in [[Authentication getSharedInstance] getCategoryNames]) {
+            _jsonReceivedDicts[i][name] = @0;
         }
     }
 }
@@ -358,6 +358,10 @@ static MonthlyEvents *sharedInstance;
     
     //NSLog(@"The new year is %d and the new month is %d", _selectedYear, _selectedMonth);
     
+    //[self resetEvents];
+    
+    Authentication *auth = [Authentication getSharedInstance];
+    
     if (offset == 1)
     {
         _calendarEvents[0] = _calendarEvents[1];
@@ -366,9 +370,15 @@ static MonthlyEvents *sharedInstance;
         _firstWeekDay1 = _firstWeekDay2;
         _calendarEvents[2] = [NSNull null];
         
-        for(id key in _jsonReceivedDicts[2]) {
-            _jsonReceivedDicts[2][key] = @0;
+        _jsonReceivedDicts[0] = _jsonReceivedDicts[1];
+        _jsonReceivedDicts[1] = _jsonReceivedDicts[2];
+        
+        NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
+        for (int j=0; j<[[auth getCategoryNames] count]; j++)
+        {
+            [jsonDict setObject:@0 forKey:[auth getCategoryNames][j]];
         }
+        _jsonReceivedDicts[2] = jsonDict;
     }
     else if (offset == -1)
     {
@@ -378,9 +388,15 @@ static MonthlyEvents *sharedInstance;
         _firstWeekDay1 = _firstWeekDay0;
         _calendarEvents[0] = [NSNull null];
         
-        for(id key in _jsonReceivedDicts[0]) {
-            _jsonReceivedDicts[0][key] = @0;
+        _jsonReceivedDicts[2] = _jsonReceivedDicts[1];
+        _jsonReceivedDicts[1] = _jsonReceivedDicts[0];
+        
+        NSMutableDictionary *jsonDict = [[NSMutableDictionary alloc] init];
+        for (int j=0; j<[[auth getCategoryNames] count]; j++)
+        {
+            [jsonDict setObject:@0 forKey:[auth getCategoryNames][j]];
         }
+        _jsonReceivedDicts[0] = jsonDict;
     }
     else if (offset > 1 || offset < -1)
     {
@@ -425,7 +441,7 @@ static MonthlyEvents *sharedInstance;
     BOOL doneLoading = YES;
     for (id key in _jsonReceivedDicts[arrayId])
     {
-        if (!_jsonReceivedDicts[arrayId][key])
+        if ([_jsonReceivedDicts[arrayId][key] intValue] == 0)
         {
             doneLoading = NO;
             break;
@@ -436,7 +452,22 @@ static MonthlyEvents *sharedInstance;
 
 -(void)setCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar
 {
+    if ([_jsonReceivedDicts[arrayId][calendar] intValue] == 1)
+    {
+        NSLog(@"Month: %d already loaded the %@ calendar",arrayId, calendar);
+    }
+    else
+    {
+        NSLog(@"Month: %d has had %@ calendar loaded",arrayId, calendar);
+    }
     _jsonReceivedDicts[arrayId][calendar] = @1;
+}
+
+-(BOOL)getCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar
+{
+    BOOL jsonReceived = [_jsonReceivedDicts[arrayId][calendar] boolValue];
+
+    return jsonReceived;
 }
 
 @end
