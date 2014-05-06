@@ -163,7 +163,7 @@
     //Check a bunch of conditions that altogether mean that the json that we're expecting
     //  hasn't been heard from for over 3 seconds. This hopefully means it won't be coming back.
     if (!_loadCompleted
-        && _timeLastReqSent + 2 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + 3 < [[NSDate date] timeIntervalSince1970])
     {
         [_events resetEvents];
         
@@ -822,7 +822,7 @@
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound)
     {
-        NSLog(@"%@",responseJSONAsString);
+        //NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
