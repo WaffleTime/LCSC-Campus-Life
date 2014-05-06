@@ -40,23 +40,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wTc-6S-bic">
-                                <rect key="frame" x="0.0" y="21" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem id="uVE-7V-K6i">
-                                        <connections>
-                                            <action selector="signOutOrSignIn:" destination="vXZ-lx-hvc" id="QC5-9d-Dh5"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="yW4-Zx-s0b"/>
-                                    <barButtonItem enabled="NO" title=" " id="iBk-o7-Bqm">
-                                        <connections>
-                                            <segue destination="lm4-rW-dyT" kind="push" id="Hou-2Z-Fh7"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calendar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dp-md-3wZ">
                                 <rect key="frame" x="91" y="29" width="138" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -354,7 +337,13 @@
                             <outletCollection property="gestureRecognizers" destination="JhE-A6-Mbz" appends="YES" id="bUR-ps-Sg1"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Calendar" id="xAc-fc-j1e"/>
+                    <navigationItem key="navigationItem" title="Calendar" id="xAc-fc-j1e">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title=" " id="iBk-o7-Bqm">
+                            <connections>
+                                <segue destination="lm4-rW-dyT" kind="push" id="Hou-2Z-Fh7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="pPm-e7-bG5" id="aWP-sj-r1y"/>
                         <outlet property="addEventButton" destination="iBk-o7-Bqm" id="Nci-IR-g0h"/>
@@ -368,7 +357,6 @@
                         <outlet property="leftArrow" destination="hdl-Sk-HTY" id="99f-Mp-waM"/>
                         <outlet property="monthLabel" destination="FFL-Y2-5MW" id="ozO-Aw-DcN"/>
                         <outlet property="rightArrow" destination="4dy-g2-40z" id="6Aa-Xg-s3b"/>
-                        <outlet property="signInOutButton" destination="uVE-7V-K6i" id="zdg-0d-meu"/>
                         <outlet property="swipeLeft" destination="JhE-A6-Mbz" id="0de-ko-9Xv"/>
                         <outlet property="swipeRight" destination="lX3-dg-vsY" id="BjW-OR-E6U"/>
                     </connections>
@@ -957,12 +945,86 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="cR8-OQ-Mma"/>
+                        <segue destination="doN-7W-3Hz" kind="relationship" relationship="rootViewController" id="KGM-Pa-gsr"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAG-nL-nyY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-77" y="-1"/>
+            <point key="canvasLocation" x="-654" y="-1"/>
+        </scene>
+        <!--Hub View Controller-->
+        <scene sceneID="e8H-0z-rcm">
+            <objects>
+                <viewController id="doN-7W-3Hz" customClass="hubViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Akz-Pe-Dnw"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZHe-FJ-loz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xMC-jT-6cJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-6m-ewk">
+                                <rect key="frame" x="108" y="500" width="105" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Event Calendar">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInToGoogleCalendar:" destination="doN-7W-3Hz" eventType="touchUpInside" id="wpG-ec-7uw"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEO-oB-jmA">
+                                <rect key="frame" x="11" y="275" width="299" height="132"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <mutableString key="text">Lewis-Clark State College is located at Lewiston, Idaho, where two rivers (Clearwater and Snake), two cities (Lewiston and Clarkston), and two states (Idaho and Washington) come together. It is also where two peoples and two cultures came together in friendship and discovery – the Nez Perce Tribe and the Lewis &amp; Clark Corps of Discovery. Founded in 1893, Lewis-Clark State is a public undergraduate college with a three-part mission of academic programs, professional-technical programs, and community programs.</mutableString>
+                                <fontDescription key="fontDescription" name="Baskerville" family="Baskerville" pointSize="11"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IR4-tC-t5y">
+                                <rect key="frame" x="11" y="415" width="299" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">One of the top public comprehensive four-year colleges in the West, with its beautiful campus, small classes, and superb faculty, LCSC is often described as a public institution with the feel and quality of a private college.</string>
+                                <fontDescription key="fontDescription" name="Baskerville" family="Baskerville" pointSize="11"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LCSC Campus Life" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF9-9y-eJ3">
+                                <rect key="frame" x="20" y="74" width="281" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Baskerville-Bold" family="Baskerville" pointSize="31"/>
+                                <color key="textColor" red="0.015686274510000001" green="0.40000000000000002" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <size key="shadowOffset" width="1" height="2"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lewistonMap.png" translatesAutoresizingMaskIntoConstraints="NO" id="A8h-Vt-hBk">
+                                <rect key="frame" x="20" y="142" width="280" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connecting Learning To Life" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPg-8X-3oJ">
+                                <rect key="frame" x="153" y="115" width="147" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Baskerville-Italic" family="Baskerville" pointSize="15"/>
+                                <color key="textColor" red="0.015686274510000001" green="0.40000000000000002" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wxf-BU-tEg"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="push" identifier="hubToCalendar" id="M7y-ex-EsK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="63I-cj-OYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-194" y="43"/>
         </scene>
         <!--Update Event View Controller - Update Event-->
         <scene sceneID="71R-wm-LKW">
@@ -1451,6 +1513,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </scenes>
     <resources>
         <image name="dotEntertainment.png" width="20" height="20"/>
+        <image name="lewistonMap.png" width="900" height="428"/>
         <image name="newAlphaCircle.png" width="13" height="13"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

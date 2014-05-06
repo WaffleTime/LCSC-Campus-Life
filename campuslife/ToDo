@@ -36,9 +36,22 @@ BUGGSSSS
 
 17. (done) The delete event method isn't intuitive. Put a button at the bottom of the event detail page.
 
+18. After moving multiple months at a time. The jsonReceivedDicts array will have all of its dictionaries be updated simultaneously (even though a specific index is given.)
+    No ideas for why it would do that, it makes no sense...
 
 NEW FEATURES!
 
 * 1. Load three months into memory at a time.
 
 2. Allow the event on a day area to go to other days.
+
+
+
+Last Things To Finish:
+
+1. Alter the names of the category buttons.
+
+2. Adjust the preference usage to utilize strings instead of ints.
+
+3. Finish the hub.
+

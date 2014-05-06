@@ -11,6 +11,7 @@
 		C10BC49A18AD8C5D004C91CD /* newAlphaCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = C10BC49918AD8C5D004C91CD /* newAlphaCircle.png */; };
 		C10C84F918E23B4400C7CB09 /* ToDo in Resources */ = {isa = PBXBuildFile; fileRef = C10C84F818E23B4400C7CB09 /* ToDo */; };
 		C111B76D18C6929200B957F2 /* EventDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */; };
+		C114505719172761005D1D99 /* hubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C114505619172761005D1D99 /* hubViewController.m */; };
 		C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */; };
 		C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB418B40F7D00FE63F6 /* RepeatFreqViewController.m */; };
 		C1182FB818B40F9600FE63F6 /* RepeatUntilViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1182FB718B40F9600FE63F6 /* RepeatUntilViewController.m */; };
@@ -37,6 +38,11 @@
 		C17D5A4A1844433300DE0B26 /* unselected-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = C17D5A481844433300DE0B26 /* unselected-ipad.png */; };
 		C19EA4C1183ECDA5002FC746 /* daysOfTheWeek-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */; };
 		C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = C1A75FF4184E99DF0072C27F /* Authentication.m */; };
+		C1BA28801919705A0035F364 /* lewistonMap.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA287F1919705A0035F364 /* lewistonMap.png */; };
+		C1BA288419198B520035F364 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288119198B520035F364 /* Default-568h@2x.png */; };
+		C1BA288519198B520035F364 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288219198B520035F364 /* Default-Portrait.png */; };
+		C1BA288619198B520035F364 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288319198B520035F364 /* Default-Portrait@2x.png */; };
+		C1BA288819198C160035F364 /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288719198C160035F364 /* Default-568h.png */; };
 		C1DEC8CB18F4AC2700ECD591 /* dotAcademics.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DEC8C518F4AC2700ECD591 /* dotAcademics.png */; };
 		C1DEC8CC18F4AC2700ECD591 /* dotActivities.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DEC8C618F4AC2700ECD591 /* dotActivities.png */; };
 		C1DEC8CD18F4AC2700ECD591 /* dotAthletics.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DEC8C718F4AC2700ECD591 /* dotAthletics.png */; };
@@ -86,6 +92,8 @@
 		C10C84F818E23B4400C7CB09 /* ToDo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ToDo; sourceTree = "<group>"; };
 		C111B76B18C6929200B957F2 /* EventDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailTableViewController.h; sourceTree = "<group>"; };
 		C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailTableViewController.m; sourceTree = "<group>"; };
+		C114505519172761005D1D99 /* hubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hubViewController.h; sourceTree = "<group>"; };
+		C114505619172761005D1D99 /* hubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hubViewController.m; sourceTree = "<group>"; };
 		C1182FB018B40B1000FE63F6 /* AddEventParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEventParentViewController.h; sourceTree = "<group>"; };
 		C1182FB118B40B1000FE63F6 /* AddEventParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEventParentViewController.m; sourceTree = "<group>"; };
 		C1182FB318B40F7D00FE63F6 /* RepeatFreqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatFreqViewController.h; sourceTree = "<group>"; };
@@ -117,6 +125,11 @@
 		C19EA4C0183ECDA5002FC746 /* daysOfTheWeek-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "daysOfTheWeek-iPad.png"; sourceTree = "<group>"; };
 		C1A75FF3184E99DF0072C27F /* Authentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Authentication.h; sourceTree = "<group>"; };
 		C1A75FF4184E99DF0072C27F /* Authentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Authentication.m; sourceTree = "<group>"; };
+		C1BA287F1919705A0035F364 /* lewistonMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lewistonMap.png; sourceTree = "<group>"; };
+		C1BA288119198B520035F364 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C1BA288219198B520035F364 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
+		C1BA288319198B520035F364 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		C1BA288719198C160035F364 /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
 		C1DEC8C518F4AC2700ECD591 /* dotAcademics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotAcademics.png; sourceTree = "<group>"; };
 		C1DEC8C618F4AC2700ECD591 /* dotActivities.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotActivities.png; sourceTree = "<group>"; };
 		C1DEC8C718F4AC2700ECD591 /* dotAthletics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotAthletics.png; sourceTree = "<group>"; };
@@ -225,6 +238,8 @@
 				C111B76B18C6929200B957F2 /* EventDetailTableViewController.h */,
 				C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */,
 				C1E66E0C183C333A00851B89 /* Images.xcassets */,
+				C114505519172761005D1D99 /* hubViewController.h */,
+				C114505619172761005D1D99 /* hubViewController.m */,
 				C1E66E3D183C33D000851B89 /* CalendarViewController.h */,
 				C1E66E3E183C33D000851B89 /* CalendarViewController.m */,
 				C1E66E3F183C33D000851B89 /* Day_Event_ViewController.h */,
@@ -255,6 +270,11 @@
 		C1E66DF8183C333A00851B89 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C1BA288719198C160035F364 /* Default-568h.png */,
+				C1BA288119198B520035F364 /* Default-568h@2x.png */,
+				C1BA288219198B520035F364 /* Default-Portrait.png */,
+				C1BA288319198B520035F364 /* Default-Portrait@2x.png */,
+				C1BA287F1919705A0035F364 /* lewistonMap.png */,
 				C1E23C6A1900885900F17579 /* GoogleOAuth_BackArrow.png */,
 				C1E23C6B1900885900F17579 /* GoogleOAuth_CancelButton.png */,
 				C1E23C6C1900885900F17579 /* GoogleOAuth_ForwardArrow.png */,
@@ -399,28 +419,33 @@
 				C12C65FD18612C5D0017C41C /* AppIcon57x57@2x.png in Resources */,
 				C10C84F918E23B4400C7CB09 /* ToDo in Resources */,
 				C1E66E50183C34F000851B89 /* daysOfWeek.png in Resources */,
+				C1BA288519198B520035F364 /* Default-Portrait.png in Resources */,
 				C1DEC8CF18F4AC2700ECD591 /* dotEntertainment.png in Resources */,
 				C12C65F918612C5D0017C41C /* AppIcon40x40@2x.png in Resources */,
 				C12C660118612C5D0017C41C /* AppIcon72x72@2x.png in Resources */,
 				C1DEC8D018F4AC2700ECD591 /* dotResidence.png in Resources */,
+				C1BA288819198C160035F364 /* Default-568h.png in Resources */,
 				C10BC49A18AD8C5D004C91CD /* newAlphaCircle.png in Resources */,
 				C1E23C6E1900885900F17579 /* GoogleOAuth_CancelButton.png in Resources */,
 				C17D5A491844433300DE0B26 /* selected-ipad.png in Resources */,
 				C12C65F818612C5D0017C41C /* AppIcon40x40.png in Resources */,
 				C1E23C6F1900885900F17579 /* GoogleOAuth_ForwardArrow.png in Resources */,
 				C12C65FA18612C5D0017C41C /* AppIcon50x50.png in Resources */,
+				C1BA288419198B520035F364 /* Default-568h@2x.png in Resources */,
 				C17D5A4618443C5100DE0B26 /* unselected.png in Resources */,
 				C1DEC8CD18F4AC2700ECD591 /* dotAthletics.png in Resources */,
 				C12C65F718612C5D0017C41C /* AppIcon29x29@2x.png in Resources */,
 				C1DEC8CB18F4AC2700ECD591 /* dotAcademics.png in Resources */,
 				C1E66E0D183C333A00851B89 /* Images.xcassets in Resources */,
 				C12C65FF18612C5D0017C41C /* AppIcon60x60@2x.png in Resources */,
+				C1BA288619198B520035F364 /* Default-Portrait@2x.png in Resources */,
 				C19EA4C1183ECDA5002FC746 /* daysOfTheWeek-iPad.png in Resources */,
 				C12C660218612C5D0017C41C /* AppIcon76x76.png in Resources */,
 				C1FBB4D31907057200C5D3B5 /* Main_iPad.storyboard in Resources */,
 				C17D5A4518443C5100DE0B26 /* selected.png in Resources */,
 				C1DEC8CE18F4AC2700ECD591 /* dotCampusRec.png in Resources */,
 				C12C660018612C5D0017C41C /* AppIcon72x72.png in Resources */,
+				C1BA28801919705A0035F364 /* lewistonMap.png in Resources */,
 				C1E66E05183C333A00851B89 /* Main_iPhone.storyboard in Resources */,
 				C12C65FB18612C5D0017C41C /* AppIcon50x50@2x.png in Resources */,
 				C12C65FC18612C5D0017C41C /* AppIcon57x57.png in Resources */,
@@ -464,6 +489,7 @@
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
 				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,
 				C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */,
+				C114505719172761005D1D99 /* hubViewController.m in Sources */,
 				C1E66DFE183C333A00851B89 /* main.m in Sources */,
 				C111B76D18C6929200B957F2 /* EventDetailTableViewController.m in Sources */,
 				C1F8CF2F184D25BC0003E2A1 /* AddEventViewController.m in Sources */,

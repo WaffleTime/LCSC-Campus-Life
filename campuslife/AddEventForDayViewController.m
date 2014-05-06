@@ -229,25 +229,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
     
     
-    NSString *calId = @"";
-    if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
-        calId = [_auth getEntertainmentCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Student Activities"]) {
-        calId = [_auth getActivitiesCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
-        calId = [_auth getAcademicsCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Warrior Athletics"]) {
-        calId = [_auth getAthleticsCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence Life"]) {
-        calId = [_auth getResidenceCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {
-        calId = [_auth getCampusRecCalId];
-    }
+    NSString *calId = [_auth getCalIds][_categories[[_categoryPicker selectedRowInComponent:0]]];
     
     if (readyToAddEvent) {
         NSMutableDictionary *json = [[NSMutableDictionary alloc] init];
@@ -589,7 +571,5 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Just log the error message.
     //NSLog(@"%@", errorMessage);
 }
-
-
 
 @end

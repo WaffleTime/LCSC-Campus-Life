@@ -360,45 +360,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         }
     }
     
-    NSString *oldCalId = @"";
-    if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
-        oldCalId = [_auth getEntertainmentCalId];
-    }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Student Activities"]) {
-        oldCalId = [_auth getActivitiesCalId];
-    }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Academics"]) {
-        oldCalId = [_auth getAcademicsCalId];
-    }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Warrior Athletics"]) {
-        oldCalId = [_auth getAthleticsCalId];
-    }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Residence Life"]) {
-        oldCalId = [_auth getResidenceCalId];
-    }
-    else if ([[_eventInfo objectForKey:@"category"] isEqualToString:@"Campus Rec"]) {
-        oldCalId = [_auth getCampusRecCalId];
-    }
+    NSString *oldCalId = [_auth getCalIds][[_eventInfo objectForKey:@"category"]];
     
-    NSString *newCalId = @"";
-    if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Entertainment"]) {
-        newCalId = [_auth getEntertainmentCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Student Activities"]) {
-        newCalId = [_auth getActivitiesCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Academics"]) {
-        newCalId = [_auth getAcademicsCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Warrior Athletics"]) {
-        newCalId = [_auth getAthleticsCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Residence Life"]) {
-        newCalId = [_auth getResidenceCalId];
-    }
-    else if ([_categories[[_categoryPicker selectedRowInComponent:0]] isEqualToString:@"Campus Rec"]) {
-        newCalId = [_auth getCampusRecCalId];
-    }
+    NSString *newCalId = [_auth getCalIds][_categories[[_categoryPicker selectedRowInComponent:0]]];
+    
     if (newCalId == nil || oldCalId == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Problem"
@@ -749,7 +714,5 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Just log the error message.
     //NSLog(@"%@", errorMessage);
 }
-
-
 
 @end

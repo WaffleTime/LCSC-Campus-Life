@@ -461,26 +461,8 @@
 
 - (IBAction)deleteEvent:(id)sender
 {
-    NSString *calId = @"";
-    if ([_eventDict[@"category"] isEqualToString:@"Entertainment"]) {
-        calId = [auth getEntertainmentCalId];
-    }
-    else if ([_eventDict[@"category"] isEqualToString:@"Academics"]) {
-        calId = [auth getAcademicsCalId];
-    }
-    else if ([_eventDict[@"category"] isEqualToString:@"Student Activities"]) {
-        calId = [auth getActivitiesCalId];
-    }
-    else if ([_eventDict[@"category"] isEqualToString:@"Residence Life"]) {
-        calId = [auth getResidenceCalId];
-    }
-    else if ([_eventDict[@"category"] isEqualToString:@"Warrior Athletics"]) {
-        calId = [auth getAthleticsCalId];
-    }
-    else if ([_eventDict[@"category"] isEqualToString:@"Campus Rec"]) {
-        calId = [auth getCampusRecCalId];
-    }
-    
+    NSString *calId = [[Authentication getSharedInstance] getCalIds][_eventDict[@"category"]];
+
     [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventDict[@"id"]]
                       withHttpMethod:httpMethod_DELETE
                   postParameterNames:[NSArray arrayWithObjects: nil]
@@ -529,6 +511,8 @@
     //NSLog(@"%@", errorMessage);
 }
 
-
+-(void)authorizationFailure
+{
+}
 
 @end
