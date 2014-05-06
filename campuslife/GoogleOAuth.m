@@ -134,10 +134,11 @@
             [self refreshAccessToken];
         }
         else{
-            // Otherwise tell the caller through the delegate class that the authorization is successful.
-            [self.gOAuthDelegate authorizationWasSuccessful];
+            //[self revokeAccessToken];
+            // In case that the access token info file is not found then show the
+            // webview to let user sign in and allow access to the app.
+            [self showWebviewForUserLogin];
         }
-        
     }
     else{
         // In case that the access token info file is not found then show the
@@ -373,7 +374,7 @@
     [backButton setImage:backArrow forState:normal];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [backButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    _backButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
     //  Flexible spacer for buttons
     UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -386,13 +387,13 @@
     [forwardButton setImage:forwardArrow forState:normal];
     [forwardButton addTarget:self action:@selector(forwardButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [forwardButton setShowsTouchWhenHighlighted:YES];
-    UIBarButtonItem *forward = [[UIBarButtonItem alloc] initWithCustomView:forwardButton];
+    _forwardButton = [[UIBarButtonItem alloc] initWithCustomView:forwardButton];
     
     //  Adding buttons to toolbar
     [items addObject:fixedItem]; //added a fixed space to separate buttons
-    [items addObject:back]; //added back button
+    [items addObject:_backButton]; //added back button
     [items addObject:fixedItem]; //added a fixed space to separate buttons
-    [items addObject:forward]; //added forward button
+    [items addObject:_forwardButton]; //added forward button
     [toolbar setItems:items animated:NO];
     [self addSubview:toolbar];
     
@@ -622,7 +623,8 @@
         }
     }
     
-    //back.enabled = self.canGoBack;
+    _backButton.enabled = self.canGoBack;
+    _forwardButton.enabled = self.canGoForward;
 }
 
 
@@ -697,8 +699,6 @@
         [self.gOAuthDelegate authorizationWasSuccessful];
         
         isAPIResponse = NO;
-        
-        _loggedIn = YES;
     }
     
     

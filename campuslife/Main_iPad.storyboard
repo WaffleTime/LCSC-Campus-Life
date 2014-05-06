@@ -405,12 +405,12 @@ One of the top public comprehensive four-year colleges in the West, with its bea
                     <connections>
                         <outlet property="activityIndicator" destination="9Gf-er-7KO" id="Vuw-TW-PNR"/>
                         <outlet property="addEventButton" destination="4aA-3f-mas" id="Gr2-LF-09l"/>
-                        <outlet property="cat1Btn" destination="eEa-h2-qGF" id="hJp-x2-poE"/>
-                        <outlet property="cat2Btn" destination="ezD-J5-Fdc" id="vc6-Zw-Y8o"/>
-                        <outlet property="cat3Btn" destination="TxK-Pz-okp" id="97p-2n-vb1"/>
-                        <outlet property="cat4Btn" destination="BUU-M4-7hD" id="6Yp-Zi-jbB"/>
-                        <outlet property="cat5Btn" destination="lyf-ZU-ohz" id="asN-lW-D0P"/>
-                        <outlet property="cat6Btn" destination="PrC-7E-W8y" id="P2b-Ei-MEp"/>
+                        <outlet property="btnAcademics" destination="ezD-J5-Fdc" id="iaP-bU-jsN"/>
+                        <outlet property="btnCampusRec" destination="PrC-7E-W8y" id="AOw-Ze-E0q"/>
+                        <outlet property="btnEntertainment" destination="eEa-h2-qGF" id="VmC-8u-IJc"/>
+                        <outlet property="btnResidenceLife" destination="BUU-M4-7hD" id="SJV-SQ-OMj"/>
+                        <outlet property="btnStudentActivities" destination="TxK-Pz-okp" id="jOP-wF-gcv"/>
+                        <outlet property="btnWarriorAthletics" destination="lyf-ZU-ohz" id="7cT-3E-N0d"/>
                         <outlet property="collectionView" destination="EWa-JO-Uke" id="pJV-qD-v69"/>
                         <outlet property="leftArrow" destination="hbQ-y3-LPp" id="avV-qz-P7e"/>
                         <outlet property="monthLabel" destination="3p4-RS-72g" id="ov0-pZ-HfA"/>

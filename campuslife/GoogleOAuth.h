@@ -47,6 +47,9 @@ typedef enum {
 @interface GoogleOAuth : UIWebView <UIWebViewDelegate, NSURLConnectionDataDelegate>
 @property (nonatomic, strong) id<GoogleOAuthDelegate> gOAuthDelegate;
 
+@property (nonatomic, strong) UIBarButtonItem *backButton;
+@property (nonatomic, strong) UIBarButtonItem *forwardButton;
+
 -(void)authorizeUserWithClienID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
                     andParentView:(UIView *)parent_View andScopes:(NSArray *)scopes;
 -(void)revokeAccessToken;

@@ -262,6 +262,8 @@
 				C1E66E46183C33D000851B89 /* Preferences.m */,
 				C1A75FF3184E99DF0072C27F /* Authentication.h */,
 				C1A75FF4184E99DF0072C27F /* Authentication.m */,
+				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
+				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C1E66DF8183C333A00851B89 /* Supporting Files */,
 			);
 			path = campuslife;
@@ -303,8 +305,6 @@
 				C12C65F318612C5D0017C41C /* AppIcon72x72@2x.png */,
 				C12C65F418612C5D0017C41C /* AppIcon76x76.png */,
 				C12C65F518612C5D0017C41C /* AppIcon76x76@2x.png */,
-				C1E66E4C183C33DA00851B89 /* GoogleOAuth.h */,
-				C1E66E4D183C33DA00851B89 /* GoogleOAuth.m */,
 				C17D5A471844433300DE0B26 /* selected-ipad.png */,
 				C17D5A481844433300DE0B26 /* unselected-ipad.png */,
 				C17D5A4318443C5100DE0B26 /* selected.png */,

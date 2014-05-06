@@ -10,24 +10,13 @@
 
 @interface Preferences : NSObject
 
-//Entertainment
-@property (nonatomic, setter=setPrefOne:) BOOL prefOne;
-//Academics
-@property (nonatomic, setter=setPrefTwo:) BOOL prefTwo;
-//Activities
-@property (nonatomic, setter=setPrefThree:) BOOL prefThree;
-//Residence
-@property (nonatomic, setter=setPrefFour:) BOOL prefFour;
-//Athletics
-@property (nonatomic, setter=setPrefFive:) BOOL prefFive;
-//Athletics
-@property (nonatomic, setter=setPrefSix:) BOOL prefSix;
+@property (nonatomic, setter = initPrefs:)NSMutableDictionary *prefs;
 
 +(Preferences *) getSharedInstance;
 
-- (void) setPreference:(int) index :(BOOL)preference;
-- (BOOL) getPreference:(int) index;
-- (void) negatePreference:(int) index;
+//- (void) setPreference:(NSString *)prefName :(BOOL)preference;
+- (BOOL) getPreference:(NSString *)prefName;
+- (void) negatePreference:(NSString *)prefName;
 
 - (void) loadPreferences;
 - (void) savePreferences;

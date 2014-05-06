@@ -64,19 +64,21 @@
 
     _auth = [Authentication getSharedInstance];
     
-     [_auth setDelegate:self];
-    
     _events = [MonthlyEvents getSharedInstance];
     
     Preferences *prefs = [Preferences getSharedInstance];
     
     //Here we load the actual state of the selected buttons.
-    [_cat1Btn setSelected:[prefs getPreference:1]];
-    [_cat2Btn setSelected:[prefs getPreference:2]];
-    [_cat3Btn setSelected:[prefs getPreference:3]];
-    [_cat4Btn setSelected:[prefs getPreference:4]];
-    [_cat5Btn setSelected:[prefs getPreference:5]];
-    [_cat6Btn setSelected:[prefs getPreference:6]];
+    [_btnEntertainment setSelected:[prefs getPreference:@"Entertainment"]];
+    [_btnAcademics setSelected:[prefs getPreference:@"Academics"]];
+    [_btnStudentActivities setSelected:[prefs getPreference:@"Student Activities"]];
+    [_btnResidenceLife setSelected:[prefs getPreference:@"Residence Life"]];
+    [_btnWarriorAthletics setSelected:[prefs getPreference:@"Warrior Athletics"]];
+    [_btnCampusRec setSelected:[prefs getPreference:@"Campus Rec"]];
+    
+    _leftArrow.enabled = NO;
+    _rightArrow.enabled = NO;
+    
 
     _curArrayId = 1;
     
@@ -291,40 +293,47 @@
     [_activityIndicator startAnimating];
 }*/
 
-- (IBAction)radioSelected:(UIButton *)sender {
+- (IBAction)radioSelected:(UIButton *)sender
+{
     Preferences *prefs = [Preferences getSharedInstance];
-
-    switch (sender.tag) {
-        case 1:
-            [prefs negatePreference:1]; //                              <-- Entertainment
-            [_cat1Btn setSelected:[prefs getPreference:1]];
-            [_cat1Btn setHighlighted:NO];
-            break;
-        case 2:
-            [prefs negatePreference:2]; //                              <-- Academics
-            [_cat2Btn setSelected:[prefs getPreference:2]];
-            [_cat2Btn setHighlighted:NO];
-            break;
-        case 3:
-            [prefs negatePreference:3]; //                              <-- Activities
-            [_cat3Btn setSelected:[prefs getPreference:3]];
-            [_cat3Btn setHighlighted:NO];
-            break;
-        case 4:
-            [prefs negatePreference:4]; //                              <-- Residence
-            [_cat4Btn setSelected:[prefs getPreference:4]];
-            [_cat4Btn setHighlighted:NO];
-            break;
-        case 5:
-            [prefs negatePreference:5]; //                              <-- Athletics
-            [_cat5Btn setSelected:[prefs getPreference:5]];
-            [_cat5Btn setHighlighted:NO];
-            break;
-        case 6:
-            [prefs negatePreference:6]; //                              <-- Campus Rec
-            [_cat6Btn setSelected:[prefs getPreference:6]];
-            [_cat6Btn setHighlighted:NO];
-            break;
+    
+    NSString *categoryName = sender.titleLabel.text;
+    
+    if([categoryName  isEqual: @"Entertainment"])
+    {
+        [prefs negatePreference:categoryName]; //                              <-- Entertainment
+        [_btnEntertainment setSelected:[prefs getPreference:categoryName]];
+        [_btnEntertainment setHighlighted:NO];
+    }
+    else if([categoryName  isEqual: @"Academics"])
+    {
+        [prefs negatePreference:categoryName]; //                              <-- Academics
+        [_btnAcademics setSelected:[prefs getPreference:categoryName]];
+        [_btnAcademics setHighlighted:NO];
+    }
+    else if ([categoryName isEqual: @"Student Activities"])
+    {
+        [prefs negatePreference:categoryName]; //                              <-- Student Activities
+        [_btnStudentActivities setSelected:[prefs getPreference:categoryName]];
+        [_btnStudentActivities setHighlighted:NO];
+    }
+    else if ([categoryName  isEqual: @"Residence Life"])
+    {
+        [prefs negatePreference:categoryName]; //                              <-- Residence
+        [_btnResidenceLife setSelected:[prefs getPreference:categoryName]];
+        [_btnResidenceLife setHighlighted:NO];
+    }
+    else if ([categoryName isEqual: @"Warrior Athletics"])
+    {
+        [prefs negatePreference:categoryName]; //                              <-- Warrior Athletics
+        [_btnWarriorAthletics setSelected:[prefs getPreference:categoryName]];
+        [_btnWarriorAthletics setHighlighted:NO];
+    }
+    else
+    {
+        [prefs negatePreference:categoryName]; //                              <-- Campus Rec
+        [_btnCampusRec setSelected:[prefs getPreference:categoryName]];
+        [_btnCampusRec setHighlighted:NO];
     }
     
     [_collectionView reloadData];
@@ -415,29 +424,29 @@
         dayLbl.text = [NSString stringWithFormat:@"%d", (int)indexPath.row+1 - [_events getFirstWeekDay:1]];
         
         //Grab the squares for each category.
-        UIView *cat1 = (UIView *)[cell viewWithTag:11];
-        if (!cat1.hidden) {
-            cat1.hidden = YES;
+        UIView *entertainment = (UIView *)[cell viewWithTag:11];
+        if (!entertainment.hidden) {
+            entertainment.hidden = YES;
         }
-        UIView *cat2 = (UIView *)[cell viewWithTag:12];
-        if (!cat2.hidden) {
-            cat2.hidden = YES;
+        UIView *academics = (UIView *)[cell viewWithTag:12];
+        if (!academics.hidden) {
+            academics.hidden = YES;
         }
-        UIView *cat3 = (UIView *)[cell viewWithTag:13];
-        if (!cat3.hidden) {
-            cat3.hidden = YES;
+        UIView *studentActivities = (UIView *)[cell viewWithTag:13];
+        if (!studentActivities.hidden) {
+            studentActivities.hidden = YES;
         }
-        UIView *cat4 = (UIView *)[cell viewWithTag:14];
-        if (!cat4.hidden) {
-            cat4.hidden = YES;
+        UIView *residenceLife = (UIView *)[cell viewWithTag:14];
+        if (!residenceLife.hidden) {
+            residenceLife.hidden = YES;
         }
-        UIView *cat5 = (UIView *)[cell viewWithTag:15];
-        if (!cat5.hidden) {
-            cat5.hidden = YES;
+        UIView *warriorAthletics = (UIView *)[cell viewWithTag:15];
+        if (!warriorAthletics.hidden) {
+            warriorAthletics.hidden = YES;
         }
-        UIView *cat6 = (UIView *)[cell viewWithTag:16];
-        if (!cat6.hidden) {
-            cat6.hidden = YES;
+        UIView *campusRec = (UIView *)[cell viewWithTag:16];
+        if (!campusRec.hidden) {
+            campusRec.hidden = YES;
         }
         
         //This holds the preferences based on the legend at the top.
@@ -453,50 +462,50 @@
             //NSLog(@"The event's colorId is %d", [[[dayEvents objectAtIndex:i] objectForKey:@"colorId"] intValue]);
             
             if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Entertainment"]) {
-                if (cat1.hidden) {
+                if (entertainment.hidden) {
                     //Check to see if this category is selected.
-                    if ([prefs getPreference:1]) {
-                        cat1.hidden = NO;
+                    if ([prefs getPreference:[[dayEvents objectAtIndex:i] objectForKey:@"category"]]) {
+                        entertainment.hidden = NO;
                     }
                 }
             }
             else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Academics"]) {
-                if (cat2.hidden) {
+                if (academics.hidden) {
                     //Check to see if this category is selected.
-                    if ([prefs getPreference:2]) {
-                        cat2.hidden = NO;
+                    if ([prefs getPreference:[[dayEvents objectAtIndex:i] objectForKey:@"category"]]) {
+                        academics.hidden = NO;
                     }
                 }
             }
             else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Student Activities"]) {
-                if (cat3.hidden) {
+                if (studentActivities.hidden) {
                     //Check to see if this category is selected.
-                    if ([prefs getPreference:3]) {
-                        cat3.hidden = NO;
+                    if ([prefs getPreference:[[dayEvents objectAtIndex:i] objectForKey:@"category"]]) {
+                        studentActivities.hidden = NO;
                     }
                 }
             }
             else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Residence Life"]) {
-                if (cat4.hidden) {
+                if (residenceLife.hidden) {
                     //Check to see if this category is selected.
-                    if ([prefs getPreference:4]) {
-                        cat4.hidden = NO;
+                    if ([prefs getPreference:[[dayEvents objectAtIndex:i] objectForKey:@"category"]]) {
+                        residenceLife.hidden = NO;
                     }
                 }
             }
             else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Warrior Athletics"]) {
-                if (cat5.hidden) {
+                if (warriorAthletics.hidden) {
                     //Check to see if this category is selected.
-                    if ([prefs getPreference:5]) {
-                        cat5.hidden = NO;
+                    if ([prefs getPreference:[[dayEvents objectAtIndex:i] objectForKey:@"category"]]) {
+                        warriorAthletics.hidden = NO;
                     }
                 }
             }
             else if ([[[dayEvents objectAtIndex:i] objectForKey:@"category"] isEqualToString:@"Campus Rec"]) {
-                if (cat6.hidden) {
+                if (campusRec.hidden) {
                     //Check to see if this category is selected.
-                    if ([prefs getPreference:6]) {
-                        cat6.hidden = NO;
+                    if ([prefs getPreference:[[dayEvents objectAtIndex:i] objectForKey:@"category"]]) {
+                        campusRec.hidden = NO;
                     }
                 }
             }
@@ -1142,7 +1151,7 @@
                                 //NSLog(@"The repeat number is %d", repeat);
                             }
                         }
-                        int substringIndx = [self getIndexOfSubstringInString:@"INTERVAL=":currentEventInfo[@"recurrence"][0]];
+                        NSUInteger substringIndx = [self getIndexOfSubstringInString:@"INTERVAL=":currentEventInfo[@"recurrence"][0]];
                         if (substringIndx != -1)
                         {
                             NSString *substring = [currentEventInfo[@"recurrence"][0] substringFromIndex:substringIndx+9];

@@ -7,22 +7,47 @@
 //
 
 #import "Preferences.h"
+#import "Authentication.h"
 
 @implementation Preferences
 
 static Preferences *_sharedInstance;
 
-+(Preferences *) getSharedInstance {
-    if (!_sharedInstance) {
++(Preferences *) getSharedInstance
+{
+    if (!_sharedInstance)
+    {
         _sharedInstance = [[Preferences alloc] init];
+        
+        [_sharedInstance initPrefs];
         
         //Then load the preferences from previous sessions of the app.
         [_sharedInstance loadPreferences];
     }
+    
     return _sharedInstance;
 }
 
-- (void) setPreference:(int) index :(BOOL)isSelected {
+
+
+- (void) initPrefs
+{
+    _prefs = [[NSMutableDictionary alloc] init];
+    
+    NSUInteger keyCount = [[[Authentication getSharedInstance] getCategoryNames] count];
+    
+    for ( int i = 0; i < keyCount; i++ )
+    {
+        [_prefs setObject:@1 forKey:[[Authentication getSharedInstance] getCategoryNames][i]];
+    }
+}
+
+
+
+/*- (void) setPreference:(NSString *)prefName :(BOOL)isSelected
+{
+    
+    
     switch(index) {
         case 1:
             [self setPrefOne:isSelected];
@@ -43,57 +68,34 @@ static Preferences *_sharedInstance;
             [self setPrefSix:isSelected];
             break;
     }
-}
+}*/
 
-- (void) negatePreference:(int) index {
-    switch(index) {
-        case 1:
-            [self setPrefOne:!_prefOne];
-            break;
-        case 2:
-            [self setPrefTwo:!_prefTwo];
-            break;
-        case 3:
-            [self setPrefThree:!_prefThree];
-            break;
-        case 4:
-            [self setPrefFour:!_prefFour];
-            break;
-        case 5:
-            [self setPrefFive:!_prefFive];
-            break;
-        case 6:
-            [self setPrefSix:!_prefSix];
-            break;
-    }
-}
 
-- (BOOL) getPreference:(int) index {
-    BOOL isSelected = YES;
+
+/*
+ Negates the current preference turning it from on to off or vice-versa.
+ @param prefName Name of the category.
+ */
+- (void) negatePreference:(NSString *)prefName
+{
+    BOOL value = ![[_prefs valueForKey:prefName] boolValue];
     
-    switch(index) {
-        case 1:
-            isSelected = _prefOne;
-            break;
-        case 2:
-            isSelected = _prefTwo;
-            break;
-        case 3:
-            isSelected = _prefThree;
-            break;
-        case 4:
-            isSelected = _prefFour;
-            break;
-        case 5:
-            isSelected = _prefFive;
-            break;
-        case 6:
-            isSelected = _prefSix;
-            break;
-    }
+    [_prefs setValue:[NSNumber numberWithBool:value] forKey:prefName];
+}
+
+
+/*
+ Retrieves the value of the preference from the dictionary.
+ @param prefName  Name of the category.
+ @return Boolean value for the state of the preference.
+ */
+- (BOOL) getPreference:(NSString *)prefName
+{
+    BOOL isSelected = [[_prefs valueForKey:prefName] boolValue];
     
     return isSelected;
 }
+
 
 
 //This is called when the instance is being initialized. Nowhere else. So it only loads once.
@@ -105,14 +107,19 @@ static Preferences *_sharedInstance;
     //This is an object that we'll be loading our saved data from.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    //Tracks the number of times the for-loop should execute.
+    NSUInteger each = [_prefs count];
+    
     //Load all of the prefences for the categories that are selected.
-    [self setPrefOne:![defaults boolForKey:@"prefOne"]];
-    [self setPrefTwo:![defaults boolForKey:@"prefTwo"]];
-    [self setPrefThree:![defaults boolForKey:@"prefThree"]];
-    [self setPrefFour:![defaults boolForKey:@"prefFour"]];
-    [self setPrefFive:![defaults boolForKey:@"prefFive"]];
-    [self setPrefSix:![defaults boolForKey:@"prefSix"]];
+    for (int i = 0; i < each; i++)
+    {
+        NSNumber *prefActive = [NSNumber numberWithBool:![defaults boolForKey:[[Authentication getSharedInstance] getCategoryNames][i]]];
+        
+        [_prefs setValue:prefActive forKey:[[Authentication getSharedInstance] getCategoryNames][i]];
+    }
 }
+
+
 
 //This is called within AppDelegate when the app is being closed or brought to the background.
 //The preferences are negated when being saved, because a NO is returned when the object doesn't exist.
@@ -122,13 +129,18 @@ static Preferences *_sharedInstance;
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    //Tracks the number of times the for-loop should execute.
+    NSUInteger each = [_prefs count];
+    
     //Save the preferences for future sessions of the app.
-    [defaults setBool:!_prefOne forKey:@"prefOne"];
-    [defaults setBool:!_prefTwo forKey:@"prefTwo"];
-    [defaults setBool:!_prefThree forKey:@"prefThree"];
-    [defaults setBool:!_prefFour forKey:@"prefFour"];
-    [defaults setBool:!_prefFive forKey:@"prefFive"];
-    [defaults setBool:!_prefSix forKey:@"prefSix"];
+    for (int i = 0; i < each; i++)
+    {
+        //Retrieves current value for key, or if none exists returns 0 - then typecasted into Bool.
+        BOOL prefActive = [[_prefs valueForKey:[[Authentication getSharedInstance] getCategoryNames][i]] boolValue];
+        
+        //Sets the boolean value for key.
+        [defaults setBool:!prefActive forKey:[[Authentication getSharedInstance] getCategoryNames][i]];
+    }
     
     [defaults synchronize];
 }
