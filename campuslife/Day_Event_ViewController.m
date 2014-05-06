@@ -116,44 +116,45 @@
         int currentPos = 0;
         
         NSString *categoryName = [newArray[currentPos] objectForKey:@"category"];
+        NSLog(@"\n\n\n er meh gersh!!!\n\n %@ \n\n\n", categoryName);
         
         while (currentPos < [newArray count])
         {
-            if ([categoryName isEqualToString:@"Entertainment"] && [preferences getPreference:categoryName] == FALSE)
+            if (([categoryName isEqualToString:@"Entertainment"] && [preferences getPreference:categoryName]) == FALSE)
             {
                 //NSLog(@"Popping Entertainment event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([categoryName isEqualToString:@"Academics"] && [preferences getPreference:categoryName] == FALSE)
+            else if (([categoryName isEqualToString:@"Academics"] && [preferences getPreference:categoryName]) == FALSE)
             {
                 //NSLog(@"Popping Academics event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([categoryName isEqualToString:@"Student Activities"] && [preferences getPreference:categoryName] == FALSE)
+            else if (([categoryName isEqualToString:@"Student Activities"] && [preferences getPreference:categoryName]) == FALSE)
             {
                 //NSLog(@"Popping Activities event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([categoryName isEqualToString:@"Residence Life"] && [preferences getPreference:categoryName] == FALSE)
+            else if (([categoryName isEqualToString:@"Residence Life"] && [preferences getPreference:categoryName]) == FALSE)
             {
                 //NSLog(@"Popping Residence event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
             
-            else if ([categoryName isEqualToString:@"Warrior Athletics"] && [preferences getPreference:categoryName] == FALSE)
+            else if (([categoryName isEqualToString:@"Warrior Athletics"] && [preferences getPreference:categoryName]) == FALSE)
             {
                 //NSLog(@"Popping Athletics event");
                 
                 [newArray removeObjectAtIndex:currentPos];
             }
-            else if ([categoryName isEqualToString:@"Campus Rec"] && [preferences getPreference:categoryName] == FALSE)
+            else if (([categoryName isEqualToString:@"Campus Rec"] && [preferences getPreference:categoryName]) == FALSE)
             {
                 //NSLog(@"Popping Campus Rec event");
                 

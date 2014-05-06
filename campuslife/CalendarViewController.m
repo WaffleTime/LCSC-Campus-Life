@@ -71,7 +71,6 @@
     Preferences *prefs = [Preferences getSharedInstance];
     
     //Here we load the actual state of the selected buttons.
-<<<<<<< HEAD
     [_btnEntertainment setSelected:[prefs getPreference:@"Entertainment"]];
     [_btnAcademics setSelected:[prefs getPreference:@"Academics"]];
     [_btnStudentActivities setSelected:[prefs getPreference:@"Student Activities"]];
@@ -82,15 +81,7 @@
     _leftArrow.enabled = NO;
     _rightArrow.enabled = NO;
     
-=======
-    [_cat1Btn setSelected:[prefs getPreference:1]];
-    [_cat2Btn setSelected:[prefs getPreference:2]];
-    [_cat3Btn setSelected:[prefs getPreference:3]];
-    [_cat4Btn setSelected:[prefs getPreference:4]];
-    [_cat5Btn setSelected:[prefs getPreference:5]];
-    [_cat6Btn setSelected:[prefs getPreference:6]];
 
->>>>>>> 975f8094c7aa9955e242588d28a2d2e0804a32ce
     _curArrayId = 1;
     
     //We don't need to refresh the calendar since
@@ -1180,7 +1171,7 @@
                                 //NSLog(@"The repeat number is %d", repeat);
                             }
                         }
-                        int substringIndx = [self getIndexOfSubstringInString:@"INTERVAL=":currentEventInfo[@"recurrence"][0]];
+                        NSUInteger substringIndx = [self getIndexOfSubstringInString:@"INTERVAL=":currentEventInfo[@"recurrence"][0]];
                         if (substringIndx != -1)
                         {
                             NSString *substring = [currentEventInfo[@"recurrence"][0] substringFromIndex:substringIndx+9];

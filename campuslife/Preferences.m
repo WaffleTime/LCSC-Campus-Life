@@ -34,9 +34,9 @@ static Preferences *_sharedInstance;
 {
     _prefs = [[NSMutableDictionary alloc] init];
     
-    int count = [[[Authentication getSharedInstance] getCategoryNames] count];
+    NSUInteger keyCount = [[[Authentication getSharedInstance] getCategoryNames] count];
     
-    for ( int i = 0; i < count; i++ )
+    for ( int i = 0; i < keyCount; i++ )
     {
         [_prefs setObject:@1 forKey:[[Authentication getSharedInstance] getCategoryNames][i]];
     }
@@ -108,7 +108,7 @@ static Preferences *_sharedInstance;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //Tracks the number of times the for-loop should execute.
-    int each = [_prefs count];
+    NSUInteger each = [_prefs count];
     
     //Load all of the prefences for the categories that are selected.
     for (int i = 0; i < each; i++)
@@ -130,7 +130,7 @@ static Preferences *_sharedInstance;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //Tracks the number of times the for-loop should execute.
-    int each = [_prefs count];
+    NSUInteger each = [_prefs count];
     
     //Save the preferences for future sessions of the app.
     for (int i = 0; i < each; i++)
