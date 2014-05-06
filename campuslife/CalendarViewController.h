@@ -18,7 +18,6 @@
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeLeft;
 @property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeRight;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *signInOutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addEventButton;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -37,9 +36,6 @@
 
 - (void)onTick:(NSTimer*)timer;
 - (void)onTickForDelay:(NSTimer*)timer;
-
-- (IBAction)signOutOrSignIn:(id)sender;
-
 
 - (IBAction)radioSelected:(UIButton *)sender;
 

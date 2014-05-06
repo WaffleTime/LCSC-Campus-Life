@@ -511,6 +511,8 @@
     //NSLog(@"%@", errorMessage);
 }
 
-
+-(void)authorizationFailure
+{
+}
 
 @end

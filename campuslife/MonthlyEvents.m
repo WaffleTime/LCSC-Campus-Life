@@ -452,6 +452,7 @@ static MonthlyEvents *sharedInstance;
 
 -(void)setCalendarJsonReceivedForMonth:(int)arrayId :(NSString*)calendar
 {
+    /*
     if ([_jsonReceivedDicts[arrayId][calendar] intValue] == 1)
     {
         NSLog(@"Month: %d already loaded the %@ calendar",arrayId, calendar);
@@ -459,7 +460,7 @@ static MonthlyEvents *sharedInstance;
     else
     {
         NSLog(@"Month: %d has had %@ calendar loaded",arrayId, calendar);
-    }
+    }*/
     _jsonReceivedDicts[arrayId][calendar] = @1;
 }
 

@@ -399,7 +399,6 @@
     
     //http://stackoverflow.com/questions/10444104/bar-button-item-add-toolbar-programetically
     
-    
     // Make the request and add self (webview) to the parent view.
     [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:targetURLString]]];
     [_parentView addSubview:self];
@@ -700,10 +699,6 @@
         isAPIResponse = NO;
         
         _loggedIn = YES;
-    }
-    else
-    {
-        _loggedIn = NO;
     }
     
     

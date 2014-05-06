@@ -572,6 +572,4 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     //NSLog(@"%@", errorMessage);
 }
 
-
-
 @end

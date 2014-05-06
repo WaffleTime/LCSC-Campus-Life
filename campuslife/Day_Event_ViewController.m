@@ -50,8 +50,6 @@
     
     [super viewDidLoad];
     
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    
     if ([[Authentication getSharedInstance] getUserCanManageEvents])
     {
         self.navigationItem.rightBarButtonItem.title = @"Add Event";
@@ -83,8 +81,6 @@
  */
 -(void)viewDidAppear:(BOOL)animated
 {
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    
     //NSLog(@"viewDidAppear");
 }
 
@@ -527,9 +523,6 @@
     // Just log the error message.
     //NSLog(@"%@", errorMessage);
 }
-
-
-
 
 
 @end

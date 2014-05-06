@@ -44,3 +44,14 @@ NEW FEATURES!
 * 1. Load three months into memory at a time.
 
 2. Allow the event on a day area to go to other days.
+
+
+
+Last Things To Finish:
+
+1. Alter the names of the category buttons.
+
+2. Adjust the preference usage to utilize strings instead of ints.
+
+3. Finish the hub.
+
