@@ -24,12 +24,12 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
-@property (weak, nonatomic) IBOutlet UIButton *cat1Btn;
-@property (weak, nonatomic) IBOutlet UIButton *cat2Btn;
-@property (weak, nonatomic) IBOutlet UIButton *cat3Btn;
-@property (weak, nonatomic) IBOutlet UIButton *cat4Btn;
-@property (weak, nonatomic) IBOutlet UIButton *cat5Btn;
-@property (weak, nonatomic) IBOutlet UIButton *cat6Btn;
+@property (weak, nonatomic) IBOutlet UIButton *btnEntertainment;
+@property (weak, nonatomic) IBOutlet UIButton *btnAcademics;
+@property (weak, nonatomic) IBOutlet UIButton *btnStudentActivities;
+@property (weak, nonatomic) IBOutlet UIButton *btnResidenceLife;
+@property (weak, nonatomic) IBOutlet UIButton *btnWarriorAthletics;
+@property (weak, nonatomic) IBOutlet UIButton *btnCampusRec;
 
 
 @property (nonatomic, setter=setShouldRefresh:) BOOL shouldRefresh;
