@@ -444,7 +444,7 @@
                          postParameterValues:[NSArray arrayWithObjects: nil]
                                  requestBody:nil];
             
-            CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+            CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[1];
             [controller setShouldRefresh:YES];
             
             [sortedArray removeObjectAtIndex:indexPath.row];

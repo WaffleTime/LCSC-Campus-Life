@@ -469,10 +469,10 @@
                  postParameterValues:[NSArray arrayWithObjects: nil]
                          requestBody:nil];
     
-    CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[0];
+    CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[1];
     [controller setShouldRefresh:YES];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 
