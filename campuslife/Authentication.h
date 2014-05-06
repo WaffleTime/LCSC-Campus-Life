@@ -20,9 +20,9 @@
 
 @property (nonatomic, strong, setter=setCalIds:, getter=getCalIds) NSDictionary *calendarIds;
 
-@property (nonatomic, strong, setter=setAuthCals:, getter=getAuthCals) NSMutableDictionary *authorizedCalendars;
+@property (nonatomic, strong, setter=setEventIds:, getter=getEventIds) NSDictionary *authorizationEventIds;
 
-@property (nonatomic, strong, setter=setCalToCat:, getter=getCalToCat) NSDictionary *calendarNameToCategoryName;
+@property (nonatomic, strong, setter=setAuthCals:, getter=getAuthCals) NSMutableDictionary *authorizedCalendars;
 
 @property (nonatomic, strong, setter=setCategoryNames:, getter=getCategoryNames) NSArray *categoryNames;
 

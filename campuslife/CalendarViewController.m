@@ -701,14 +701,13 @@
     for (NSString *name in [_auth getCategoryNames])
     {
         //This is a dummy update that will be to see if the user is able to manage events.
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/79uiotmngl52ana82ob7ibhc1s/move", [_auth getCalIds][name]]
+        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@/move", [_auth getCalIds][name], [_auth getEventIds][name]]
                            withHttpMethod:httpMethod_POST
                        postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
                       postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCalIds][name]], nil]
                               requestBody:nil];
+        _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
     }
-    
-    _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void) getEventsForMonth:(NSInteger) month :(NSInteger) year {
@@ -807,13 +806,12 @@
 
 -(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData {
     NSError *error;
-    //NSLog(@"%@",responseJSONAsString);
 
     //NSLog(@"json Incoming");
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound)
     {
-        //NSLog(@"%@",responseJSONAsString);
+        NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
@@ -838,29 +836,13 @@
                 NSLog(@"Refreshing current month");
             }
             
-            if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
-                //Only refresh the events if this is the first json received.
-                category = @"Entertainment";
-                //NSLog(@"Refresh events");
-            }
-            else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Academics";
-            }
-            else if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Student Activities";
-            }
-            else if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Residence Life";
-            }
-            else if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Warrior Athletics";
-            }
-            else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
-                category = @"Campus Rec";
-            }
-            else
+            category = eventsInfoDict[@"summary"];
+            
+            for (NSString *name in [_auth getCategoryNames])
             {
-                NSLog(@"What is this calendar!? %@", eventsInfoDict[@"summary"]);
+                if ([self getIndexOfSubstringInString:name :eventsInfoDict[@"summary"]] != -1) {
+                    category = eventsInfoDict[@"summary"];
+                }
             }
             
             NSLog(@"Calendar received: %@", category);
@@ -1353,29 +1335,14 @@
         
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
-        NSString *category = @"";
+        for (NSString *name in [_auth getCategoryNames])
+        {
+            if ([self getIndexOfSubstringInString:name :eventsInfoDict[@"organizer"][@"displayName"]] != -1) {
+                [[_auth getAuthCals] setObject:@"YES" forKey:name];
+            }
+        }
         
-        if ([self getIndexOfSubstringInString:@"Entertainment" :eventsInfoDict[@"summary"]] != -1) {
-            category = @"Entertainment";
-        }
-        else if ([self getIndexOfSubstringInString:@"Academics" :eventsInfoDict[@"summary"]] != -1) {
-            category = @"Academics";
-        }
-        else if ([self getIndexOfSubstringInString:@"Activities" :eventsInfoDict[@"summary"]] != -1) {
-            category = @"Student Activities";
-        }
-        else if ([self getIndexOfSubstringInString:@"Residence Life" :eventsInfoDict[@"summary"]] != -1) {
-            category = @"Residence Life";
-        }
-        else if ([self getIndexOfSubstringInString:@"Athletics" :eventsInfoDict[@"summary"]] != -1) {
-            category = @"Warrior Athletics";
-        }
-        else if ([self getIndexOfSubstringInString:@"Campus Recreation" :eventsInfoDict[@"summary"]] != -1) {
-            category = @"Campus Rec";
-        }
-        [[_auth getAuthCals] setObject:@"YES" forKey:category];
-        
-        NSLog(@"Authenticated Calendar: %@", category);
+        //NSLog(@"Authenticated Calendar: %@", category);
     }
 }
 
@@ -1401,7 +1368,7 @@
 
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
-    //NSLog(@"Error:%@", errorMessage);
+    NSLog(@"Error:%@", errorMessage);
 }
 
 @end
