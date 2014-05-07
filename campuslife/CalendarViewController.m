@@ -49,8 +49,7 @@
 
 @property (nonatomic) BOOL loadCompleted;
 
-@property (nonatomic) int reqsSent;
-
+@property (nonatomic) int authJsonReceived;
 @end
 
 @implementation CalendarViewController
@@ -79,6 +78,7 @@
     _leftArrow.enabled = NO;
     _rightArrow.enabled = NO;
     
+    _authJsonReceived = 0;
 
     _curArrayId = 1;
     
@@ -170,6 +170,13 @@
         //Resend the requests that failed.
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     }
+    
+    //Have we received all of the authorization jsons after 3 seconds has passed?
+    if (_authJsonReceived < [[_auth getCategoryNames] count]
+        && _timeLastMonthSwitch + 0.2 < [[NSDate date] timeIntervalSince1970])
+    {
+        [self authenticate];
+    }
 }
 
 - (void)onTickForDelay:(NSTimer*)timer
@@ -206,6 +213,7 @@
                     NSLog(@"Screen is no longer locked!");
                     _loadCompleted = YES;
                     _screenLocked = NO;
+                    [self.navigationItem setHidesBackButton:NO animated:YES];
                 }
             }
         }
@@ -709,13 +717,16 @@
 {
     for (NSString *name in [_auth getCategoryNames])
     {
-        //This is a dummy update that will be to see if the user is able to manage events.
-        [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@/move", [_auth getCalIds][name], [_auth getEventIds][name]]
-                           withHttpMethod:httpMethod_POST
-                       postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
-                      postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCalIds][name]], nil]
-                              requestBody:nil];
-        _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
+        if ([[_auth getAuthCals][name] isEqualToString:@"NO"])
+        {
+            //This is a dummy update that will be to see if the user is able to manage events.
+            [[_auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@/move", [_auth getCalIds][name], [_auth getEventIds][name]]
+                               withHttpMethod:httpMethod_POST
+                           postParameterNames:[NSArray arrayWithObjects:@"destination", nil]
+                          postParameterValues:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",[_auth getCalIds][name]], nil]
+                                  requestBody:nil];
+            _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
+        }
     }
 }
 
@@ -763,7 +774,12 @@
                                       requestBody:nil];
                 
                 _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
-                _loadCompleted = NO;
+                
+                if (_loadCompleted)
+                {
+                    _loadCompleted = NO;
+                    [self.navigationItem setHidesBackButton:YES animated:YES];
+                }
             }
             else
             {
@@ -820,7 +836,7 @@
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound)
     {
-        //NSLog(@"%@",responseJSONAsString);
+        NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
@@ -1309,6 +1325,7 @@
                             NSLog(@"Screen is no longer locked!");
                             _screenLocked = NO;
                             _loadCompleted = YES;
+                            [self.navigationItem setHidesBackButton:NO animated:YES];
                         }
                     }
                 }
@@ -1324,6 +1341,7 @@
                         NSLog(@"Screen is no longer locked!");
                         _screenLocked = NO;
                         _loadCompleted = YES;
+                        [self.navigationItem setHidesBackButton:NO animated:YES];
                     }
                 }
                 else
@@ -1331,6 +1349,7 @@
                     NSLog(@"Screen is no longer locked!");
                     _screenLocked = NO;
                     _loadCompleted = YES;
+                    [self.navigationItem setHidesBackButton:NO animated:YES];
                 }
             }
         }
@@ -1344,12 +1363,24 @@
         
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         
+        //BOOL foundCal = NO;
+        
         for (NSString *name in [_auth getCategoryNames])
         {
             if ([self getIndexOfSubstringInString:name :eventsInfoDict[@"organizer"][@"displayName"]] != -1) {
                 [[_auth getAuthCals] setObject:@"YES" forKey:name];
+                //foundCal = YES;
             }
         }
+        
+        /*
+        //This is for checking to see if there was a authorized category that doesn't have a calendar name associated with it.
+        if (!foundCal)
+        {
+            NSLog(@"auth problems");
+        }*/
+        
+        _authJsonReceived += 1;
         
         //NSLog(@"Authenticated Calendar: %@", category);
     }
@@ -1363,21 +1394,29 @@
 
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
     // Just log the error messages.
-    //NSLog(@"Error:%@", errorShortDescription);
-    //NSLog(@"Details:%@", errorDetails);
+    NSLog(@"Error:%@", errorShortDescription);
+    NSLog(@"Details:%@", errorDetails);
     
+    /*
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: errorShortDescription
                                                     message: errorDetails
                                                    delegate: nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+     */
 }
 
 
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     // Just log the error message.
     NSLog(@"Error:%@", errorMessage);
+    
+    if ([self getIndexOfSubstringInString:@"403" :errorMessage] != -1
+       && [self getIndexOfSubstringInString:@"Forbidden" :errorMessage] != -1)
+    {
+        _authJsonReceived += 1;
+    }
 }
 
 @end

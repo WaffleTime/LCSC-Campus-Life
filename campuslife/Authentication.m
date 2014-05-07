@@ -27,12 +27,12 @@ static Authentication *_sharedInstance;
                                     @"gqv0n6j15pppdh0t8adgc1n1ts@group.calendar.google.com", @"Residence Life",
                                     @"h4j413d3q0uftb2crk0t92jjlc@group.calendar.google.com", @"Campus Rec", nil]];
         
-        [_sharedInstance setEventIds:[[NSDictionary alloc] initWithObjectsAndKeys:@"lrg46te59n9o54f01qeug727tk", @"Academics",
-                                    @"6fhomj6btb4eueb4rl0t1mqsdg", @"Student Activities",
-                                    @"m2vg4ncj8bu7oechv50ltk84j4", @"Warrior Athletics",
-                                    @"79uiotmngl52ana82ob7ibhc1s", @"Entertainment",
-                                    @"mg2obo46a6nqb32v33otufivq8", @"Residence Life",
-                                    @"650gme9itnmk2ofvo2crjrm2io", @"Campus Rec", nil]];
+        [_sharedInstance setEventIds:[[NSDictionary alloc] initWithObjectsAndKeys:@"f1hgv90p23lu0qpk99jc2qksc8", @"Academics",
+                                    @"dkl4s479ob9kv8364gnv9pn8ck", @"Student Activities",
+                                    @"5ogvo7g7oudtnatvln1s0bbl7s", @"Warrior Athletics",
+                                    @"k5lqhttcf8v6p6dtonbdmbnr98", @"Entertainment",
+                                    @"r2ej4ok8qdohd1uqhpqjs3kp6o", @"Residence Life",
+                                    @"pshph3m2oef72tmnk50i4enng0", @"Campus Rec", nil]];
         
         [_sharedInstance setAuthCals:[[NSMutableDictionary alloc] initWithObjectsAndKeys:@"NO", @"Academics", @"NO", @"Student Activities", @"NO", @"Warrior Athletics", @"NO", @"Entertainment", @"NO", @"Residence Life", @"NO", @"Campus Rec", nil]];
         
