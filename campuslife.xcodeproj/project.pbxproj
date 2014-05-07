@@ -43,6 +43,7 @@
 		C1BA288519198B520035F364 /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288219198B520035F364 /* Default-Portrait.png */; };
 		C1BA288619198B520035F364 /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288319198B520035F364 /* Default-Portrait@2x.png */; };
 		C1BA288819198C160035F364 /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = C1BA288719198C160035F364 /* Default-568h.png */; };
+		C1DB86B61919BC2300A301DD /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C1DB86B51919BC2300A301DD /* AboutViewController.m */; };
 		C1DEC8CB18F4AC2700ECD591 /* dotAcademics.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DEC8C518F4AC2700ECD591 /* dotAcademics.png */; };
 		C1DEC8CC18F4AC2700ECD591 /* dotActivities.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DEC8C618F4AC2700ECD591 /* dotActivities.png */; };
 		C1DEC8CD18F4AC2700ECD591 /* dotAthletics.png in Resources */ = {isa = PBXBuildFile; fileRef = C1DEC8C718F4AC2700ECD591 /* dotAthletics.png */; };
@@ -130,6 +131,8 @@
 		C1BA288219198B520035F364 /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		C1BA288319198B520035F364 /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
 		C1BA288719198C160035F364 /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h.png"; sourceTree = "<group>"; };
+		C1DB86B41919BC2300A301DD /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		C1DB86B51919BC2300A301DD /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		C1DEC8C518F4AC2700ECD591 /* dotAcademics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotAcademics.png; sourceTree = "<group>"; };
 		C1DEC8C618F4AC2700ECD591 /* dotActivities.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotActivities.png; sourceTree = "<group>"; };
 		C1DEC8C718F4AC2700ECD591 /* dotAthletics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotAthletics.png; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 				C1E66E01183C333A00851B89 /* AppDelegate.m */,
 				C1E66E03183C333A00851B89 /* Main_iPhone.storyboard */,
 				C1FBB4D21907057200C5D3B5 /* Main_iPad.storyboard */,
+				C1DB86B41919BC2300A301DD /* AboutViewController.h */,
+				C1DB86B51919BC2300A301DD /* AboutViewController.m */,
 				C111B76B18C6929200B957F2 /* EventDetailTableViewController.h */,
 				C111B76C18C6929200B957F2 /* EventDetailTableViewController.m */,
 				C1E66E0C183C333A00851B89 /* Images.xcassets */,
@@ -486,6 +491,7 @@
 				C1182FB218B40B1000FE63F6 /* AddEventParentViewController.m in Sources */,
 				C1182FB518B40F7D00FE63F6 /* RepeatFreqViewController.m in Sources */,
 				C1E66E4A183C33D000851B89 /* MonthlyEvents.m in Sources */,
+				C1DB86B61919BC2300A301DD /* AboutViewController.m in Sources */,
 				C1E66E4E183C33DA00851B89 /* GoogleOAuth.m in Sources */,
 				C1A75FF5184E99DF0072C27F /* Authentication.m in Sources */,
 				C12C28D11853E8C200274023 /* AddEventForDayViewController.m in Sources */,
