@@ -165,7 +165,7 @@
     //Check a bunch of conditions that altogether mean that the json that we're expecting
     //  hasn't been heard from for over 3 seconds. This hopefully means it won't be coming back.
     if (!_loadCompleted
-        && _timeLastReqSent + 3 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + 4 < [[NSDate date] timeIntervalSince1970])
     {
         [_events resetEvents];
         
