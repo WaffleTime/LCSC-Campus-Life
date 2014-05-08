@@ -367,6 +367,10 @@
     toolbar.frame = CGRectMake(0, self.frame.size.height - 60, self.frame.size.width, 60.0f);
     NSMutableArray *items = [[NSMutableArray alloc] init];
     
+    //  Flexible spacer for buttons
+    UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    fixedItem.width = 50.0f; // or whatever you want
+    
     //  Back button for toolbar
     UIImage *backArrow = [UIImage imageNamed:@"GoogleOAuth_BackArrow.png"];
     CGRect frameBack = CGRectMake(0, 0, backArrow.size.width/2.5, backArrow.size.height/2.5);
@@ -375,10 +379,6 @@
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [backButton setShowsTouchWhenHighlighted:YES];
     _backButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    
-    //  Flexible spacer for buttons
-    UIBarButtonItem *fixedItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    fixedItem.width = 50.0f; // or whatever you want
     
     //  Forward button for toolbar
     UIImage *forwardArrow = [UIImage imageNamed:@"GoogleOAuth_ForwardArrow.png"];
@@ -389,11 +389,22 @@
     [forwardButton setShowsTouchWhenHighlighted:YES];
     _forwardButton = [[UIBarButtonItem alloc] initWithCustomView:forwardButton];
     
+    //  Forward button for toolbar
+    UIImage *cancelX = [UIImage imageNamed:@"GoogleOAuth_CancelButton.png"];
+    CGRect frameCancel = CGRectMake(0, 0, cancelX.size.width/2.5, cancelX.size.height/2.5);
+    UIButton *cancelButton = [[UIButton alloc] initWithFrame:frameCancel];
+    [cancelButton setImage:cancelX forState:normal];
+    [cancelButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton setShowsTouchWhenHighlighted:YES];
+    UIBarButtonItem *newCancelButton = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    
     //  Adding buttons to toolbar
     [items addObject:fixedItem]; //added a fixed space to separate buttons
     [items addObject:_backButton]; //added back button
     [items addObject:fixedItem]; //added a fixed space to separate buttons
     [items addObject:_forwardButton]; //added forward button
+    [items addObject:fixedItem]; //added a fixed space to separate buttons
+    [items addObject:newCancelButton]; //added cancel button
     [toolbar setItems:items animated:NO];
     [self addSubview:toolbar];
     
@@ -415,6 +426,11 @@
 - (void)forwardButtonPressed:(id)sender
 {
     [self goForward];
+}
+
+- (void)cancelButtonPressed:(id)sender
+{
+    [self removeFromSuperview];
 }
 
 
