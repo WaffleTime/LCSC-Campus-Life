@@ -130,10 +130,14 @@
     
     // Check if the access token info file exists or not.
     if ([self checkIfAccessTokenInfoFileExists]) {
-        [self revokeAccessToken];
-        // In case that the access token info file is not found then show the
-        // webview to let user sign in and allow access to the app.
-        [self showWebviewForUserLogin];
+        [self loadAccessTokenInfo];
+        if ([self checkIfShouldRefreshAccessToken]) {
+            [self showWebviewForUserLogin];
+        }
+        else{
+            [self revokeAccessToken];
+            [self showWebviewForUserLogin];
+        }
     }
     else{
         // In case that the access token info file is not found then show the

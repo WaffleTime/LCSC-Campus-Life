@@ -181,11 +181,11 @@
     //Check a bunch of conditions that altogether mean that the json that we're expecting
     //  hasn't been heard from for over 3 seconds. This hopefully means it won't be coming back.
     if (!_loadCompleted
-        && _timeLastReqSent + _failedReqs + 3 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + _failedReqs + 2 < [[NSDate date] timeIntervalSince1970])
     {
-        [_events resetEvents];
+        //[_events resetEvents];
         
-        _curArrayId = 1;
+        //_curArrayId = 1;
         
         _failedReqs += 1;
         
@@ -195,7 +195,7 @@
     
     //Have we received all of the authorization jsons after 3 seconds has passed?
     if (_authJsonReceived < [[_auth getCategoryNames] count]
-        && _timeLastMonthSwitch + 0.2 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + 3 < [[NSDate date] timeIntervalSince1970])
     {
         [self authenticate];
     }
