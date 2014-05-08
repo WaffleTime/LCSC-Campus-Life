@@ -50,6 +50,9 @@
 @property (nonatomic) BOOL loadCompleted;
 
 @property (nonatomic) int authJsonReceived;
+
+@property (nonatomic) int failedReqs;
+
 @end
 
 @implementation CalendarViewController
@@ -79,6 +82,8 @@
     _rightArrow.enabled = NO;
     
     _authJsonReceived = 0;
+    
+    _failedReqs = 0;
 
     _curArrayId = 1;
     
@@ -162,14 +167,27 @@
 
 - (void)onTick:(NSTimer*)timer
 {
+    if (_failedReqs == 5)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error"
+                                                        message: @"Please sign back in, there was a problem getting the events."
+                                                       delegate: nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        [[self navigationController] popToRootViewControllerAnimated:YES];
+    }
     //Check a bunch of conditions that altogether mean that the json that we're expecting
     //  hasn't been heard from for over 3 seconds. This hopefully means it won't be coming back.
     if (!_loadCompleted
-        && _timeLastReqSent + 4 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + _failedReqs + 3 < [[NSDate date] timeIntervalSince1970])
     {
         [_events resetEvents];
         
         _curArrayId = 1;
+        
+        _failedReqs += 1;
         
         //Resend the requests that failed.
         [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
@@ -218,6 +236,7 @@
                     _loadCompleted = YES;
                     _screenLocked = NO;
                     [self.navigationItem setHidesBackButton:NO animated:YES];
+                    _failedReqs = 0;
                 }
             }
         }
@@ -1265,6 +1284,7 @@
                             _screenLocked = NO;
                             _loadCompleted = YES;
                             [self.navigationItem setHidesBackButton:NO animated:YES];
+                            _failedReqs = 0;
                         }
                     }
                 }
@@ -1281,6 +1301,7 @@
                         _screenLocked = NO;
                         _loadCompleted = YES;
                         [self.navigationItem setHidesBackButton:NO animated:YES];
+                        _failedReqs = 0;
                     }
                 }
                 else
@@ -1289,6 +1310,7 @@
                     _screenLocked = NO;
                     _loadCompleted = YES;
                     [self.navigationItem setHidesBackButton:NO animated:YES];
+                    _failedReqs = 0;
                 }
             }
         }
