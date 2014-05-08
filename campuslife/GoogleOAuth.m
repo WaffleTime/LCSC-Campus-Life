@@ -65,6 +65,8 @@
 // The parent view where the webview will be shown on.
 @property (nonatomic, strong) UIView *parentView;
 
+@property(nonatomic, strong) UIViewController *parent;
+
 
 #pragma mark - Declaration of private methods
 
@@ -116,29 +118,22 @@
 
 -(void)authorizeUserWithClienID:(NSString *)client_ID
                 andClientSecret:(NSString *)client_Secret
-                  andParentView:(UIView *)parent_View
+                  andParent:(UIViewController *)parent
                       andScopes:(NSArray *)scopes{
     
     // Store into the local private properties all the parameter values.
     _clientID = [[NSString alloc] initWithString:client_ID];
     _clientSecret = [[NSString alloc] initWithString:client_Secret];
     _scopes = [[NSMutableArray alloc] initWithArray:scopes copyItems:YES];
-    _parentView = parent_View;
+    _parentView = parent.view;
+    _parent = parent;
     
     // Check if the access token info file exists or not.
     if ([self checkIfAccessTokenInfoFileExists]) {
-        // In case it exists load the access token info and check if the access token is valid.
-        [self loadAccessTokenInfo];
-        if ([self checkIfShouldRefreshAccessToken]) {
-            // If the access token is not valid then refresh it.
-            [self refreshAccessToken];
-        }
-        else{
-            [self revokeAccessToken];
-            // In case that the access token info file is not found then show the
-            // webview to let user sign in and allow access to the app.
-            [self showWebviewForUserLogin];
-        }
+        [self revokeAccessToken];
+        // In case that the access token info file is not found then show the
+        // webview to let user sign in and allow access to the app.
+        [self showWebviewForUserLogin];
     }
     else{
         // In case that the access token info file is not found then show the
@@ -433,6 +428,7 @@
 
 - (void)cancelButtonPressed:(id)sender
 {
+    [[_parent navigationController] setNavigationBarHidden:NO animated:NO];
     [self removeFromSuperview];
 }
 
@@ -636,6 +632,7 @@
     }
     else{
         if ([webviewTitle rangeOfString:@"access_denied"].location != NSNotFound) {
+            [[_parent navigationController] setNavigationBarHidden:NO animated:NO];
             // In case that the user tapped on the Cancel button instead of the Accept, then just
             // remove the webview from the superview.
             [webView removeFromSuperview];
@@ -715,6 +712,8 @@
     if ([responseJSON rangeOfString:@"access_token"].location != NSNotFound) {
         // This is the case where the access token has been fetched.
         [self storeAccessTokenInfo];
+        
+        [[_parent navigationController] setNavigationBarHidden:NO animated:NO];
         
         // Remove the webview from the superview.
         [self removeFromSuperview];

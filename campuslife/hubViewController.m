@@ -67,14 +67,11 @@
         [[[Authentication getSharedInstance] getAuthenticator] revokeAccessToken];
     }
     
-    //READ THIS IF YOU'RE ADDING NEW THINGS TO THIS APP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //Make sure to make this navigation bar not hidden when you segue to the parts of the app that you add.
-    //  This was needed for the webview that pops up for the calendar. So deal with it accordingly.
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
     
     [[_auth getAuthenticator] authorizeUserWithClienID:@"836202105226-07ulfvopjkp1qpr2f08i8df1rv5ebphs.apps.googleusercontent.com"
                                        andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
-                                         andParentView:self.view
+                                         andParent:self
                                              andScopes:[NSArray arrayWithObject:@"https://www.googleapis.com/auth/calendar"]];
 }
 
@@ -83,8 +80,7 @@
 
 -(void)authorizationWasSuccessful {
     [self setSignedIn:YES];
-    [[self navigationController] setNavigationBarHidden:NO animated:NO];
-    
+
     [self performSegueWithIdentifier:@"hubToCalendar" sender:self];
 }
 

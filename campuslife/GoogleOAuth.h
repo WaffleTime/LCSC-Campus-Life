@@ -54,7 +54,7 @@ typedef enum {
 @property (nonatomic) BOOL saveURL;
 
 -(void)authorizeUserWithClienID:(NSString *)client_ID andClientSecret:(NSString *)client_Secret
-                    andParentView:(UIView *)parent_View andScopes:(NSArray *)scopes;
+                      andParent:(UIViewController *)parent andScopes:(NSArray *)scopes;
 -(void)revokeAccessToken;
 -(void)callAPI:(NSString *)apiURL withHttpMethod:(HTTP_Method)httpMethod postParameterNames:(NSArray *)params postParameterValues:(NSArray *)values requestBody:(NSDictionary *)json;
 
