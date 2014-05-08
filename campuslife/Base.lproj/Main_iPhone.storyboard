@@ -40,13 +40,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calendar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dp-md-3wZ">
-                                <rect key="frame" x="91" y="29" width="138" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ttL-Bj-aDL">
                                 <rect key="frame" x="3" y="127" width="315" height="275"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -347,12 +340,12 @@
                     <connections>
                         <outlet property="activityIndicator" destination="pPm-e7-bG5" id="aWP-sj-r1y"/>
                         <outlet property="addEventButton" destination="iBk-o7-Bqm" id="Nci-IR-g0h"/>
-                        <outlet property="cat1Btn" destination="9KE-Eg-oTH" id="ZHH-0y-v6G"/>
-                        <outlet property="cat2Btn" destination="6hF-ag-m6d" id="TkJ-8W-MBK"/>
-                        <outlet property="cat3Btn" destination="OS3-R2-g6O" id="iEY-ho-mJ9"/>
-                        <outlet property="cat4Btn" destination="yk2-yZ-FAt" id="WG7-95-Zjs"/>
-                        <outlet property="cat5Btn" destination="q40-vJ-vco" id="HxR-QJ-9pI"/>
-                        <outlet property="cat6Btn" destination="Wjs-x6-9W8" id="LdN-Q5-80e"/>
+                        <outlet property="btnAcademics" destination="6hF-ag-m6d" id="iYX-KO-aQP"/>
+                        <outlet property="btnCampusRec" destination="Wjs-x6-9W8" id="Ig4-Y0-lE6"/>
+                        <outlet property="btnEntertainment" destination="9KE-Eg-oTH" id="PZg-hN-rvW"/>
+                        <outlet property="btnResidenceLife" destination="yk2-yZ-FAt" id="zMr-Wh-dxp"/>
+                        <outlet property="btnStudentActivities" destination="OS3-R2-g6O" id="jsu-7x-E1f"/>
+                        <outlet property="btnWarriorAthletics" destination="q40-vJ-vco" id="dOa-Tf-5Dk"/>
                         <outlet property="collectionView" destination="ttL-Bj-aDL" id="Zja-bq-1Eu"/>
                         <outlet property="leftArrow" destination="hdl-Sk-HTY" id="99f-Mp-waM"/>
                         <outlet property="monthLabel" destination="FFL-Y2-5MW" id="ozO-Aw-DcN"/>
@@ -1029,7 +1022,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </view>
                     <navigationItem key="navigationItem" id="wxf-BU-tEg"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="push" identifier="hubToCalendar" id="M7y-ex-EsK"/>
+                        <segue destination="vXZ-lx-hvc" kind="push" identifier="hubToCalendar" id="VfO-zN-G2C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63I-cj-OYo" userLabel="First Responder" sceneMemberID="firstResponder"/>
