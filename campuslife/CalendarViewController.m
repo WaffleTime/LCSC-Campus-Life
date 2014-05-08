@@ -135,11 +135,13 @@
     _curArrayId = 1;
     [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
     
-    NSLog(@"viewDidLoad was called");
+    //NSLog(@"viewDidLoad was called");
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     //NSLog(@"view appeared");
+    
+    [super viewDidAppear:YES];
     
     [_auth setDelegate:self];
     
@@ -155,7 +157,7 @@
         _shouldRefresh = NO;
     }
     
-    NSLog(@"viewDidAppear was called");
+    //NSLog(@"viewDidAppear was called");
 }
 
 - (void)onTick:(NSTimer*)timer
@@ -196,7 +198,7 @@
         {
             [_collectionView reloadData];
             [_activityIndicator stopAnimating];
-            NSLog(@"Collection view reloaded!");
+            //NSLog(@"Collection view reloaded!");
             
             _curArrayId = 2;
             if ([_events doesMonthNeedLoaded:_curArrayId])
@@ -212,7 +214,7 @@
                 }
                 else
                 {
-                    NSLog(@"Screen is no longer locked!");
+                    //NSLog(@"Screen is no longer locked!");
                     _loadCompleted = YES;
                     _screenLocked = NO;
                     [self.navigationItem setHidesBackButton:NO animated:YES];
@@ -223,16 +225,6 @@
         _monthNeedsLoaded = NO;
     }
 }
-
-
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    NSLog(@"app will enter foreground");
-    
-    [super viewDidAppear:YES];
-}
-
 
 
 - (void)didReceiveMemoryWarning
@@ -501,7 +493,7 @@
             }
             else
             {
-                NSLog(@"No segue for you!");
+                //NSLog(@"No segue for you!");
             }
             canSegue = NO;
         }
@@ -513,7 +505,7 @@
             }
             else
             {
-                NSLog(@"No segue for you!");
+                //NSLog(@"No segue for you!");
             }
             canSegue = NO;
         }
@@ -705,7 +697,7 @@
             _screenLocked = YES;
         }
         
-        NSLog(@"Sending requests");
+        //NSLog(@"Sending requests");
         
         // If user authorization is successful, then make an API call to get the event list for the current month.
         // For more infomation about this API call, visit:
@@ -730,7 +722,7 @@
             }
             else
             {
-                NSLog(@"%@ calendar has already been loaded for month %d", name, _curArrayId);
+                //NSLog(@"%@ calendar has already been loaded for month %d", name, _curArrayId);
             }
         }
         _timeLastReqSent = [[NSDate date] timeIntervalSince1970];
@@ -805,7 +797,7 @@
             if ([_events doesMonthNeedLoaded:_curArrayId])
             {
                 [_events refreshArrayOfEvents:_curArrayId];
-                NSLog(@"Refreshing current month");
+                //NSLog(@"Refreshing current month");
             }
             
             category = eventsInfoDict[@"summary"];
@@ -817,7 +809,7 @@
                 }
             }
             
-            NSLog(@"Calendar received: %@", category);
+            //NSLog(@"Calendar received: %@", category);
             
             [_events setCalendarJsonReceivedForMonth:_curArrayId :category];
 
@@ -1253,7 +1245,7 @@
                 {
                     [_collectionView reloadData];
                     [_activityIndicator stopAnimating];
-                    NSLog(@"Collection view reloaded!");
+                    //NSLog(@"Collection view reloaded!");
                     
                     _curArrayId = 2;
                     if ([_events doesMonthNeedLoaded:_curArrayId])
@@ -1269,7 +1261,7 @@
                         }
                         else
                         {
-                            NSLog(@"Screen is no longer locked!");
+                            //NSLog(@"Screen is no longer locked!");
                             _screenLocked = NO;
                             _loadCompleted = YES;
                             [self.navigationItem setHidesBackButton:NO animated:YES];
@@ -1285,7 +1277,7 @@
                     }
                     else
                     {
-                        NSLog(@"Screen is no longer locked!");
+                        //NSLog(@"Screen is no longer locked!");
                         _screenLocked = NO;
                         _loadCompleted = YES;
                         [self.navigationItem setHidesBackButton:NO animated:YES];
@@ -1293,7 +1285,7 @@
                 }
                 else
                 {
-                    NSLog(@"Screen is no longer locked!");
+                    //NSLog(@"Screen is no longer locked!");
                     _screenLocked = NO;
                     _loadCompleted = YES;
                     [self.navigationItem setHidesBackButton:NO animated:YES];

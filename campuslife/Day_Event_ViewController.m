@@ -118,7 +118,7 @@
         while (currentPos < [newArray count])
         {
             NSString *categoryName = [newArray[currentPos] objectForKey:@"category"];
-            NSLog(@"\n\n\n er meh gersh!!!\n\n %@ \n\n\n", categoryName);
+            //NSLog(@"\n\n\n er meh gersh!!!\n\n %@ \n\n\n", categoryName);
             
             BOOL removedSomething = NO;
             for (NSString *name in [[Authentication getSharedInstance] getCategoryNames])
