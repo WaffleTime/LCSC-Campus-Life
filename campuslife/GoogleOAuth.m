@@ -411,6 +411,9 @@
     
     // Make the request and add self (webview) to the parent view.
     [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:targetURLString]]];
+    
+    [[_parent navigationController] setNavigationBarHidden:YES animated:NO];
+    
     [_parentView addSubview:self];
 }
 

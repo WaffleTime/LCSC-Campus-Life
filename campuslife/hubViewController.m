@@ -67,8 +67,6 @@
         [[[Authentication getSharedInstance] getAuthenticator] revokeAccessToken];
     }
     
-    [[self navigationController] setNavigationBarHidden:YES animated:NO];
-    
     [[_auth getAuthenticator] authorizeUserWithClienID:@"836202105226-07ulfvopjkp1qpr2f08i8df1rv5ebphs.apps.googleusercontent.com"
                                        andClientSecret:@"M8h6QjrFfVgKQ9slzyU6hO4q"
                                          andParent:self
