@@ -207,10 +207,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             _repUntilBtn.titleLabel.text = [dateFormatter stringFromDate:super.repeatUntil];
         }
         else {
-            NSDate *curDate = [NSDate date];
-            super.repeatUntil = curDate;
+            super.repeatUntil = _startTimePicker.date;
             
-            _repUntilBtn.titleLabel.text = [dateFormatter stringFromDate:curDate];
+            _repUntilBtn.titleLabel.text = [dateFormatter stringFromDate:super.repeatUntil];
         }
     }
 }
