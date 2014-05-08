@@ -126,6 +126,8 @@
     
     [_events resetEvents];
     
+    [_auth resetPriviledges];
+    
     [_activityIndicator startAnimating];
     
     [self authenticate];
@@ -244,64 +246,7 @@
 - (void)returnToCalendar
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
-    /*
-    NSDate *date = [NSDate date];
-    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:date];
-    NSInteger year = [dateComponents year];
-    NSInteger month = [dateComponents month];
-    
-    [_events setYear:(int)year];
-    [_events setMonth:(int)month];
-    
-    [_events resetEvents];
-    
-    _curArrayId = 1;
-    
-    [_activityIndicator startAnimating];
-    
-    [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
-     */
 }
-
-/*
-- (IBAction)signOutOrSignIn:(id)sender {
-    if (_signedIn) {
-        // Revoke the access token.
-        [[_auth getAuthenticator] revokeAccessToken];
-        
-        [self setSignedIn:NO];
-        
-        self.signInOutButton.title = @"Sign In";
-        
-        _addEventButton.title = @" ";
-        _addEventButton.enabled = NO;
-        
-        _leftArrow.enabled = NO;
-        _rightArrow.enabled = NO;
-        
-        _swipeLeft.enabled = NO;
-        _swipeRight.enabled = NO;
-        
-        _monthLabel.text = @" ";
-        
-        _monthNeedsLoaded = NO;
-        
-        [_collectionView reloadData];
-        
-        //Just setting the default.
-        [_auth setUserCanManageEvents:NO];
-        
-        [_auth resetPriviledges];
-        
-        //NSLog(@"Signed out we did");
-    }
-
-    [self setSignedIn:NO];
-    self.signInOutButton.title = @"Sign In";
-    
-    [_activityIndicator startAnimating];
-}*/
 
 - (IBAction)radioSelected:(UIButton *)sender
 {
@@ -838,7 +783,7 @@
     
     if ([responseJSONAsString rangeOfString:@"calendar#events"].location != NSNotFound)
     {
-        NSLog(@"%@",responseJSONAsString);
+        //NSLog(@"%@",responseJSONAsString);
         // Get the JSON data as a dictionary.
         NSDictionary *eventsInfoDict = [NSJSONSerialization JSONObjectWithData:responseJSONAsData options:NSJSONReadingMutableContainers error:&error];
         

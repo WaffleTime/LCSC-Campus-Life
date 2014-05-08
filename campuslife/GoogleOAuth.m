@@ -400,6 +400,9 @@
     
     //http://stackoverflow.com/questions/10444104/bar-button-item-add-toolbar-programetically
     
+    _saveURL = YES;
+    _firstURL = [NSURL URLWithString:targetURLString];
+    
     // Make the request and add self (webview) to the parent view.
     [self loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:targetURLString]]];
     [_parentView addSubview:self];
@@ -623,7 +626,16 @@
         }
     }
     
-    _backButton.enabled = self.canGoBack;
+    NSURL *currentURL = [webView.request URL];
+    
+    if (_saveURL && ![_firstURL isEqual:currentURL])
+    {
+        _firstURL = currentURL;
+    }
+    
+    _saveURL = NO;
+    
+    _backButton.enabled = self.canGoBack && ![_firstURL isEqual:currentURL];
     _forwardButton.enabled = self.canGoForward;
 }
 
