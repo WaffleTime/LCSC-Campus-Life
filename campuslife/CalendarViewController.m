@@ -195,7 +195,7 @@
     
     //Have we received all of the authorization jsons after 3 seconds has passed?
     if (_authJsonReceived < [[_auth getCategoryNames] count]
-        && _timeLastReqSent + 3 < [[NSDate date] timeIntervalSince1970])
+        && _timeLastReqSent + 2 < [[NSDate date] timeIntervalSince1970])
     {
         [self authenticate];
     }
