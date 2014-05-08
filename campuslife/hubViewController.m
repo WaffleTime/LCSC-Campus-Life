@@ -93,7 +93,7 @@
 
 -(void)accessTokenWasRevoked{
     [self setSignedIn:NO];
-    NSLog(@"Revoked!");
+    //NSLog(@"Revoked!");
 }
 
 
