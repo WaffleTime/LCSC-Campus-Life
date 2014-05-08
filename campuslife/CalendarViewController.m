@@ -245,6 +245,7 @@
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
     
+    /*
     NSDate *date = [NSDate date];
     NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSYearCalendarUnit | NSMonthCalendarUnit fromDate:date];
     NSInteger year = [dateComponents year];
@@ -260,6 +261,7 @@
     [_activityIndicator startAnimating];
     
     [self getEventsForMonth:[_events getSelectedMonth] :[_events getSelectedYear]];
+     */
 }
 
 /*

@@ -134,7 +134,7 @@
             [self refreshAccessToken];
         }
         else{
-            //[self revokeAccessToken];
+            [self revokeAccessToken];
             // In case that the access token info file is not found then show the
             // webview to let user sign in and allow access to the app.
             [self showWebviewForUserLogin];
