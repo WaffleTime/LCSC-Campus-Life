@@ -461,18 +461,41 @@
 
 - (IBAction)deleteEvent:(id)sender
 {
-    NSString *calId = [[Authentication getSharedInstance] getCalIds][_eventDict[@"category"]];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Delete Event"
+                                                    message: @"Are you sure you want to delete this event?"
+                                                   delegate: self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Delete", nil];
+    
+    [alert show];
+    
+}
 
-    [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventDict[@"id"]]
-                      withHttpMethod:httpMethod_DELETE
-                  postParameterNames:[NSArray arrayWithObjects: nil]
-                 postParameterValues:[NSArray arrayWithObjects: nil]
-                         requestBody:nil];
-    
-    CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[1];
-    [controller setShouldRefresh:YES];
-    
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //u need to change 0 to other value(,1,2,3) if u have more buttons.then u can check which button was pressed.
+    if (buttonIndex == 1)
+    {
+        NSString *calId = [[Authentication getSharedInstance] getCalIds][_eventDict[@"category"]];
+        
+        [[auth getAuthenticator] callAPI:[NSString stringWithFormat:@"https://www.googleapis.com/calendar/v3/calendars/%@/events/%@", calId, _eventDict[@"id"]]
+                          withHttpMethod:httpMethod_DELETE
+                      postParameterNames:[NSArray arrayWithObjects: nil]
+                     postParameterValues:[NSArray arrayWithObjects: nil]
+                             requestBody:nil];
+        
+        CalendarViewController *controller = (CalendarViewController *) self.navigationController.viewControllers[1];
+        [controller setShouldRefresh:YES];
+        
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    }
+}
+
+
+
+- (void)userSelectedDelete:(id)sender
+{
+
 }
 
 

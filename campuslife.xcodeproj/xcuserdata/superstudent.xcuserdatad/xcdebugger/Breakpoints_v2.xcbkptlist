@@ -9,45 +9,19 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "campuslife/EventDetailTableViewController.m"
-            timestampString = "420060765.576768"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
-            landmarkName = "-deleteEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "campuslife/EventDetailTableViewController.m"
-            timestampString = "420674668.371575"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "466"
-            endingLineNumber = "466"
-            landmarkName = "-deleteEvent:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "campuslife/CalendarViewController.m"
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "-forwardMonthOffset:"
+=======
             startingLineNumber = "250"
             endingLineNumber = "250"
             landmarkName = "-radioSelected:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -61,9 +35,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "-forwardMonthOffset:"
+=======
             startingLineNumber = "254"
             endingLineNumber = "254"
             landmarkName = "-radioSelected:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -265,10 +245,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "382"
+            endingLineNumber = "382"
+            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            landmarkType = "5">
+=======
             startingLineNumber = "321"
             endingLineNumber = "321"
             landmarkName = "@implementation CalendarViewController"
             landmarkType = "3">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -281,9 +268,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "773"
+            endingLineNumber = "773"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+=======
             startingLineNumber = "712"
             endingLineNumber = "712"
             landmarkName = "-getEventsForMonth::"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -297,9 +290,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "777"
+            endingLineNumber = "777"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+=======
             startingLineNumber = "716"
             endingLineNumber = "716"
             landmarkName = "-getEventsForMonth::"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -313,9 +312,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "789"
+            endingLineNumber = "789"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+=======
             startingLineNumber = "728"
             endingLineNumber = "728"
             landmarkName = "-getEventsForMonth::"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -329,9 +334,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "795"
+            endingLineNumber = "795"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+=======
             startingLineNumber = "734"
             endingLineNumber = "734"
             landmarkName = "-getEventsForMonth::"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -345,10 +356,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "763"
+            endingLineNumber = "763"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "702"
             endingLineNumber = "702"
             landmarkName = "-getEventsForMonth::"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -665,9 +683,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "-onTick:"
+=======
             startingLineNumber = "187"
             endingLineNumber = "187"
             landmarkName = "-onTickForDelay:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -793,9 +817,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "534"
+            endingLineNumber = "534"
+            landmarkName = "-getIndexOfSubstringInString::"
+=======
             startingLineNumber = "473"
             endingLineNumber = "473"
             landmarkName = "-prepareForSegue:sender:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -809,9 +839,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "555"
+            endingLineNumber = "555"
+            landmarkName = "-getIndexOfSubstringInString::"
+=======
             startingLineNumber = "494"
             endingLineNumber = "494"
             landmarkName = "-shouldPerformSegueWithIdentifier:sender:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1013,10 +1049,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "770"
+            endingLineNumber = "770"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "709"
             endingLineNumber = "709"
             landmarkName = "-getEventsForMonth::"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1205,10 +1248,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "826"
+            endingLineNumber = "826"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+            landmarkType = "5">
+=======
             startingLineNumber = "765"
             endingLineNumber = "765"
             landmarkName = "@implementation CalendarViewController"
             landmarkType = "3">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1237,10 +1287,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "166"
             endingLineNumber = "166"
             landmarkName = "-onTick:"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1269,9 +1326,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-viewDidAppear:"
+=======
             startingLineNumber = "163"
             endingLineNumber = "163"
             landmarkName = "-onTick:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1349,10 +1412,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "1368"
+            endingLineNumber = "1368"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "1307"
             endingLineNumber = "1307"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1365,9 +1435,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "818"
+            endingLineNumber = "818"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+=======
             startingLineNumber = "757"
             endingLineNumber = "757"
             landmarkName = "-getEventsForMonth::"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1381,9 +1457,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "817"
+            endingLineNumber = "817"
+            landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+=======
             startingLineNumber = "756"
             endingLineNumber = "756"
             landmarkName = "-getEventsForMonth::"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1397,9 +1479,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "1357"
+            endingLineNumber = "1357"
+            landmarkName = "-errorInResponseWithBody:"
+=======
             startingLineNumber = "1296"
             endingLineNumber = "1296"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1413,10 +1501,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "1361"
+            endingLineNumber = "1361"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "1300"
             endingLineNumber = "1300"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1429,10 +1524,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "1360"
+            endingLineNumber = "1360"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "1299"
             endingLineNumber = "1299"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1461,9 +1563,15 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "1359"
+            endingLineNumber = "1359"
+            landmarkName = "-errorInResponseWithBody:"
+=======
             startingLineNumber = "1298"
             endingLineNumber = "1298"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1477,10 +1585,17 @@
             timestampString = "421261757.757635"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< HEAD
+            startingLineNumber = "1376"
+            endingLineNumber = "1376"
+            landmarkName = "@implementation CalendarViewController"
+            landmarkType = "3">
+=======
             startingLineNumber = "1315"
             endingLineNumber = "1315"
             landmarkName = "-responseFromServiceWasReceived:andResponseJSONAsData:"
             landmarkType = "5">
+>>>>>>> 3c3672772f548459836932326e043727c1ebb6be
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
